@@ -7,7 +7,7 @@ Use the entries below as an example.
 
 ## Week 4
 
-Everyone: create application skeleton - meeting 14:00 19 Mar
+Everyone: create application skeleton - meeting 13:00 21 Aug
 
 ## Week 5
 
