@@ -1,5 +1,9 @@
 package comp1110.ass2;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class CatanDice {
 
     /**
@@ -13,7 +17,61 @@ public class CatanDice {
      *         a board state, false otherwise.
      */
     public static boolean isBoardStateWellFormed(String board_state) {
-	 return false; // FIXME: Task #3
+        String s[] = {"","R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","R11","R12","R13","R14","R15","S3","S4","S5","S7","S9","S11","C7","C12","C20","C30","J1","J2","J3","J4","J5","J6","K1","K2","K3","K4","K5","K6"};
+        String bs[] = board_state.split(",");
+        int t=0;
+        for(int i=0;i<=bs.length-1;i++){
+            if(Arrays.asList(s).contains(bs[i])==true){
+                t++;
+            }
+        }
+        return t == bs.length;
+
+
+//        StringBuffer sb = new StringBuffer(board_state);
+//        int i = 0;
+//        if(board_state!=""){
+//            if(board_state.length()==2){
+//                sb.insert(1," ");
+//                String s2 = new String(sb);
+//                String[] s0 = s2.split(" ");
+//                if(s0.length==2){
+//                    char c =  s0[0].charAt(0);
+//                    if(c=='R'){
+//                        if(Integer.parseInt(s0[1])>=0&&Integer.parseInt(s0[1])<=15){
+//                            i++ ;
+//                        }
+//                    }
+//                    else if (c=='S'){
+//                        if(Integer.parseInt(s0[1])==3||Integer.parseInt(s0[1])==4||Integer.parseInt(s0[1])==5||Integer.parseInt(s0[1])==7||Integer.parseInt(s0[1])==9||Integer.parseInt(s0[1])==11){
+//                            i++;
+//                        }
+//                    }
+//                    else if (c=='C'){
+//                        if(Integer.parseInt(s0[1])==7||Integer.parseInt(s0[1])==12||Integer.parseInt(s0[1])==20||Integer.parseInt(s0[1])==30){
+//                            i++;
+//                        }
+//                    }
+//                    else if (c=='J'||c=='K'){
+//                        if(Integer.parseInt(s0[1])>=1&&Integer.parseInt(s0[1])<=6){
+//                            i++;
+//                        }
+//                    }
+//                }
+//            }
+//
+//
+//        }
+//        else i++;
+
+
+//        if (i==1){
+//            return true;
+//        }
+//        else return false;
+
+
+	  // FIXME: Task #3
     }
 
     /**
