@@ -3,6 +3,7 @@ package comp1110.ass2;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class CatanDice {
 
@@ -17,11 +18,11 @@ public class CatanDice {
      *         a board state, false otherwise.
      */
     public static boolean isBoardStateWellFormed(String board_state) {
-        String s[] = {"","R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","R11","R12","R13","R14","R15","S3","S4","S5","S7","S9","S11","C7","C12","C20","C30","J1","J2","J3","J4","J5","J6","K1","K2","K3","K4","K5","K6"};
-        String bs[] = board_state.split(",");
+        String[] s = {"","R0","R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","R11","R12","R13","R14","R15","S3","S4","S5","S7","S9","S11","C7","C12","C20","C30","J1","J2","J3","J4","J5","J6","K1","K2","K3","K4","K5","K6"};
+        String[] bs = board_state.split(",");
         int t=0;
         for(int i=0;i<=bs.length-1;i++){
-            if(Arrays.asList(s).contains(bs[i])==true){
+            if(Arrays.asList(s).contains(bs[i])){
                 t++;
             }
         }
@@ -82,7 +83,27 @@ public class CatanDice {
      *         a board state, false otherwise.
      */
     public static boolean isActionWellFormed(String action) {
-	 return false; // FIXME: Task #4
+        String[] trade = {"1","2","3","4","0"};
+        String[] swap = {"1","2","3","4","5","0"};
+        String[] sp = action.split(" ");
+        int i = 0;
+        if(Objects.equals(sp[0], "build")){
+            if (isBoardStateWellFormed(sp[1])){
+                i++;
+            }
+        }
+        else if(sp[0].equals("trade")&&sp.length==2){
+            if (Arrays.asList(trade).contains(sp[1])){
+                i++;
+            }
+        }
+        else if(sp[0].equals("swap")&&sp.length==3){
+            if(Arrays.asList(swap).contains(sp[1]) && Arrays.asList(swap).contains(sp[2])){
+                i++;
+            }
+        }
+        return i==1;
+        // FIXME: Task #4
     }
 
     /**
