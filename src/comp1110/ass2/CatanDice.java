@@ -1,9 +1,6 @@
 package comp1110.ass2;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class CatanDice {
 
@@ -123,6 +120,15 @@ public class CatanDice {
      * resource_state.
      */
     public static void rollDice(int n_dice, int[] resource_state) {
+        Random ran = new Random();
+        ran.nextInt(5);
+        for(int i=1;i<=n_dice;i++){
+            int r = ran.nextInt(5);
+            resource_state[r]++;
+        }
+
+
+
 	// FIXME: Task #6
     }
 
