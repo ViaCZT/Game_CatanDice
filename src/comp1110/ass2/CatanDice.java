@@ -161,7 +161,29 @@ public class CatanDice {
      */
     public static boolean checkResources(String structure,
 					 int[] resource_state) {
-	 return false; // FIXME: Task #7
+        char c = structure.charAt(0);
+        int i = 0;
+        if (c=='R'){
+            if(resource_state[3]>=1&&resource_state[4]>=1){
+                i++;
+            }
+        }
+        else if (c=='S'){
+            if (resource_state[4]>=1&&resource_state[1]>=1&&resource_state[2]>=1&&resource_state[3]>=1){
+                i++;
+            }
+        }
+        else if (c=='C'){
+            if (resource_state[0]>=3&&resource_state[1]>=2){
+                i++;
+            }
+        }
+        else if (c=='J'||c=='K'){
+            if (resource_state[0]>=1&&resource_state[1]>=1&&resource_state[2]>=1){
+                i++;
+            }
+        }
+	 return i==1; // FIXME: Task #7
     }
 
     /**
