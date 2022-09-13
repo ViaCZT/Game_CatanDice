@@ -1,5 +1,7 @@
 package comp1110.ass2;
 
+import gittest.A;
+
 import java.util.*;
 
 public class CatanDice {
@@ -132,6 +134,25 @@ public class CatanDice {
 	// FIXME: Task #6
     }
 
+    public static String getroad(String structure){
+        String Road;
+        switch (structure){
+            case "S4" -> Road = "R2";
+            case "S5" -> Road = "R5";
+            case "S7" -> Road = "R7";
+            case "S9" -> Road = "R9";
+            case "S11" -> Road = "R11";
+            case "C7" -> Road = "R1";
+            case "C12" -> Road = "R4";
+            case "C20" -> Road = "R13";
+            case "C30" -> Road = "R15";
+            default ->  Road = "";
+        }
+
+        return Road;
+    }
+
+
     /**
      * Check if the specified structure can be built next, given the
      * current board state. This method should check that the build
@@ -146,7 +167,89 @@ public class CatanDice {
      */
     public static boolean checkBuildConstraints(String structure,
 						String board_state) {
-	 return false; // FIXME: Task #8
+        String[] Roads = {"R0","R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","R11","R12","R13","R14","R15"};
+        String[] Settlements = {"S3","S4","S5","S7","S9","S11"};
+        String[] Cities = {"C7","C12","C20","C30"};
+        String[] Jokers = {"J1","J2","J3","J4","J5","J6"};
+        String[] Knights = {"K1","K2","K3","K4","K5","K6"};
+        String[] bs  =board_state.split(",");
+        ArrayList bs0 = new ArrayList();
+        ArrayList r = new ArrayList();
+        ArrayList s = new ArrayList();
+        ArrayList c = new ArrayList();
+        ArrayList j = new ArrayList();
+        ArrayList k = new ArrayList();
+        float n = 0;
+
+        Collections.addAll(bs0, bs);
+        Collections.addAll(r, Roads);
+        Collections.addAll(s, Settlements);
+        Collections.addAll(c, Cities);
+        Collections.addAll(j, Jokers);
+        Collections.addAll(k, Knights);
+        if(r.contains(structure)){
+            switch (structure) {
+                case "R0":
+                    n++;
+                    break;
+                case "R2":
+                    if (bs0.contains("R0")) {
+                        n++;
+                    }
+                    break;
+                case "R5":
+                    if (bs0.contains("R3")) {
+                        n++;
+                    }
+                    break;
+                case "R12":
+                    if (bs0.contains("R7")) {
+                        n++;
+                    }
+                    break;
+                default:
+                    if (bs0.contains(r.get(r.indexOf(structure) - 1))) {
+                        n++;
+                    }
+                    break;
+            }
+        }
+        else if(s.contains(structure)){
+            if(!structure.equals("S3")){
+                if(bs0.contains(s.get(s.indexOf(structure)-1))&&bs0.contains(getroad(structure))){
+                    n++;
+                }
+            }
+            else {
+                if(bs0.contains(getroad(structure))){
+                    n++;
+                }
+            }
+        }
+        else if(c.contains(structure)){
+            if(!structure.equals("C7")){
+                if(bs0.contains(c.get(c.indexOf(structure)-1))&&bs0.contains(getroad(structure))){
+                    n++;
+                }
+            }
+            else {
+                if(bs0.contains(getroad(structure))){
+                    n++;
+                }
+            }
+        }
+        else if(j.contains(structure)){
+            if (structure.equals("J1")){
+                n++;
+            }
+            else {
+                if (bs0.contains(j.get(j.indexOf(structure)-1))||bs0.contains(k.get(j.indexOf(structure)-1))){
+                    n++;
+                }
+            }
+        }
+
+	 return n==1; // FIXME: Task #8
     }
 
     /**
