@@ -1,7 +1,5 @@
 package comp1110.ass2;
 
-import gittest.A;
-
 import java.util.*;
 
 public class CatanDice {
@@ -17,15 +15,19 @@ public class CatanDice {
      *         a board state, false otherwise.
      */
     public static boolean isBoardStateWellFormed(String board_state) {
-        String[] s = {"","R0","R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","R11","R12","R13","R14","R15","S3","S4","S5","S7","S9","S11","C7","C12","C20","C30","J1","J2","J3","J4","J5","J6","K1","K2","K3","K4","K5","K6"};
-        String[] bs = board_state.split(",");
-        int t=0;
-        for(int i=0;i<=bs.length-1;i++){
-            if(Arrays.asList(s).contains(bs[i])){
-                t++;
+        String[] s = {"","R0","R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","R11","R12","R13","R14","R15",
+                "S3","S4","S5","S7","S9","S11",
+                "C7","C12","C20","C30",
+                "J1","J2","J3","J4","J5","J6",
+                "K1","K2","K3","K4","K5","K6"};
+        String[] boardStateSplit = board_state.split(",");
+        int flag =0;
+        for (String value : boardStateSplit) {
+            if (Arrays.asList(s).contains(value)) {
+                flag++;
             }
         }
-        return t == bs.length;
+        return flag == boardStateSplit.length;
 
 
 //        StringBuffer sb = new StringBuffer(board_state);
@@ -84,24 +86,25 @@ public class CatanDice {
     public static boolean isActionWellFormed(String action) {
         String[] trade = {"1","2","3","4","0"};
         String[] swap = {"1","2","3","4","5","0"};
-        String[] sp = action.split(" ");
-        int i = 0;
-        if(Objects.equals(sp[0], "build")){
-            if (isBoardStateWellFormed(sp[1])){
-                i++;
+        String[] actionSplit = action.split(" ");
+        int flag = 0;
+        if(Objects.equals(actionSplit[0], "build")){
+            if (isBoardStateWellFormed(actionSplit[1])){
+                flag++;
             }
         }
-        else if(sp[0].equals("trade")&&sp.length==2){
-            if (Arrays.asList(trade).contains(sp[1])){
-                i++;
+        else if(actionSplit[0].equals("trade") && actionSplit.length==2){
+            if (Arrays.asList(trade).contains(actionSplit[1])){
+                flag++;
             }
         }
-        else if(sp[0].equals("swap")&&sp.length==3){
-            if(Arrays.asList(swap).contains(sp[1]) && Arrays.asList(swap).contains(sp[2])){
-                i++;
+        else if(actionSplit[0].equals("swap") && actionSplit.length==3){
+            if(Arrays.asList(swap).contains(actionSplit[1]) &&
+                    Arrays.asList(swap).contains(actionSplit[2])){
+                flag++;
             }
         }
-        return i==1;
+        return flag ==1;
         // FIXME: Task #4
     }
 
