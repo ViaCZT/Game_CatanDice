@@ -46,32 +46,30 @@ public class Viewer extends Application {
         //导入图片并使其居中 import and center the image
         importBoardImage();
 
-        if (!(CatanDice.isBoardStateWellFormed(board_state))){
-
+        if (!(CatanDice.isBoardStateWellFormed(board_state))) {
             makeText(boardStateErrorText);
-        }else {
+        } else {
             String[] boardStateSplit = board_state.split(",");
-            for (String move: boardStateSplit){
+            for (String move : boardStateSplit) {
 //                System.out.println(move);
                 String substr = move.substring(1);
-                if (move.charAt(0) == 'R'){
+                if (move.charAt(0) == 'R') {
 //                    System.out.println(substr);
                     makeRoad(substr);
                 } else if (move.charAt(0) == 'S') {
                     makeSettlement(substr);
                 } else if (move.charAt(0) == 'C') {
                     makeCity(substr);
-                }else if (move.charAt(0) == 'J') {
+                } else if (move.charAt(0) == 'J') {
                     makeJoker(substr);
-                }else if (move.charAt(0) == 'K') {
+                } else if (move.charAt(0) == 'K') {
                     makeKnight(substr);
                 }
             }
         }
-
     }
 
-    private void importBoardImage(){
+    private void importBoardImage() {
         //导入图片并使其居中 import and center the image
 //        Image boardImage = new Image(Viewer.class.getResource("island-one-with-numbering.png").toString());
         Image boardImage = new Image(Objects.requireNonNull(Viewer.class.getResource("island-one-with-numbering.png")).toString());
@@ -80,9 +78,9 @@ public class Viewer extends Application {
         boardImg.setFitHeight(boardSide);
         boardImg.setFitWidth(boardSide);
 //        (1200-600)/2=300
-        boardImg.setLayoutX((VIEWER_WIDTH-boardSide)/2.0);
+        boardImg.setLayoutX((VIEWER_WIDTH - boardSide) / 2.0);
 //        (700-600)/2=50
-        boardImg.setLayoutY((VIEWER_HEIGHT-boardSide)/2.0);
+        boardImg.setLayoutY((VIEWER_HEIGHT - boardSide) / 2.0);
         root.getChildren().add(boardImg);
     }
 
@@ -106,7 +104,7 @@ public class Viewer extends Application {
     /**
      * @param indexString : "0"-"15"
      */
-    private void makeRoad(String indexString){
+    private void makeRoad(String indexString) {
         switch (indexString) {
             case "0" -> {
                 Rectangle road0 = new Rectangle(20, 60, Color.BLACK);
@@ -223,7 +221,7 @@ public class Viewer extends Application {
         }
     }
 
-    private void makeSettlement(String indexString){
+    private void makeSettlement(String indexString) {
         switch (indexString) {
             case "3" -> {
                 Rectangle s3 = new Rectangle(25, 25, Color.BLACK);
@@ -270,7 +268,7 @@ public class Viewer extends Application {
         }
     }
 
-    private void makeCity(String indexString){
+    private void makeCity(String indexString) {
         switch (indexString) {
             case "7" -> {
                 Rectangle c7 = new Rectangle(44, 20, Color.BLACK);
@@ -303,7 +301,7 @@ public class Viewer extends Application {
         }
     }
 
-    private void makeJoker(String indexString){
+    private void makeJoker(String indexString) {
         switch (indexString) {
             case "1" -> {
                 Circle j1 = new Circle(421, 180, 12); //X,Y,Radius
@@ -338,40 +336,40 @@ public class Viewer extends Application {
         }
     }
 
-    private void makeKnight(String indexString){
+    private void makeKnight(String indexString) {
         switch (indexString) {
             case "1" -> {
-                Circle k1 = new Circle(421, 180+27, 15); //12+15=27
+                Circle k1 = new Circle(421, 180 + 27, 15); //12+15=27
                 k1.setFill(Color.BLACK);
                 k1.setOpacity(0.6);
                 root.getChildren().add(k1);
             }
             case "2" -> {
-                Circle k2 = new Circle(422, 373+27, 15);
+                Circle k2 = new Circle(422, 373 + 27, 15);
                 k2.setFill(Color.BLACK);
                 k2.setOpacity(0.6);
                 root.getChildren().add(k2);
             }
             case "3" -> {
-                Circle k3 = new Circle(594, 468+27, 15);
+                Circle k3 = new Circle(594, 468 + 27, 15);
                 k3.setFill(Color.BLACK);
                 k3.setOpacity(0.6);
                 root.getChildren().add(k3);
             }
             case "4" -> {
-                Circle k4 = new Circle(767, 374+27, 15);
+                Circle k4 = new Circle(767, 374 + 27, 15);
                 k4.setFill(Color.BLACK);
                 k4.setOpacity(0.6);
                 root.getChildren().add(k4);
             }
             case "5" -> {
-                Circle k5 = new Circle(766, 181+27, 15);
+                Circle k5 = new Circle(766, 181 + 27, 15);
                 k5.setFill(Color.BLACK);
                 k5.setOpacity(0.6);
                 root.getChildren().add(k5);
             }
             case "6" -> {
-                Circle k6 = new Circle(594, 82+27, 15);
+                Circle k6 = new Circle(594, 82 + 27, 15);
                 k6.setFill(Color.BLACK);
                 k6.setOpacity(0.6);
                 root.getChildren().add(k6);
