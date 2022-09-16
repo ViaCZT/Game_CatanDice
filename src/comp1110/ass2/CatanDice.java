@@ -22,13 +22,12 @@ public class CatanDice {
                 "K1","K2","K3","K4","K5","K6"};
         String[] boardStateSplit = board_state.split(",");
         int flag =0;
-        for (String value : boardStateSplit) {
-            if (Arrays.asList(s).contains(value)) {
+        for (String move : boardStateSplit) {
+            if (Arrays.asList(s).contains(move)) {
                 flag++;
             }
         }
         return flag == boardStateSplit.length;
-
 
 //        StringBuffer sb = new StringBuffer(board_state);
 //        int i = 0;
@@ -168,8 +167,7 @@ public class CatanDice {
      * @return true iff the structure is a possible next build, false
      *         otherwise.
      */
-    public static boolean checkBuildConstraints(String structure,
-						String board_state) {
+    public static boolean checkBuildConstraints(String structure, String board_state) {
         String[] Roads = {"R0","R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","R11","R12","R13","R14","R15"};
         String[] Settlements = {"S3","S4","S5","S7","S9","S11"};
         String[] Cities = {"C7","C12","C20","C30"};
@@ -265,8 +263,7 @@ public class CatanDice {
      * @return true iff the structure can be built with the available
      *         resources, false otherwise.
      */
-    public static boolean checkResources(String structure,
-					 int[] resource_state) {
+    public static boolean checkResources(String structure, int[] resource_state) {
         char c = structure.charAt(0);
         int i = 0;
         if (c=='R'){
