@@ -31,11 +31,19 @@ declaration: >-
 
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
-class:
-   - Viewer
+
 
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
+method:
+  - Viewer.displayState() (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L46-85)
+  - Viewer.importBoardImage() (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L86-100)
+  - Viewer.makeText() (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L101-118)
+  - Viewer.makeText() (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L119-238)
+  - Viewer.makeRoad() (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L119-238)
+  - Viewer.makeSettlement() (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L239-285)
+  - Viewer.makeCity() (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L286-318)
+  - Viewer.makeJokerOrKnight() (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L319-394)
 
 
 # sign *your* name and uid here

@@ -36,7 +36,7 @@ declaration: >-
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
 method:
-  - CatanDice.getRoad()
+  - CatanDice.getRoad() (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/CatanDice.java#L234-250)
 
 # sign *your* name and uid here
 name: Zihan Ai
