@@ -30,48 +30,7 @@ public class CatanDice {
         }
         return flag == boardStateSplit.length;
 
-/*
-        StringBuffer sb = new StringBuffer(board_state);
-        int i = 0;
-        if(board_state!=""){
-            if(board_state.length()==2){
-                sb.insert(1," ");
-                String s2 = new String(sb);
-                String[] s0 = s2.split(" ");
-                if(s0.length==2){
-                    char c =  s0[0].charAt(0);
-                    if(c=='R'){
-                        if(Integer.parseInt(s0[1])>=0&&Integer.parseInt(s0[1])<=15){
-                            i++ ;
-                        }
-                    }
-                    else if (c=='S'){
-                        if(Integer.parseInt(s0[1])==3||Integer.parseInt(s0[1])==4||Integer.parseInt(s0[1])==5||Integer.parseInt(s0[1])==7||Integer.parseInt(s0[1])==9||Integer.parseInt(s0[1])==11){
-                            i++;
-                        }
-                    }
-                    else if (c=='C'){
-                        if(Integer.parseInt(s0[1])==7||Integer.parseInt(s0[1])==12||Integer.parseInt(s0[1])==20||Integer.parseInt(s0[1])==30){
-                            i++;
-                        }
-                    }
-                    else if (c=='J'||c=='K'){
-                        if(Integer.parseInt(s0[1])>=1&&Integer.parseInt(s0[1])<=6){
-                            i++;
-                        }
-                    }
-                }
-            }
 
-
-        }
-        else i++;
-
-        if (i==1){
-            return true;
-        }
-        else return false;
-*/
     }
 
     /**
@@ -150,21 +109,7 @@ public class CatanDice {
         String[] Jokers = {"J1", "J2", "J3", "J4", "J5", "J6"};
         String[] Knights = {"K1", "K2", "K3", "K4", "K5", "K6"};
         String[] boardStateSplit = board_state.split(",");
-/*
-        ArrayList boardStateList = new ArrayList();
-        ArrayList rList = new ArrayList();
-        ArrayList sList = new ArrayList();
-        ArrayList cList = new ArrayList();
-        ArrayList jList = new ArrayList();
-        ArrayList kList = new ArrayList();
 
-        Collections.addAll(boardStateList, boardStateSplit);
-        Collections.addAll(rList, Roads);
-        Collections.addAll(sList, Settlements);
-        Collections.addAll(cList, Cities);
-        Collections.addAll(jList, Jokers);
-        Collections.addAll(kList, Knights);
-*/
         List<String> boardStateList = new ArrayList<>(Arrays.asList(boardStateSplit));
         List<String> rList = new ArrayList<>(Arrays.asList(Roads));
         List<String> sList = new ArrayList<>(Arrays.asList(Settlements));
@@ -285,26 +230,6 @@ public class CatanDice {
             default -> throw new IllegalStateException("Unexpected value: " + type);
         }
         return flag == 1;
-/*
-        if (type == 'R') {
-            if (resource_state[3] >= 1 && resource_state[4] >= 1) {
-                flag++;
-            }
-        } else if (type == 'S') {
-            if (resource_state[4] >= 1 && resource_state[1] >= 1 && resource_state[2] >= 1 && resource_state[3] >= 1) {
-                flag++;
-            }
-        } else if (type == 'C') {
-            if (resource_state[0] >= 3 && resource_state[1] >= 2) {
-                flag++;
-            }
-        } else if (type == 'J') {
-            if (resource_state[0] >= 1 && resource_state[1] >= 1 && resource_state[2] >= 1) {
-                flag++;
-            }
-        }
-        return flag == 1;
- */
     }
 
     /**
@@ -326,6 +251,14 @@ public class CatanDice {
         return false; // FIXME: Task #12
     }
 
+    public static boolean checkCanSwap(String board_state,int[] resource_state,int swap_resource,int target_resource){
+        String[] states = board_state.split(",");
+        ArrayList s = new ArrayList();
+        Collections.addAll(s,states);
+        String joker = "J"+ (target_resource+1);
+        return (s.contains(joker) || s.contains("J6"))&&resource_state[swap_resource]>=1;
+    }
+
     /**
      * Check if a player action (build, trade or swap) is executable in the
      * given board and resource state.
@@ -338,7 +271,106 @@ public class CatanDice {
     public static boolean canDoAction(String action,
                                       String board_state,
                                       int[] resource_state) {
-        return false; // FIXME: Task #9
+        int i = 0;
+        if(isActionWellFormed(action)){
+            String behaviour = action.split(" ")[0];
+            switch (behaviour) {
+                case "build" -> {
+                    String structure = action.split(" ")[1];
+                    if (checkBuildConstraints(structure, board_state)) {
+                        if (checkResources(structure, resource_state)) {
+                            i = 1;
+                        }
+                    }
+                }
+                case "trade" -> {
+                    if (resource_state[5] >= 2) {
+                        i = 1;
+                    }
+                }
+                case "swap" -> {
+                    if (checkCanSwap(board_state, resource_state, Integer.parseInt(action.split(" ")[1]), Integer.parseInt(action.split(" ")[2]))) {
+                        i = 1;
+                    }
+                }
+            }
+        }
+
+        return i==1; // FIXME: Task #9
+    }
+
+    public static String updateBoardState(String action,String board_state){
+        String behaviour = action.split(" ")[0];
+        switch (behaviour) {
+            case "build" -> board_state += ("," + action.split(" ")[1]);
+            case "trade" -> {
+                String[] structures = board_state.split(",");
+                int resource_index = Integer.parseInt(action.split(" ")[1]);
+                String joker = "J" + (resource_index + 1);
+                for (int i = 0; i <= structures.length - 1; i++) {
+                    if (Objects.equals(structures[i], joker)) {
+                        structures[i] = "K" + (resource_index + 1);
+                        break;
+                    } else if (Objects.equals(structures[i], "J6")) {
+                        structures[i] = "K6";
+                        break;
+                    }
+                }
+                StringBuilder board_stateBuilder = new StringBuilder(structures[0]);
+                for (int i = 1; i <= structures.length - 1; i++) {
+                    board_stateBuilder.append(",").append(structures[i]);
+                }
+                board_state = board_stateBuilder.toString();
+            }
+        }
+        return board_state;
+    }
+
+
+    //Change the quantity of resources after action
+    public static int[] updateResourceState(String action,int[] resource_state){
+        String behaviour = action.split(" ")[0];
+        switch (behaviour){
+            case "build":{
+                char structure = action.split(" ")[1].charAt(0);
+                switch (structure) {
+                    case 'R' -> {
+                        resource_state[3] -= 1;
+                        resource_state[4] -= 1;
+                    }
+                    case 'S' -> {
+                        resource_state[1] -= 1;
+                        resource_state[2] -= 1;
+                        resource_state[3] -= 1;
+                        resource_state[4] -= 1;
+                    }
+                    case 'C' -> {
+                        resource_state[0] -= 3;
+                        resource_state[1] -= 2;
+                    }
+                    case 'J' -> {
+                        resource_state[0] -= 1;
+                        resource_state[1] -= 1;
+                        resource_state[2] -= 1;
+                        resource_state[3] -= 1;
+                    }
+                }
+            }
+            case "trade":{
+                int target_resource = Integer.parseInt(action.split(" ")[1]);
+                resource_state[5]-=2;
+                resource_state[target_resource]+=1;
+                break;
+            }
+            case "swap":{
+                int swap_resource = Integer.parseInt(action.split(" ")[1]);
+                int target_resource = Integer.parseInt(action.split(" ")[2]);
+                resource_state[swap_resource]-=1;
+                resource_state[target_resource]+=1;
+                break;
+            }
+        }
+        return resource_state;
     }
 
     /**
@@ -353,7 +385,17 @@ public class CatanDice {
     public static boolean canDoSequence(String[] actions,
                                         String board_state,
                                         int[] resource_state) {
-        return false; // FIXME: Task #11
+        int n=0;
+        for(int i = 0;i<=actions.length-1;i++){
+            if(canDoAction(actions[i],board_state,resource_state)){
+                board_state=updateBoardState(actions[i],board_state);
+                updateResourceState(actions[i], resource_state);
+                n++;
+            }
+            else
+                break;
+        }
+        return n==actions.length-1; // FIXME: Task #11
     }
 
     /**
