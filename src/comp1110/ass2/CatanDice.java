@@ -303,9 +303,9 @@ public class CatanDice {
         String behaviour = action.split(" ")[0];
         switch (behaviour) {
             case "build" -> board_state += ("," + action.split(" ")[1]);
-            case "trade" -> {
+            case "swap" -> {
                 String[] structures = board_state.split(",");
-                int resource_index = Integer.parseInt(action.split(" ")[1]);
+                int resource_index = Integer.parseInt(action.split(" ")[2]);
                 String joker = "J" + (resource_index + 1);
                 for (int i = 0; i <= structures.length - 1; i++) {
                     if (Objects.equals(structures[i], joker)) {
@@ -329,48 +329,49 @@ public class CatanDice {
 
     //Change the quantity of resources after action
     public static int[] updateResourceState(String action,int[] resource_state){
+        int[] state = resource_state;
         String behaviour = action.split(" ")[0];
         switch (behaviour){
             case "build":{
                 char structure = action.split(" ")[1].charAt(0);
                 switch (structure) {
                     case 'R' -> {
-                        resource_state[3] -= 1;
-                        resource_state[4] -= 1;
+                        state[3] -= 1;
+                        state[4] -= 1;
                     }
                     case 'S' -> {
-                        resource_state[1] -= 1;
-                        resource_state[2] -= 1;
-                        resource_state[3] -= 1;
-                        resource_state[4] -= 1;
+                        state[1] -= 1;
+                        state[2] -= 1;
+                        state[3] -= 1;
+                        state[4] -= 1;
                     }
                     case 'C' -> {
-                        resource_state[0] -= 3;
-                        resource_state[1] -= 2;
+                        state[0] -= 3;
+                        state[1] -= 2;
                     }
                     case 'J' -> {
-                        resource_state[0] -= 1;
-                        resource_state[1] -= 1;
-                        resource_state[2] -= 1;
-                        resource_state[3] -= 1;
+                        state[0] -= 1;
+                        state[1] -= 1;
+                        state[2] -= 1;
                     }
                 }
+                break;
             }
             case "trade":{
                 int target_resource = Integer.parseInt(action.split(" ")[1]);
-                resource_state[5]-=2;
-                resource_state[target_resource]+=1;
+                state[5]-=2;
+                state[target_resource]++;
                 break;
             }
             case "swap":{
                 int swap_resource = Integer.parseInt(action.split(" ")[1]);
                 int target_resource = Integer.parseInt(action.split(" ")[2]);
-                resource_state[swap_resource]-=1;
-                resource_state[target_resource]+=1;
+                state[swap_resource]-=1;
+                state[target_resource]+=1;
                 break;
             }
         }
-        return resource_state;
+        return state;
     }
 
     /**
@@ -385,17 +386,20 @@ public class CatanDice {
     public static boolean canDoSequence(String[] actions,
                                         String board_state,
                                         int[] resource_state) {
+        int[] state = resource_state;
         int n=0;
         for(int i = 0;i<=actions.length-1;i++){
-            if(canDoAction(actions[i],board_state,resource_state)){
+            if(canDoAction(actions[i],board_state,state)){
                 board_state=updateBoardState(actions[i],board_state);
-                updateResourceState(actions[i], resource_state);
+                System.out.println(board_state);
+                state=updateResourceState(actions[i], state);
                 n++;
             }
             else
                 break;
         }
-        return n==actions.length-1; // FIXME: Task #11
+        System.out.println("kk");
+        return n==actions.length; // FIXME: Task #11
     }
 
     /**
