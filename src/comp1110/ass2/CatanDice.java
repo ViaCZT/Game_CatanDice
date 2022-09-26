@@ -338,7 +338,7 @@ public class CatanDice {
 
 
     //Change the quantity of resources after action
-    public static void updateResourceState(String action, int[] resource_state) {
+    public static int[] updateResourceState(String action, int[] resource_state) {
         String behaviour = action.split(" ")[0];
         switch (behaviour) {
             case "build" -> {
@@ -377,6 +377,7 @@ public class CatanDice {
                 resource_state[target_resource] += 1;
             }
         }
+        return resource_state;
     }
 
     /**
@@ -538,6 +539,7 @@ public class CatanDice {
     public static String[] buildPlan(String target_structure,
                                      String board_state,
                                      int[] resource_state) {
+
         return null; // FIXME: Task #14
     }
 
