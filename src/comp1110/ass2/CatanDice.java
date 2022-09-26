@@ -72,12 +72,12 @@ public class CatanDice {
      * the resource state, not remove or clear the resources already
      * represented in it.
      *
-     * @param n_dice:         The number of dice to roll (>= 0).
-     * @param resource_state: The available resources that the dice
-     *                        roll will be added to.
-     *                        <p>
-     *                        This method does not return any value. It should update the given
-     *                        resource_state.
+     * @param n_dice:        The number of dice to roll (>= 0).
+     * @param resource_state The available resources that the dice
+     *                       roll will be added to.
+     *                       <p>
+     *                       This method does not return any value. It should update the given
+     *                       resource_state.
      */
     public static void rollDice(int n_dice, int[] resource_state) {
         // FIXME: Task #6
@@ -252,19 +252,20 @@ public class CatanDice {
         return false; // FIXME: Task #12
     }
 
-    public static boolean checkCanSwap(String board_state,int[] resource_state,int swap_resource,int target_resource){
+    public static boolean checkCanSwap(String board_state, int[] resource_state, int swap_resource, int target_resource) {
         String[] states = board_state.split(",");
-        ArrayList s = new ArrayList();
-        Collections.addAll(s,states);
-        String joker = "J"+ (target_resource+1);
-        return (s.contains(joker) || s.contains("J6"))&&resource_state[swap_resource]>=1;
+        List<String> stateList = new ArrayList<>();
+        Collections.addAll(stateList, states);
+        // must 1.have built the Joker of target resource && 2.have enough resource to swap.
+        String joker = "J" + (target_resource + 1);
+        return (stateList.contains(joker) || stateList.contains("J6")) && resource_state[swap_resource] >= 1;
     }
 
     /**
      * Check if a player action (build, trade or swap) is executable in the
      * given board and resource state.
      *
-     * @param action:         String representatiion of the action to check.
+     * @param action:         String representation of the action to check.
      * @param board_state:    The string representation of the board state.
      * @param resource_state: The available resources.
      * @return true iff the action is applicable, false otherwise.
@@ -272,35 +273,35 @@ public class CatanDice {
     public static boolean canDoAction(String action,
                                       String board_state,
                                       int[] resource_state) {
-        int i = 0;
-        if(isActionWellFormed(action)){
+        int flag = 0;
+        if (isActionWellFormed(action)) {
             String behaviour = action.split(" ")[0];
             switch (behaviour) {
                 case "build" -> {
                     String structure = action.split(" ")[1];
                     if (checkBuildConstraints(structure, board_state)) {
                         if (checkResources(structure, resource_state)) {
-                            i = 1;
+                            flag = 1;
                         }
                     }
                 }
                 case "trade" -> {
                     if (resource_state[5] >= 2) {
-                        i = 1;
+                        flag = 1;
                     }
                 }
                 case "swap" -> {
                     if (checkCanSwap(board_state, resource_state, Integer.parseInt(action.split(" ")[1]), Integer.parseInt(action.split(" ")[2]))) {
-                        i = 1;
+                        flag = 1;
                     }
                 }
             }
         }
 
-        return i==1; // FIXME: Task #9
+        return flag == 1; // FIXME: Task #9
     }
 
-    public static String updateBoardState(String action,String board_state){
+    public static String updateBoardState(String action, String board_state) {
         String behaviour = action.split(" ")[0];
         switch (behaviour) {
             case "build" -> board_state += ("," + action.split(" ")[1]);
@@ -329,7 +330,7 @@ public class CatanDice {
 
 
     //Change the quantity of resources after action
-    public static int[] updateResourceState(String action,int[] resource_state){
+    public static void updateResourceState(String action, int[] resource_state) {
         String behaviour = action.split(" ")[0];
         switch (behaviour) {
             case "build" -> {
@@ -368,14 +369,13 @@ public class CatanDice {
                 resource_state[target_resource] += 1;
             }
         }
-        return resource_state;
     }
 
     /**
      * Check if the specified sequence of player actions is executable
      * from the given board and resource state.
      *
-     * @param actions:        The sequence of (string representatins of) actions.
+     * @param actions:        The sequence of (string representations of) actions.
      * @param board_state:    The string representation of the board state.
      * @param resource_state: The available resources.
      * @return true iff the action sequence is executable, false otherwise.
@@ -383,19 +383,18 @@ public class CatanDice {
     public static boolean canDoSequence(String[] actions,
                                         String board_state,
                                         int[] resource_state) {
-        int[] state = new int[6];
-        System.arraycopy(resource_state, 0, state, 0, 6);
-        int n=0;
-        for(int i = 0;i<=actions.length-1;i++){
-            if(canDoAction(actions[i],board_state,state)){
-                board_state=updateBoardState(actions[i],board_state);
-                updateResourceState(actions[i], state);
-                n++;
-            }
-            else
+        int[] new_resource_state = new int[6];
+        System.arraycopy(resource_state, 0, new_resource_state, 0, 6);
+        int count = 0;
+        for (String action : actions) {
+            if (canDoAction(action, board_state, new_resource_state)) {
+                board_state = updateBoardState(action, board_state);
+                updateResourceState(action, new_resource_state);
+                count++;
+            } else
                 break;
         }
-        return n==actions.length; // FIXME: Task #11
+        return count == actions.length; // FIXME: Task #11
     }
 
     /**
@@ -425,7 +424,7 @@ public class CatanDice {
     /**
      * Generate a plan (sequence of player actions) to build the target
      * structure from the given board and resource state. The plan may
-     * include trades and swaps, as well as bulding other structures if
+     * include trades and swaps, as well as building other structures if
      * needed to reach the target structure or to satisfy the build order
      * constraints.
      * <p>
