@@ -46,7 +46,7 @@ public class CatanDice {
         String[] swap = {"1", "2", "3", "4", "5", "0"};
         String[] actionSplit = action.split(" ");
         int flag = 0;
-        if (Objects.equals(actionSplit[0], "build")) {
+        if (actionSplit[0].equals("build")) {
             if (isBoardStateWellFormed(actionSplit[1])) {
                 flag++;
             }
@@ -308,17 +308,26 @@ public class CatanDice {
                 String[] structures = board_state.split(",");
                 int resource_index = Integer.parseInt(action.split(" ")[2]);
                 String joker = "J" + (resource_index + 1);
-                for (int i = 0; i <= structures.length - 1; i++) {
-                    if (Objects.equals(structures[i], joker)) {
+                boolean no_specific_joker = true;
+                boolean have_J6 = false;
+                for (int i = 0; i < structures.length; i++) {
+                    if (structures[i].equals(joker)) {
                         structures[i] = "K" + (resource_index + 1);
+                        no_specific_joker = false;
                         break;
-                    } else if (Objects.equals(structures[i], "J6")) {
+                    } else if (structures[i].equals("J6")) {
+                        have_J6 = true;
+//                        structures[i] = "K6";
+//                        break;
+                    }
+                }
+                for (int i = 0; i < structures.length; i++) {
+                    if (structures[i].equals("J6") && no_specific_joker && have_J6) {
                         structures[i] = "K6";
-                        break;
                     }
                 }
                 StringBuilder board_stateBuilder = new StringBuilder(structures[0]);
-                for (int i = 1; i <= structures.length - 1; i++) {
+                for (int i = 1; i < structures.length; i++) {
                     board_stateBuilder.append(",").append(structures[i]);
                 }
                 board_state = board_stateBuilder.toString();
@@ -396,12 +405,12 @@ public class CatanDice {
         return count == actions.length; // FIXME: Task #11
     }
 
-    public static String[] settlementsOrder = {"S3","R0","R2","S4","R3","R5","S5","R6","R7","S7","R8","R9","S9","R10","R11","S11"};
-    public static String[] C7Path = {"R0","R1"};
-    public static String[] C12Path = {"R0","R2","R3","R4"};
-    public static String[] C20Path = {"R0","R2","R3","R5","R6","R7","R12","R13"};
-    public static String[] C30Path = {"R0","R2","R3","R5","R6","R7","R12","R13","R14","R15"};
-    public static String[] mainroad = {"R0","R2","R3","R5","R6","R7","R8","R9","R10","R11"};
+    public static String[] settlementsOrder = {"S3", "R0", "R2", "S4", "R3", "R5", "S5", "R6", "R7", "S7", "R8", "R9", "S9", "R10", "R11", "S11"};
+    public static String[] C7Path = {"R0", "R1"};
+    public static String[] C12Path = {"R0", "R2", "R3", "R4"};
+    public static String[] C20Path = {"R0", "R2", "R3", "R5", "R6", "R7", "R12", "R13"};
+    public static String[] C30Path = {"R0", "R2", "R3", "R5", "R6", "R7", "R12", "R13", "R14", "R15"};
+    public static String[] mainRoad = {"R0", "R2", "R3", "R5", "R6", "R7", "R8", "R9", "R10", "R11"};
 
     /**
      * Find the path of roads that need to be built to reach a specified
@@ -421,16 +430,16 @@ public class CatanDice {
      * @return An array of string representations of the roads along the
      * path.
      */
-    
+
 
     public static String[] pathTo(String target_structure,
                                   String board_state) {
         ArrayList path = new ArrayList();
         ArrayList board = new ArrayList();
         String[] board0 = board_state.split(",");
-        if (board_state.length()!=0){
-            for(int i =0;i<=board0.length-1;i++){
-                if(board0[i].charAt(0)=='R'){
+        if (board_state.length() != 0) {
+            for (int i = 0; i <= board0.length - 1; i++) {
+                if (board0[i].charAt(0) == 'R') {
                     board.add(board0[i]);
                 }
             }
@@ -438,67 +447,67 @@ public class CatanDice {
         char type = target_structure.charAt(0);
         switch (type) {
             case 'S' -> {
-                ArrayList settlementpath = new ArrayList();
+                ArrayList settlementPath = new ArrayList();
                 for (int n = 0; n <= 15; n++) {
-                    if (!Objects.equals(settlementsOrder[n], target_structure) && settlementsOrder[n].charAt(0) == 'R') {
-                        settlementpath.add(settlementsOrder[n]);
-                    } else if (Objects.equals(settlementsOrder[n], target_structure)) {
+                    if (!settlementsOrder[n].equals(target_structure) && settlementsOrder[n].charAt(0) == 'R') {
+                        settlementPath.add(settlementsOrder[n]);
+                    } else if (settlementsOrder[n].equals(target_structure)) {
                         break;
                     }
                 }
-                for (int s = 0; s <= settlementpath.size() - 1; s++) {
-                    if (!board.contains(settlementpath.get(s))) {
-                        path.add(settlementpath.get(s));
+                for (int s = 0; s <= settlementPath.size() - 1; s++) {
+                    if (!board.contains(settlementPath.get(s))) {
+                        path.add(settlementPath.get(s));
                     }
                 }
             }
             case 'C' -> {
-                ArrayList citypath = new ArrayList();
+                ArrayList cityPath = new ArrayList();
                 switch (target_structure) {
-                    case "C7" -> Collections.addAll(citypath, C7Path);
-                    case "C12" -> Collections.addAll(citypath, C12Path);
-                    case "C20" -> Collections.addAll(citypath, C20Path);
-                    case "C30" -> Collections.addAll(citypath, C30Path);
+                    case "C7" -> Collections.addAll(cityPath, C7Path);
+                    case "C12" -> Collections.addAll(cityPath, C12Path);
+                    case "C20" -> Collections.addAll(cityPath, C20Path);
+                    case "C30" -> Collections.addAll(cityPath, C30Path);
                 }
-                for (int s = 0; s <= citypath.size() - 1; s++) {
-                    if (!board.contains(citypath.get(s))) {
-                        path.add(citypath.get(s));
+                for (int s = 0; s <= cityPath.size() - 1; s++) {
+                    if (!board.contains(cityPath.get(s))) {
+                        path.add(cityPath.get(s));
                     }
                 }
             }
             case 'R' -> {
-                ArrayList roadpath = new ArrayList();
+                ArrayList roadPath = new ArrayList();
                 switch (target_structure) {
-                    case "R1" -> Collections.addAll(roadpath, C7Path);
-                    case "R4" -> Collections.addAll(roadpath, C12Path);
+                    case "R1" -> Collections.addAll(roadPath, C7Path);
+                    case "R4" -> Collections.addAll(roadPath, C12Path);
                     case "R12", "R13", "R14", "R15" -> {
                         for (int i = 0; i <= 10; i++) {
-                            if (!Objects.equals(C30Path[i], target_structure)) {
-                                roadpath.add(C30Path[i]);
+                            if (!C30Path[i].equals(target_structure)) {
+                                roadPath.add(C30Path[i]);
                             } else
                                 break;
                         }
                     }
                     default -> {
                         for (int i = 0; i <= 10; i++) {
-                            if (!Objects.equals(mainroad[i], target_structure)) {
-                                roadpath.add(mainroad[i]);
+                            if (!mainRoad[i].equals(target_structure)) {
+                                roadPath.add(mainRoad[i]);
                             } else
                                 break;
                         }
                     }
                 }
-                for (int s = 0; s <= roadpath.size() - 1; s++) {
-                    if (!board.contains(roadpath.get(s)) && roadpath.get(s) != target_structure) {
-                        path.add(roadpath.get(s));
+                for (int s = 0; s <= roadPath.size() - 1; s++) {
+                    if (!board.contains(roadPath.get(s)) && roadPath.get(s) != target_structure) {
+                        path.add(roadPath.get(s));
                     }
                 }
             }
         }
-        
+
         String[] result = new String[path.size()];
-        for(int i0 = 0;i0<=path.size()-1;i0++){
-            result[i0]= (String) path.get(i0);
+        for (int i0 = 0; i0 <= path.size() - 1; i0++) {
+            result[i0] = (String) path.get(i0);
         }
         return result; // FIXME: Task #13
     }
