@@ -70,8 +70,8 @@ public class TestUpdateResourceState {
         TestUpdateResourceState tests = new TestUpdateResourceState();
         System.out.println("testing...");
         tests.testbuild();
-        tests.testtrade();
         tests.testswap();
+        tests.testtrade();
         System.out.println("all done!");
     }
 }
