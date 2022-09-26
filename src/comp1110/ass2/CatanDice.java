@@ -386,19 +386,20 @@ public class CatanDice {
     public static boolean canDoSequence(String[] actions,
                                         String board_state,
                                         int[] resource_state) {
-        int[] state = resource_state;
+        int[] state = new int[6];
+        for(int k =0;k<=5;k++){
+            state[k] = resource_state[k];
+        }
         int n=0;
         for(int i = 0;i<=actions.length-1;i++){
             if(canDoAction(actions[i],board_state,state)){
                 board_state=updateBoardState(actions[i],board_state);
-                System.out.println(board_state);
                 state=updateResourceState(actions[i], state);
                 n++;
             }
             else
                 break;
         }
-        System.out.println("kk");
         return n==actions.length; // FIXME: Task #11
     }
 
