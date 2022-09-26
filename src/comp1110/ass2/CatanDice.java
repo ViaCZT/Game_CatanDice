@@ -248,7 +248,6 @@ public class CatanDice {
     public static boolean checkResourcesWithTradeAndSwap(String structure,
                                                          String board_state,
                                                          int[] resource_state) {
-
         return false; // FIXME: Task #12
     }
 
@@ -397,6 +396,13 @@ public class CatanDice {
         return count == actions.length; // FIXME: Task #11
     }
 
+    public static String[] settlementsOrder = {"S3","R0","R2","S4","R3","R5","S5","R6","R7","S7","R8","R9","S9","R10","R11","S11"};
+    public static String[] C7Path = {"R0","R1"};
+    public static String[] C12Path = {"R0","R2","R3","R4"};
+    public static String[] C20Path = {"R0","R2","R3","R5","R6","R7","R12","R13"};
+    public static String[] C30Path = {"R0","R2","R3","R5","R6","R7","R12","R13","R14","R15"};
+    public static String[] mainroad = {"R0","R2","R3","R5","R6","R7","R8","R9","R10","R11"};
+
     /**
      * Find the path of roads that need to be built to reach a specified
      * (unbuilt) structure in the current board state. The roads should
@@ -415,9 +421,85 @@ public class CatanDice {
      * @return An array of string representations of the roads along the
      * path.
      */
+    
+
     public static String[] pathTo(String target_structure,
                                   String board_state) {
-        String[] result = {};
+        ArrayList path = new ArrayList();
+        ArrayList board = new ArrayList();
+        String[] board0 = board_state.split(",");
+        if (board_state.length()!=0){
+            for(int i =0;i<=board0.length-1;i++){
+                if(board0[i].charAt(0)=='R'){
+                    board.add(board0[i]);
+                }
+            }
+        }
+        char type = target_structure.charAt(0);
+        switch (type) {
+            case 'S' -> {
+                ArrayList settlementpath = new ArrayList();
+                for (int n = 0; n <= 15; n++) {
+                    if (!Objects.equals(settlementsOrder[n], target_structure) && settlementsOrder[n].charAt(0) == 'R') {
+                        settlementpath.add(settlementsOrder[n]);
+                    } else if (Objects.equals(settlementsOrder[n], target_structure)) {
+                        break;
+                    }
+                }
+                for (int s = 0; s <= settlementpath.size() - 1; s++) {
+                    if (!board.contains(settlementpath.get(s))) {
+                        path.add(settlementpath.get(s));
+                    }
+                }
+            }
+            case 'C' -> {
+                ArrayList citypath = new ArrayList();
+                switch (target_structure) {
+                    case "C7" -> Collections.addAll(citypath, C7Path);
+                    case "C12" -> Collections.addAll(citypath, C12Path);
+                    case "C20" -> Collections.addAll(citypath, C20Path);
+                    case "C30" -> Collections.addAll(citypath, C30Path);
+                }
+                for (int s = 0; s <= citypath.size() - 1; s++) {
+                    if (!board.contains(citypath.get(s))) {
+                        path.add(citypath.get(s));
+                    }
+                }
+            }
+            case 'R' -> {
+                ArrayList roadpath = new ArrayList();
+                switch (target_structure) {
+                    case "R1" -> Collections.addAll(roadpath, C7Path);
+                    case "R4" -> Collections.addAll(roadpath, C12Path);
+                    case "R12", "R13", "R14", "R15" -> {
+                        for (int i = 0; i <= 10; i++) {
+                            if (!Objects.equals(C30Path[i], target_structure)) {
+                                roadpath.add(C30Path[i]);
+                            } else
+                                break;
+                        }
+                    }
+                    default -> {
+                        for (int i = 0; i <= 10; i++) {
+                            if (!Objects.equals(mainroad[i], target_structure)) {
+                                roadpath.add(mainroad[i]);
+                            } else
+                                break;
+                        }
+                    }
+                }
+                for (int s = 0; s <= roadpath.size() - 1; s++) {
+                    if (!board.contains(roadpath.get(s)) && roadpath.get(s) != target_structure) {
+                        path.add(roadpath.get(s));
+                    }
+                }
+            }
+        }
+        
+        String[] result = new String[path.size()];
+        for(int i0 = 0;i0<=path.size()-1;i0++){
+            result[i0]= (String) path.get(i0);
+        }
         return result; // FIXME: Task #13
     }
 
