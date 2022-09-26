@@ -248,6 +248,7 @@ public class CatanDice {
     public static boolean checkResourcesWithTradeAndSwap(String structure,
                                                          String board_state,
                                                          int[] resource_state) {
+
         return false; // FIXME: Task #12
     }
 
@@ -329,49 +330,45 @@ public class CatanDice {
 
     //Change the quantity of resources after action
     public static int[] updateResourceState(String action,int[] resource_state){
-        int[] state = resource_state;
         String behaviour = action.split(" ")[0];
-        switch (behaviour){
-            case "build":{
+        switch (behaviour) {
+            case "build" -> {
                 char structure = action.split(" ")[1].charAt(0);
                 switch (structure) {
                     case 'R' -> {
-                        state[3] -= 1;
-                        state[4] -= 1;
+                        resource_state[3] -= 1;
+                        resource_state[4] -= 1;
                     }
                     case 'S' -> {
-                        state[1] -= 1;
-                        state[2] -= 1;
-                        state[3] -= 1;
-                        state[4] -= 1;
+                        resource_state[1] -= 1;
+                        resource_state[2] -= 1;
+                        resource_state[3] -= 1;
+                        resource_state[4] -= 1;
                     }
                     case 'C' -> {
-                        state[0] -= 3;
-                        state[1] -= 2;
+                        resource_state[0] -= 3;
+                        resource_state[1] -= 2;
                     }
                     case 'J' -> {
-                        state[0] -= 1;
-                        state[1] -= 1;
-                        state[2] -= 1;
+                        resource_state[0] -= 1;
+                        resource_state[1] -= 1;
+                        resource_state[2] -= 1;
                     }
                 }
-                break;
             }
-            case "trade":{
+            case "trade" -> {
                 int target_resource = Integer.parseInt(action.split(" ")[1]);
-                state[5]-=2;
-                state[target_resource]++;
-                break;
+                resource_state[5] -= 2;
+                resource_state[target_resource]++;
             }
-            case "swap":{
+            case "swap" -> {
                 int swap_resource = Integer.parseInt(action.split(" ")[1]);
                 int target_resource = Integer.parseInt(action.split(" ")[2]);
-                state[swap_resource]-=1;
-                state[target_resource]+=1;
-                break;
+                resource_state[swap_resource] -= 1;
+                resource_state[target_resource] += 1;
             }
         }
-        return state;
+        return resource_state;
     }
 
     /**
@@ -387,14 +384,12 @@ public class CatanDice {
                                         String board_state,
                                         int[] resource_state) {
         int[] state = new int[6];
-        for(int k =0;k<=5;k++){
-            state[k] = resource_state[k];
-        }
+        System.arraycopy(resource_state, 0, state, 0, 6);
         int n=0;
         for(int i = 0;i<=actions.length-1;i++){
             if(canDoAction(actions[i],board_state,state)){
                 board_state=updateBoardState(actions[i],board_state);
-                state=updateResourceState(actions[i], state);
+                updateResourceState(actions[i], state);
                 n++;
             }
             else
