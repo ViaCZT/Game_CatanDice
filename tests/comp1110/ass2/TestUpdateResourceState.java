@@ -21,11 +21,9 @@ public class TestUpdateResourceState {
         assertEquals(toString(expected), toString(out), errorPrefix);
     }
 
-
-
-    static String builds[] = {"build R2", "build S5", "build C30", "build J2"};
-    static String swaps[] = {"swap 2 0", "swap 1 4", "swap 3 1"};
-    static String trades[] = {"trade 2", "trade 3"};
+    static String[] builds = {"build R2", "build S5", "build C30", "build J2"};
+    static String[] swaps = {"swap 2 0", "swap 1 4", "swap 3 1"};
+    static String[] trades = {"trade 2", "trade 3"};
 
     private final static int[][] resources = {
             {0, 0, 1, 1, 1, 3},
@@ -55,19 +53,18 @@ public class TestUpdateResourceState {
             test(resources[i], builds[i], buildexpected[i]);
         }
     }
-
+    @Test
     public void testswap() {
         for (int i = 0; i <= 2; i++) {
             test(resources[i], swaps[i], swapexpected[i]);
         }
     }
-
+    @Test
     public void testtrade() {
         for (int i = 0; i <= 1; i++) {
             test(resources[i], trades[i], tradeexpected[i]);
         }
     }
-
 
     public static void main(String[] args) {
         TestUpdateResourceState tests = new TestUpdateResourceState();
