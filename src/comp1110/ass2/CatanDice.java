@@ -251,13 +251,15 @@ public class CatanDice {
         return false; // FIXME: Task #12
     }
 
-    public static boolean checkCanSwap(String board_state, int[] resource_state, int swap_resource, int target_resource) {
+    public static boolean checkCanSwap(String board_state, int[] resource_state,
+                                       int swap_resource, int target_resource) {
         String[] states = board_state.split(",");
         List<String> stateList = new ArrayList<>();
         Collections.addAll(stateList, states);
         // must 1.have built the Joker of target resource && 2.have enough resource to swap.
         String joker = "J" + (target_resource + 1);
-        return (stateList.contains(joker) || stateList.contains("J6")) && resource_state[swap_resource] >= 1;
+        return (stateList.contains(joker) || stateList.contains("J6")) &&
+                resource_state[swap_resource] >= 1;
     }
 
     /**
@@ -272,32 +274,33 @@ public class CatanDice {
     public static boolean canDoAction(String action,
                                       String board_state,
                                       int[] resource_state) {
-        int flag = 0;
+        // FIXME: Task #9
         if (isActionWellFormed(action)) {
-            String behaviour = action.split(" ")[0];
+            String behaviour = action.split(" ")[0]; // is "build", "trade", or "swap"
             switch (behaviour) {
                 case "build" -> {
-                    String structure = action.split(" ")[1];
+                    String structure = action.split(" ")[1]; //what to be built
                     if (checkBuildConstraints(structure, board_state)) {
                         if (checkResources(structure, resource_state)) {
-                            flag = 1;
+                            return true;
                         }
                     }
                 }
                 case "trade" -> {
                     if (resource_state[5] >= 2) {
-                        flag = 1;
+                        return true;
                     }
                 }
                 case "swap" -> {
-                    if (checkCanSwap(board_state, resource_state, Integer.parseInt(action.split(" ")[1]), Integer.parseInt(action.split(" ")[2]))) {
-                        flag = 1;
+                    int swap_resource = Integer.parseInt(action.split(" ")[1]);
+                    int target_resource = Integer.parseInt(action.split(" ")[2]);
+                    if (checkCanSwap(board_state, resource_state, swap_resource, target_resource)) {
+                        return true;
                     }
                 }
             }
         }
-
-        return flag == 1; // FIXME: Task #9
+        return false;
     }
 
     public static String updateBoardState(String action, String board_state) {
