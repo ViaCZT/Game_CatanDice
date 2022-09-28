@@ -45,22 +45,15 @@ public class CatanDice {
         String[] trade = {"1", "2", "3", "4", "0"};
         String[] swap = {"1", "2", "3", "4", "5", "0"};
         String[] actionSplit = action.split(" ");
-        int flag = 0;
         if (actionSplit[0].equals("build")) {
-            if (isBoardStateWellFormed(actionSplit[1])) {
-                flag++;
-            }
+            return isBoardStateWellFormed(actionSplit[1]);
         } else if (actionSplit[0].equals("trade") && actionSplit.length == 2) {
-            if (Arrays.asList(trade).contains(actionSplit[1])) {
-                flag++;
-            }
+            return Arrays.asList(trade).contains(actionSplit[1]);
         } else if (actionSplit[0].equals("swap") && actionSplit.length == 3) {
-            if (Arrays.asList(swap).contains(actionSplit[1]) &&
-                    Arrays.asList(swap).contains(actionSplit[2])) {
-                flag++;
-            }
+            return Arrays.asList(swap).contains(actionSplit[1]) &&
+                    Arrays.asList(swap).contains(actionSplit[2]);
         }
-        return flag == 1;
+        return false;
     }
 
     /**
@@ -117,63 +110,52 @@ public class CatanDice {
         List<String> jList = new ArrayList<>(Arrays.asList(Jokers));
         List<String> kList = new ArrayList<>(Arrays.asList(Knights));
 
-        int flag = 0;
         if (rList.contains(structure)) {
             switch (structure) {
-                case "R0":
-                    flag++;
-                    break;
-                case "R2":
+                case "R0" -> {
+                    return true;
+                }
+                case "R2" -> {
                     if (boardStateList.contains("R0")) {
-                        flag++;
+                        return true;
                     }
-                    break;
-                case "R5":
+                }
+                case "R5" -> {
                     if (boardStateList.contains("R3")) {
-                        flag++;
+                        return true;
                     }
-                    break;
-                case "R12":
+                }
+                case "R12" -> {
                     if (boardStateList.contains("R7")) {
-                        flag++;
+                        return true;
                     }
-                    break;
-                default:
+                }
+                default -> {
                     if (boardStateList.contains(rList.get(rList.indexOf(structure) - 1))) {
-                        flag++;
+                        return true;
                     }
-                    break;
+                }
             }
         } else if (sList.contains(structure)) {
             if (!structure.equals("S3")) {
-                if (boardStateList.contains(sList.get(sList.indexOf(structure) - 1)) && boardStateList.contains(getRoad(structure))) {
-                    flag++;
-                }
+                return boardStateList.contains(sList.get(sList.indexOf(structure) - 1)) && boardStateList.contains(getRoad(structure));
             } else {
-                if (boardStateList.contains(getRoad(structure))) {
-                    flag++;
-                }
+                return boardStateList.contains(getRoad(structure));
             }
         } else if (cList.contains(structure)) {
             if (!structure.equals("C7")) {
-                if (boardStateList.contains(cList.get(cList.indexOf(structure) - 1)) && boardStateList.contains(getRoad(structure))) {
-                    flag++;
-                }
+                return boardStateList.contains(cList.get(cList.indexOf(structure) - 1)) && boardStateList.contains(getRoad(structure));
             } else {
-                if (boardStateList.contains(getRoad(structure))) {
-                    flag++;
-                }
+                return boardStateList.contains(getRoad(structure));
             }
         } else if (jList.contains(structure)) {
             if (structure.equals("J1")) {
-                flag++;
+                return true;
             } else {
-                if (boardStateList.contains(jList.get(jList.indexOf(structure) - 1)) || boardStateList.contains(kList.get(jList.indexOf(structure) - 1))) {
-                    flag++;
-                }
+                return boardStateList.contains(jList.get(jList.indexOf(structure) - 1)) || boardStateList.contains(kList.get(jList.indexOf(structure) - 1));
             }
         }
-        return flag == 1;
+        return false;
     }
 
     public static String getRoad(String structure) {
@@ -208,28 +190,27 @@ public class CatanDice {
         // FIXME: Task #7
         // cannot build K(Knight)
         char type = structure.charAt(0);
-        int flag = 0;
         switch (type) {
             case 'R' -> {
                 if ((resource_state[3] >= 1 && resource_state[4] >= 1))
-                    flag++;
+                    return true;
             }
             case 'S' -> {
                 if (resource_state[4] >= 1 && resource_state[1] >= 1
                         && resource_state[2] >= 1 && resource_state[3] >= 1)
-                    flag++;
+                    return true;
             }
             case 'C' -> {
                 if (resource_state[0] >= 3 && resource_state[1] >= 2)
-                    flag++;
+                    return true;
             }
             case 'J' -> {
                 if (resource_state[0] >= 1 && resource_state[1] >= 1 && resource_state[2] >= 1)
-                    flag++;
+                    return true;
             }
             default -> throw new IllegalStateException("Unexpected value: " + type);
         }
-        return flag == 1;
+        return false;
     }
 
     /**
@@ -248,7 +229,9 @@ public class CatanDice {
     public static boolean checkResourcesWithTradeAndSwap(String structure,
                                                          String board_state,
                                                          int[] resource_state) {
-        return false; // FIXME: Task #12
+        // FIXME: Task #12
+
+        return false;
     }
 
     public static boolean checkCanSwap(String board_state, int[] resource_state,
