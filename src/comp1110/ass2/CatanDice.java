@@ -213,6 +213,7 @@ public class CatanDice {
         return false;
     }
 
+
     /**
      * Check if the available resources are sufficient to build the
      * specified structure, considering also trades and/or swaps.
@@ -229,9 +230,39 @@ public class CatanDice {
     public static boolean checkResourcesWithTradeAndSwap(String structure,
                                                          String board_state,
                                                          int[] resource_state) {
+        int[] new_resource_state = new int[6];
+        System.arraycopy(resource_state,0,new_resource_state,0,0);
+        if(checkBuildConstraints(structure,board_state)){
+
+            if (checkResources(structure,resource_state)==false){
+                new_resource_state = updateResourceState("build "+structure,resource_state);
+                for(int i =0;i<=5;i++){
+                    if (new_resource_state[i]<0){
+                        for (int j = 0;j<=5;j++){
+                            if (checkCanSwap(board_state,new_resource_state,j,i)){
+                                new_resource_state = updateResourceState("swap "+ j + " " + i,new_resource_state);
+                            }
+                        }
+                        if(new_resource_state[5]>=2){
+                            new_resource_state=updateResourceState("trade " +i,new_resource_state);
+                        }
+                    }
+
+                }
+
+            }
+        }
+        else
+            return true;
+        for(int i =0;i<=5;i++){
+            if(new_resource_state[i]<0)
+                return false;
+        }
+        return true;
+
         // FIXME: Task #12
 
-        return false;
+
     }
 
     public static boolean checkCanSwap(String board_state, int[] resource_state,
@@ -303,8 +334,6 @@ public class CatanDice {
                         break;
                     } else if (structures[i].equals("J6")) {
                         have_J6 = true;
-//                        structures[i] = "K6";
-//                        break;
                     }
                 }
                 for (int i = 0; i < structures.length; i++) {
@@ -421,8 +450,8 @@ public class CatanDice {
 
     public static String[] pathTo(String target_structure,
                                   String board_state) {
-        ArrayList path = new ArrayList();
-        ArrayList board = new ArrayList();
+        List<String> path = new ArrayList<>();
+        List<String> board = new ArrayList<>();
         String[] board0 = board_state.split(",");
         if (board_state.length() != 0) {
             for (int i = 0; i <= board0.length - 1; i++) {
@@ -434,7 +463,7 @@ public class CatanDice {
         char type = target_structure.charAt(0);
         switch (type) {
             case 'S' -> {
-                ArrayList settlementPath = new ArrayList();
+                List<String> settlementPath = new ArrayList<>();
                 for (int n = 0; n <= 15; n++) {
                     if (!settlementsOrder[n].equals(target_structure) && settlementsOrder[n].charAt(0) == 'R') {
                         settlementPath.add(settlementsOrder[n]);
@@ -449,7 +478,7 @@ public class CatanDice {
                 }
             }
             case 'C' -> {
-                ArrayList cityPath = new ArrayList();
+                List<String> cityPath = new ArrayList<>();
                 switch (target_structure) {
                     case "C7" -> Collections.addAll(cityPath, C7Path);
                     case "C12" -> Collections.addAll(cityPath, C12Path);
@@ -463,7 +492,7 @@ public class CatanDice {
                 }
             }
             case 'R' -> {
-                ArrayList roadPath = new ArrayList();
+                List<String> roadPath = new ArrayList<>();
                 switch (target_structure) {
                     case "R1" -> Collections.addAll(roadPath, C7Path);
                     case "R4" -> Collections.addAll(roadPath, C12Path);
@@ -485,7 +514,7 @@ public class CatanDice {
                     }
                 }
                 for (int s = 0; s <= roadPath.size() - 1; s++) {
-                    if (!board.contains(roadPath.get(s)) && roadPath.get(s) != target_structure) {
+                    if (!board.contains(roadPath.get(s)) && !roadPath.get(s).equals(target_structure)) {
                         path.add(roadPath.get(s));
                     }
                 }
@@ -494,7 +523,7 @@ public class CatanDice {
 
         String[] result = new String[path.size()];
         for (int i0 = 0; i0 <= path.size() - 1; i0++) {
-            result[i0] = (String) path.get(i0);
+            result[i0] = path.get(i0);
         }
         return result; // FIXME: Task #13
     }
