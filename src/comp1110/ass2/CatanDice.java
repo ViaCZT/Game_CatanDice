@@ -16,6 +16,7 @@ public class CatanDice {
      */
     public static boolean isBoardStateWellFormed(String board_state) {
         // FIXME: Task #3
+/*
         String[] s = {"", "R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15",
                 "S3", "S4", "S5", "S7", "S9", "S11",
                 "C7", "C12", "C20", "C30",
@@ -29,8 +30,16 @@ public class CatanDice {
             }
         }
         return flag == boardStateSplit.length;
-
-
+*/
+        Board myBoard = new Board(board_state);
+        int flag = 0;
+        String[] moveArray = myBoard.getMove();
+        for (String move : moveArray) {
+            if (myBoard.getAllElements().contains(move)) {
+                flag++;
+            }
+        }
+        return flag == moveArray.length;
     }
 
     /**
@@ -42,6 +51,7 @@ public class CatanDice {
      */
     public static boolean isActionWellFormed(String action) {
         // FIXME: Task #4
+/*
         String[] trade = {"1", "2", "3", "4", "0"};
         String[] swap = {"1", "2", "3", "4", "5", "0"};
         String[] actionSplit = action.split(" ");
@@ -52,6 +62,19 @@ public class CatanDice {
         } else if (actionSplit[0].equals("swap") && actionSplit.length == 3) {
             return Arrays.asList(swap).contains(actionSplit[1]) &&
                     Arrays.asList(swap).contains(actionSplit[2]);
+        }
+        return false;
+*/
+        Player myPlayer = new Player();
+        String actionType = myPlayer.getActionType(action);
+        String[] actionSplit = action.split(" ");
+        if (actionType.equals("build")) {
+            return isBoardStateWellFormed(actionSplit[1]);
+        } else if (actionType.equals("trade") && actionSplit.length == 2) {
+            return myPlayer.getTradeResource().contains(actionSplit[1]);
+        } else if (actionType.equals("swap") && actionSplit.length == 3) {
+            return myPlayer.getSwapResource().contains(actionSplit[1]) &&
+                    myPlayer.getSwapResource().contains(actionSplit[2]);
         }
         return false;
     }
@@ -96,6 +119,7 @@ public class CatanDice {
      */
     public static boolean checkBuildConstraints(String structure, String board_state) {
         // FIXME: Task #8
+/*
         String[] Roads = {"R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15"};
         String[] Settlements = {"S3", "S4", "S5", "S7", "S9", "S11"};
         String[] Cities = {"C7", "C12", "C20", "C30"};
@@ -156,6 +180,62 @@ public class CatanDice {
             }
         }
         return false;
+*/
+
+        List<String> myBoardState = new Board(board_state).getBoardState();
+        Structure myStructure = new Structure();
+        List<String> rList = myStructure.getAllRoads();
+        List<String> sList = myStructure.getAllSettles();
+        List<String> cList = myStructure.getAllCities();
+        List<String> jList = myStructure.getAllJokers();
+        List<String> kList = myStructure.getAllKnights();
+
+        if (rList.contains(structure)) {
+            switch (structure) {
+                case "R0" -> {
+                    return true;
+                }
+                case "R2" -> {
+                    if (myBoardState.contains("R0")) {
+                        return true;
+                    }
+                }
+                case "R5" -> {
+                    if (myBoardState.contains("R3")) {
+                        return true;
+                    }
+                }
+                case "R12" -> {
+                    if (myBoardState.contains("R7")) {
+                        return true;
+                    }
+                }
+                default -> {
+                    if (myBoardState.contains(rList.get(rList.indexOf(structure) - 1))) {
+                        return true;
+                    }
+                }
+            }
+        } else if (sList.contains(structure)) {
+            if (!structure.equals("S3")) {
+                return myBoardState.contains(sList.get(sList.indexOf(structure) - 1)) && myBoardState.contains(getRoad(structure));
+            } else {
+                return myBoardState.contains(getRoad(structure));
+            }
+        } else if (cList.contains(structure)) {
+            if (!structure.equals("C7")) {
+                return myBoardState.contains(cList.get(cList.indexOf(structure) - 1)) && myBoardState.contains(getRoad(structure));
+            } else {
+                return myBoardState.contains(getRoad(structure));
+            }
+        } else if (jList.contains(structure)) {
+            if (structure.equals("J1")) {
+                return true;
+            } else {
+                return myBoardState.contains(jList.get(jList.indexOf(structure) - 1)) || myBoardState.contains(kList.get(jList.indexOf(structure) - 1));
+            }
+        }
+        return false;
     }
 
     public static String getRoad(String structure) {
@@ -189,6 +269,7 @@ public class CatanDice {
     public static boolean checkResources(String structure, int[] resource_state) {
         // FIXME: Task #7
         // cannot build K(Knight)
+/*
         char type = structure.charAt(0);
         switch (type) {
             case 'R' -> {
@@ -206,6 +287,31 @@ public class CatanDice {
             }
             case 'J' -> {
                 if (resource_state[0] >= 1 && resource_state[1] >= 1 && resource_state[2] >= 1)
+                    return true;
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + type);
+        }
+        return false;
+*/
+
+        char type = structure.charAt(0);
+        Resource myResource = new Resource(resource_state);
+        switch (type) {
+            case 'R' -> {
+                if ((myResource.timber >= 1 && myResource.bricks >= 1))
+                    return true;
+            }
+            case 'S' -> {
+                if (myResource.bricks >= 1 && myResource.timber >= 1
+                        && myResource.wool >= 1 && myResource.grain >= 1)
+                    return true;
+            }
+            case 'C' -> {
+                if (myResource.ore >= 3 && myResource.grain >= 2)
+                    return true;
+            }
+            case 'J' -> {
+                if (myResource.ore >= 1 && myResource.wool >= 1 && myResource.grain >= 1)
                     return true;
             }
             default -> throw new IllegalStateException("Unexpected value: " + type);
