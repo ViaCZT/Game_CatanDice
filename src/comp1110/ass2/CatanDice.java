@@ -31,15 +31,18 @@ public class CatanDice {
         }
         return flag == boardStateSplit.length;
 */
+        if (board_state.equals(""))
+            return true;
         Board myBoard = new Board(board_state);
+        String[] structures = myBoard.getStructure();
+        Structure myStruct = new Structure();
         int flag = 0;
-        String[] moveArray = myBoard.getMove();
-        for (String move : moveArray) {
-            if (myBoard.getAllElements().contains(move)) {
+        for (String structure : structures) {
+            if (myStruct.getAllStructures().contains(structure)) {
                 flag++;
             }
         }
-        return flag == moveArray.length;
+        return flag == structures.length;
     }
 
     /**
@@ -182,7 +185,7 @@ public class CatanDice {
         return false;
 */
 
-        List<String> myBoardState = new Board(board_state).getBoardState();
+        List<String> myBoardState = Arrays.asList(new Board(board_state).getStructure());
         Structure myStructure = new Structure();
         List<String> rList = myStructure.getAllRoads();
         List<String> sList = myStructure.getAllSettles();
@@ -337,29 +340,28 @@ public class CatanDice {
                                                          String board_state,
                                                          int[] resource_state) {
         int[] new_resource_state = new int[6];
-        System.arraycopy(resource_state,0,new_resource_state,0,0);
-        if(checkBuildConstraints(structure,board_state)){
+        System.arraycopy(resource_state, 0, new_resource_state, 0, 0);
+        if (checkBuildConstraints(structure, board_state)) {
 
-            if (checkResources(structure,resource_state)==false){
-                new_resource_state = updateResourceState("build "+structure,resource_state);
-                for(int i =0;i<=5;i++){
-                    if (new_resource_state[i]<0){
-                        for (int j = 0;j<=5;j++){
-                            if (checkCanSwap(board_state,new_resource_state,j,i)){
-                                new_resource_state = updateResourceState("swap "+ j + " " + i,new_resource_state);
+            if (!checkResources(structure, resource_state)) {
+                new_resource_state = updateResourceState("build " + structure, resource_state);
+                for (int i = 0; i <= 5; i++) {
+                    if (new_resource_state[i] < 0) {
+                        for (int j = 0; j <= 5; j++) {
+                            if (checkCanSwap(board_state, new_resource_state, j, i)) {
+                                new_resource_state = updateResourceState("swap " + j + " " + i, new_resource_state);
                             }
                         }
-                        if(new_resource_state[5]>=2){
-                            new_resource_state=updateResourceState("trade " +i,new_resource_state);
+                        if (new_resource_state[5] >= 2) {
+                            new_resource_state = updateResourceState("trade " + i, new_resource_state);
                         }
                     }
                 }
             }
-        }
-        else
+        } else
             return true;
-        for(int i =0;i<=5;i++){
-            if(new_resource_state[i]<0)
+        for (int i = 0; i <= 5; i++) {
+            if (new_resource_state[i] < 0)
                 return false;
         }
         return true;

@@ -1,23 +1,30 @@
 package comp1110.ass2;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+/**
+ * Author: Zetian Chen   uid: u7564812
+ * <p>
+ * The board for each player.
+ */
 public class Board {
-    //The string representation of the board state.
-    //looks like "R1,S4,R4,C7"
     private final String board_state;
+    //The string representation of the board state, eg."R1,S4,R4,C7"
 
     public Board(String board_state) {
         this.board_state = board_state;
     }
 
-    public String[] getMove() {
+    /**
+     * To get all the structures that have built by now.
+     *
+     * @return: an array containing all the structures that have built by now.
+     */
+    public String[] getStructure() {
         return board_state.split(",");
     }
 
-    public List<String> getAllElements() {
+
+/*
+    public List<String> getAllStructures() {
         String[] s = {"", "R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15",
                 "S3", "S4", "S5", "S7", "S9", "S11",
                 "C7", "C12", "C20", "C30",
@@ -25,9 +32,6 @@ public class Board {
                 "K1", "K2", "K3", "K4", "K5", "K6"};
         return Arrays.asList(s);
     }
-
-    public List<String> getBoardState() {
-        return new ArrayList<>(Arrays.asList(getMove()));
-    }
+*/
 
 }

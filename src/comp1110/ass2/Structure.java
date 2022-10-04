@@ -1,8 +1,15 @@
 package comp1110.ass2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Author: Zetian Chen   uid: u7564812
+ * <p>
+ * record all the structures in the game.
+ * There are 5 categories: Roads, Settlements(Settles), Cities, Jokers, Knights.
+ */
 public class Structure {
     public Structure() {
     }
@@ -30,5 +37,15 @@ public class Structure {
     public List<String> getAllKnights() {
         String[] Knights = {"K1", "K2", "K3", "K4", "K5", "K6"};
         return Arrays.asList(Knights);
+    }
+
+    public List<String> getAllStructures() {
+        List<String> allStructures = new ArrayList<>();
+        allStructures.addAll(getAllRoads());
+        allStructures.addAll(getAllCities());
+        allStructures.addAll(getAllSettles());
+        allStructures.addAll(getAllJokers());
+        allStructures.addAll(getAllKnights());
+        return allStructures;
     }
 }
