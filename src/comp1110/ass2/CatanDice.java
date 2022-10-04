@@ -353,9 +353,7 @@ public class CatanDice {
                             new_resource_state=updateResourceState("trade " +i,new_resource_state);
                         }
                     }
-
                 }
-
             }
         }
         else
