@@ -1,8 +1,13 @@
 package comp1110.ass2.gui;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Game extends Application {
@@ -17,4 +22,9 @@ public class Game extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+
+
+
+
 }
