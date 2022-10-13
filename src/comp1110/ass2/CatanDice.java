@@ -353,28 +353,30 @@ public class CatanDice {
                                                          String board_state,
                                                          int[] resource_state) {
         int[] new_resource_state = new int[6];
-        System.arraycopy(resource_state, 0, new_resource_state, 0, 0);
-        if (checkBuildConstraints(structure, board_state)) {
-
-            if (!checkResources(structure, resource_state)) {
-                new_resource_state = updateResourceState("build " + structure, resource_state);
-                for (int i = 0; i <= 5; i++) {
-                    if (new_resource_state[i] < 0) {
-                        for (int j = 0; j <= 5; j++) {
-                            if (checkCanSwap(board_state, new_resource_state, j, i)) {
-                                new_resource_state = updateResourceState("swap " + j + " " + i, new_resource_state);
-                            }
+        System.arraycopy(resource_state,0,new_resource_state,0,6);
+        if(checkBuildConstraints(structure,board_state)){
+            if (checkResources(structure,resource_state)==false){
+                new_resource_state = updateResourceState("build "+structure,resource_state);//Let's minus the resources first, which resource amount less than 0 is the target resource.
+                for(int i =0;i<=5;i++){
+                    if (new_resource_state[i]<0){
+                        // If can trade, use trade first
+                        if(new_resource_state[5]>=2){//Check if trade can replenish the resource
+                            new_resource_state=updateResourceState("trade " +i,new_resource_state);
                         }
-                        if (new_resource_state[5] >= 2) {
-                            new_resource_state = updateResourceState("trade " + i, new_resource_state);
+                        for (int j = 0;j<=5;j++){
+                            if (checkCanSwap(board_state,new_resource_state,j,i)){ //Check if swap can replenish the resource
+                                new_resource_state = updateResourceState("swap "+ j + " " + i,new_resource_state);
+                                board_state=updateBoardState("swap "+ j + " " + i,board_state);
+                            }
                         }
                     }
                 }
             }
-        } else
+        }
+        else
             return true;
-        for (int i = 0; i <= 5; i++) {
-            if (new_resource_state[i] < 0)
+        for(int i =0;i<=5;i++){
+            if(new_resource_state[i]<0)
                 return false;
         }
         return true;
@@ -402,8 +404,7 @@ public class CatanDice {
         Collections.addAll(stateList, states);
         // must 1.have built the Joker of target resource && 2.have enough resource to swap.
         String joker = "J" + (target_resource + 1);
-        return (stateList.contains(joker) || stateList.contains("J6")) &&
-                resource_state[swap_resource] >= 1;
+        return (stateList.contains(joker) || stateList.contains("J6")) && resource_state[swap_resource] >= 1;
     }
 
     /**
@@ -697,8 +698,9 @@ public class CatanDice {
     public static String[] buildPlan(String target_structure,
                                      String board_state,
                                      int[] resource_state) {
+        String[] path =pathTo(target_structure,board_state);
 
-        return null; // FIXME: Task #14
+        return new String[]{}; // FIXME: Task #14
     }
 
 }
