@@ -1,11 +1,11 @@
 package comp1110.ass2;
 
 /**
- * Author: Zetian Chen   uid: u7564812
- * <p>
  * The available resources that the dice roll will be added to:
  * 6 elements in total, each element is one of 0-5.
  * e.g. {0,1,2,3,4,5} represent {Ore, Grain, Wool, Timber, Bricks, Gold}
+ *
+ * @author Zetian Chen   uid: u7564812
  */
 public class Resource {
     public int ore;

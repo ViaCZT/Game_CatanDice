@@ -1,9 +1,9 @@
 package comp1110.ass2;
 
 /**
- * Author: Zetian Chen   uid: u7564812
- * <p>
  * The board for each player.
+ *
+ * @author Zetian Chen   uid: u7564812
  */
 public class Board {
     private final String board_state;

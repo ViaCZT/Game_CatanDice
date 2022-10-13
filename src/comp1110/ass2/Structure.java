@@ -5,10 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Author: Zetian Chen   uid: u7564812
- * <p>
  * record all the structures in the game.
  * There are 5 categories: Roads, Settlements(Settles), Cities, Jokers, Knights.
+ *
+ * @author Zetian Chen   uid: u7564812
  */
 public class Structure {
     public Structure() {

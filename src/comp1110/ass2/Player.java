@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Author: Zetian Chen   uid: u7564812
- * <p>
  * player can do actions:
  * build is put a road,settlement,city,joker on the board
  * trade is use gold to get other resources
  * swap is use joker to change the resources the player get
+ *
+ * @author Zetian Chen   uid: u7564812
  */
 public class Player {
 //    private String board_state;

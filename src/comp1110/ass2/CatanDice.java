@@ -13,6 +13,7 @@ public class CatanDice {
      * @param board_state: The string representation of the board state.
      * @return true iff the string is a well-formed representation of
      * a board state, false otherwise.
+     * @author Zetian Chen (uid: u7564812), Zihan Ai (uid: u7528678)
      */
     public static boolean isBoardStateWellFormed(String board_state) {
         // FIXME: Task #3
@@ -51,6 +52,7 @@ public class CatanDice {
      * @param action: The string representation of the action.
      * @return true iff the string is a well-formed representation of
      * a board state, false otherwise.
+     * @author Zetian Chen (uid: u7564812), Zihan Ai (uid: u7528678)
      */
     public static boolean isActionWellFormed(String action) {
         // FIXME: Task #4
@@ -97,6 +99,7 @@ public class CatanDice {
      *                       <p>
      *                       This method does not return any value. It should update the given
      *                       resource_state.
+     * @author Zetian Chen (uid: u7564812), Zihan Ai (uid: u7528678)
      */
     public static void rollDice(int n_dice, int[] resource_state) {
         // FIXME: Task #6
@@ -119,6 +122,7 @@ public class CatanDice {
      * @param board_state: The string representation of the board state.
      * @return true iff the structure is a possible next build, false
      * otherwise.
+     * @author Zetian Chen (uid: u7564812), Zihan Ai (uid: u7528678)
      */
     public static boolean checkBuildConstraints(String structure, String board_state) {
         // FIXME: Task #8
@@ -241,6 +245,13 @@ public class CatanDice {
         return false;
     }
 
+    /**
+     * //fixme:1
+     *
+     * @param structure
+     * @return
+     * @author Zihan Ai (uid: u7528678)
+     */
     public static String getRoad(String structure) {
         String Road;
         switch (structure) {
@@ -268,6 +279,7 @@ public class CatanDice {
      * @param resource_state: The available resources.
      * @return true iff the structure can be built with the available
      * resources, false otherwise.
+     * @author Zetian Chen (uid: u7564812), Zihan Ai (uid: u7528678)
      */
     public static boolean checkResources(String structure, int[] resource_state) {
         // FIXME: Task #7
@@ -335,6 +347,7 @@ public class CatanDice {
      * @param resource_state: The available resources.
      * @return true iff the structure can be built with the available
      * resources, false otherwise.
+     * @author Zetian Chen (uid: u7564812), Zihan Ai (uid: u7528678)
      */
     public static boolean checkResourcesWithTradeAndSwap(String structure,
                                                          String board_state,
@@ -371,6 +384,17 @@ public class CatanDice {
 
     }
 
+    /**
+     * Check if a swap is executable in the given board and resource state.
+     * A help method for Task 9 canDoAction().
+     *
+     * @param board_state:     The string representation of the board state.
+     * @param resource_state:  The available resources.
+     * @param swap_resource:   The resource used to swap.
+     * @param target_resource: The resource wanted to get (must have built this Joker).
+     * @return: True if the swap is executable, false if it is not.
+     * @author Zetian Chen (uid: u7564812), Zihan Ai (uid: u7528678)
+     */
     public static boolean checkCanSwap(String board_state, int[] resource_state,
                                        int swap_resource, int target_resource) {
         String[] states = board_state.split(",");
@@ -390,6 +414,7 @@ public class CatanDice {
      * @param board_state:    The string representation of the board state.
      * @param resource_state: The available resources.
      * @return true iff the action is applicable, false otherwise.
+     * @author Zetian Chen (uid: u7564812), Zihan Ai (uid: u7528678)
      */
     public static boolean canDoAction(String action,
                                       String board_state,
@@ -423,6 +448,13 @@ public class CatanDice {
         return false;
     }
 
+    /**
+     * //fixme: 2
+     *
+     * @param action
+     * @param board_state
+     * @return
+     */
     public static String updateBoardState(String action, String board_state) {
         String behaviour = action.split(" ")[0];
         switch (behaviour) {
@@ -457,8 +489,14 @@ public class CatanDice {
         return board_state;
     }
 
-
-    //Change the quantity of resources after action
+    /**
+     * Change the quantity of resources after action
+     * //fixme: 3
+     *
+     * @param action
+     * @param resource_state
+     * @return
+     */
     public static int[] updateResourceState(String action, int[] resource_state) {
         String behaviour = action.split(" ")[0];
         switch (behaviour) {
@@ -509,6 +547,7 @@ public class CatanDice {
      * @param board_state:    The string representation of the board state.
      * @param resource_state: The available resources.
      * @return true iff the action sequence is executable, false otherwise.
+     * @author Zetian Chen (uid: u7564812), Zihan Ai (uid: u7528678)
      */
     public static boolean canDoSequence(String[] actions,
                                         String board_state,
@@ -549,11 +588,9 @@ public class CatanDice {
      * @param target_structure: The string representation of the structure
      *                          to reach.
      * @param board_state:      The string representation of the board state.
-     * @return An array of string representations of the roads along the
-     * path.
+     * @return An array of string representations of the roads along the path
+     * @author Zetian Chen (uid: u7564812), Zihan Ai (uid: u7528678)
      */
-
-
     public static String[] pathTo(String target_structure,
                                   String board_state) {
         List<String> path = new ArrayList<>();
