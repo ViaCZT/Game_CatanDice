@@ -1,5 +1,7 @@
 package comp1110.ass2;
 
+
+
 import java.util.*;
 
 public class CatanDice {
@@ -336,6 +338,46 @@ public class CatanDice {
 
 
     /**
+     * Automatic change the resources to satisfy the actions
+     * @param resource_state: The available resources.
+     * @param board_state :The current board state
+     * @return The action to change.
+     * @author Zihan Ai (uid: u7528678)
+     */
+    public static String[] autoChangeResource(String board_state, int[] resource_state){
+        List<String> act = new ArrayList<>();
+        for(int i =0;i<=5;i++){
+            if (resource_state[i]<0){
+                // If can trade, use trade first
+                if(resource_state[5]>=2){ //Check if trade can replenish the resource
+                    resource_state=updateResourceState("trade " +i,resource_state);
+                    act.add("trade " +i);
+                }
+                for (int j = 0;j<=5;j++){
+                    if (checkCanSwap(board_state,resource_state,j,i)){ //Check if swap can replenish the resource
+                        resource_state = updateResourceState("swap "+ j + " " + i,resource_state);
+                        board_state=updateBoardState("swap "+ j + " " + i,board_state);
+                        act.add("swap "+ j + " " + i);
+                    }
+                }
+            }
+        }
+        for(int i = 0;i<=5;i++){
+            if(resource_state[i]<0){
+                return null;
+            }
+        }
+        String[] actions = new String[act.size()];
+        for (int i = 0;i<=act.size()-1;i++){
+            actions[i]=act.get(i);
+        }
+        return actions;
+    }
+
+
+
+
+    /**
      * Check if the available resources are sufficient to build the
      * specified structure, considering also trades and/or swaps.
      * This method needs access to the current board state because the
@@ -353,37 +395,18 @@ public class CatanDice {
                                                          String board_state,
                                                          int[] resource_state) {
         int[] new_resource_state = new int[6];
+        String[] actions = null;
         System.arraycopy(resource_state,0,new_resource_state,0,6);
         if(checkBuildConstraints(structure,board_state)){
-            if (checkResources(structure,resource_state)==false){
-                new_resource_state = updateResourceState("build "+structure,resource_state);//Let's minus the resources first, which resource amount less than 0 is the target resource.
-                for(int i =0;i<=5;i++){
-                    if (new_resource_state[i]<0){
-                        // If can trade, use trade first
-                        if(new_resource_state[5]>=2){//Check if trade can replenish the resource
-                            new_resource_state=updateResourceState("trade " +i,new_resource_state);
-                        }
-                        for (int j = 0;j<=5;j++){
-                            if (checkCanSwap(board_state,new_resource_state,j,i)){ //Check if swap can replenish the resource
-                                new_resource_state = updateResourceState("swap "+ j + " " + i,new_resource_state);
-                                board_state=updateBoardState("swap "+ j + " " + i,board_state);
-                            }
-                        }
-                    }
-                }
+            if (!checkResources(structure, resource_state)){
+                new_resource_state = updateResourceState("build "+structure,resource_state);//Lets minus the resources first, which resource amount less than 0 is the target resource.
+                actions = autoChangeResource(board_state,new_resource_state);
             }
         }
         else
             return true;
-        for(int i =0;i<=5;i++){
-            if(new_resource_state[i]<0)
-                return false;
-        }
-        return true;
-
+        return actions != null;
         // FIXME: Task #12
-
-
     }
 
     /**
@@ -699,6 +722,7 @@ public class CatanDice {
                                      String board_state,
                                      int[] resource_state) {
         String[] path =pathTo(target_structure,board_state);
+
 
         return new String[]{}; // FIXME: Task #14
     }
