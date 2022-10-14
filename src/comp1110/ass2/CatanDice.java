@@ -1,7 +1,6 @@
 package comp1110.ass2;
 
 
-
 import java.util.*;
 
 public class CatanDice {
@@ -19,21 +18,6 @@ public class CatanDice {
      */
     public static boolean isBoardStateWellFormed(String board_state) {
         // FIXME: Task #3
-/*
-        String[] s = {"", "R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15",
-                "S3", "S4", "S5", "S7", "S9", "S11",
-                "C7", "C12", "C20", "C30",
-                "J1", "J2", "J3", "J4", "J5", "J6",
-                "K1", "K2", "K3", "K4", "K5", "K6"};
-        String[] boardStateSplit = board_state.split(",");
-        int flag = 0;
-        for (String move : boardStateSplit) {
-            if (Arrays.asList(s).contains(move)) {
-                flag++;
-            }
-        }
-        return flag == boardStateSplit.length;
-*/
         if (board_state.equals(""))
             return true;
         Board myBoard = new Board(board_state);
@@ -58,20 +42,6 @@ public class CatanDice {
      */
     public static boolean isActionWellFormed(String action) {
         // FIXME: Task #4
-/*
-        String[] trade = {"1", "2", "3", "4", "0"};
-        String[] swap = {"1", "2", "3", "4", "5", "0"};
-        String[] actionSplit = action.split(" ");
-        if (actionSplit[0].equals("build")) {
-            return isBoardStateWellFormed(actionSplit[1]);
-        } else if (actionSplit[0].equals("trade") && actionSplit.length == 2) {
-            return Arrays.asList(trade).contains(actionSplit[1]);
-        } else if (actionSplit[0].equals("swap") && actionSplit.length == 3) {
-            return Arrays.asList(swap).contains(actionSplit[1]) &&
-                    Arrays.asList(swap).contains(actionSplit[2]);
-        }
-        return false;
-*/
         Player myPlayer = new Player();
         String actionType = myPlayer.getActionType(action);
         String[] actionSplit = action.split(" ");
@@ -128,68 +98,7 @@ public class CatanDice {
      */
     public static boolean checkBuildConstraints(String structure, String board_state) {
         // FIXME: Task #8
-/*
-        String[] Roads = {"R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15"};
-        String[] Settlements = {"S3", "S4", "S5", "S7", "S9", "S11"};
-        String[] Cities = {"C7", "C12", "C20", "C30"};
-        String[] Jokers = {"J1", "J2", "J3", "J4", "J5", "J6"};
-        String[] Knights = {"K1", "K2", "K3", "K4", "K5", "K6"};
-        String[] boardStateSplit = board_state.split(",");
 
-        List<String> boardStateList = new ArrayList<>(Arrays.asList(boardStateSplit));
-        List<String> rList = new ArrayList<>(Arrays.asList(Roads));
-        List<String> sList = new ArrayList<>(Arrays.asList(Settlements));
-        List<String> cList = new ArrayList<>(Arrays.asList(Cities));
-        List<String> jList = new ArrayList<>(Arrays.asList(Jokers));
-        List<String> kList = new ArrayList<>(Arrays.asList(Knights));
-
-        if (rList.contains(structure)) {
-            switch (structure) {
-                case "R0" -> {
-                    return true;
-                }
-                case "R2" -> {
-                    if (boardStateList.contains("R0")) {
-                        return true;
-                    }
-                }
-                case "R5" -> {
-                    if (boardStateList.contains("R3")) {
-                        return true;
-                    }
-                }
-                case "R12" -> {
-                    if (boardStateList.contains("R7")) {
-                        return true;
-                    }
-                }
-                default -> {
-                    if (boardStateList.contains(rList.get(rList.indexOf(structure) - 1))) {
-                        return true;
-                    }
-                }
-            }
-        } else if (sList.contains(structure)) {
-            if (!structure.equals("S3")) {
-                return boardStateList.contains(sList.get(sList.indexOf(structure) - 1)) && boardStateList.contains(getRoad(structure));
-            } else {
-                return boardStateList.contains(getRoad(structure));
-            }
-        } else if (cList.contains(structure)) {
-            if (!structure.equals("C7")) {
-                return boardStateList.contains(cList.get(cList.indexOf(structure) - 1)) && boardStateList.contains(getRoad(structure));
-            } else {
-                return boardStateList.contains(getRoad(structure));
-            }
-        } else if (jList.contains(structure)) {
-            if (structure.equals("J1")) {
-                return true;
-            } else {
-                return boardStateList.contains(jList.get(jList.indexOf(structure) - 1)) || boardStateList.contains(kList.get(jList.indexOf(structure) - 1));
-            }
-        }
-        return false;
-*/
 
         List<String> myBoardState = Arrays.asList(new Board(board_state).getStructure());
         Structure myStructure = new Structure();
@@ -248,10 +157,10 @@ public class CatanDice {
     }
 
     /**
-     * //fixme:1
+     * Find the road which connect the target structure
      *
-     * @param structure
-     * @return
+     * @param structure target structure
+     * @return The road near the structure
      * @author Zihan Ai (uid: u7528678)
      */
     public static String getRoad(String structure) {
@@ -285,32 +194,6 @@ public class CatanDice {
      */
     public static boolean checkResources(String structure, int[] resource_state) {
         // FIXME: Task #7
-        // cannot build K(Knight)
-/*
-        char type = structure.charAt(0);
-        switch (type) {
-            case 'R' -> {
-                if ((resource_state[3] >= 1 && resource_state[4] >= 1))
-                    return true;
-            }
-            case 'S' -> {
-                if (resource_state[4] >= 1 && resource_state[1] >= 1
-                        && resource_state[2] >= 1 && resource_state[3] >= 1)
-                    return true;
-            }
-            case 'C' -> {
-                if (resource_state[0] >= 3 && resource_state[1] >= 2)
-                    return true;
-            }
-            case 'J' -> {
-                if (resource_state[0] >= 1 && resource_state[1] >= 1 && resource_state[2] >= 1)
-                    return true;
-            }
-            default -> throw new IllegalStateException("Unexpected value: " + type);
-        }
-        return false;
-*/
-
         char type = structure.charAt(0);
         Resource myResource = new Resource(resource_state);
         switch (type) {
@@ -339,6 +222,7 @@ public class CatanDice {
 
     /**
      * Automatic change the resources to satisfy the actions
+     * use for checkResourcesWithTradeAndSwap and buildPlan
      * @param resource_state: The available resources.
      * @param board_state :The current board state
      * @return The action to change.
@@ -346,24 +230,43 @@ public class CatanDice {
      */
     public static String[] autoChangeResource(String board_state, int[] resource_state){
         List<String> act = new ArrayList<>();
+        int[] new_resource_state = new int[6];
+        System.arraycopy(resource_state,0,new_resource_state,0,6);
+        int count = 0;
+        for(int a :new_resource_state){
+            if (a<0)
+                count++;
+        }
+
         for(int i =0;i<=5;i++){
-            if (resource_state[i]<0){
-                // If can trade, use trade first
-                if(resource_state[5]>=2){ //Check if trade can replenish the resource
-                    resource_state=updateResourceState("trade " +i,resource_state);
-                    act.add("trade " +i);
+            if (new_resource_state[i]<0){
+                if(count>=2&&new_resource_state[5]<4){
+                    board_state = useSwap(board_state, act, new_resource_state, i);
                 }
-                for (int j = 0;j<=5;j++){
-                    if (checkCanSwap(board_state,resource_state,j,i)){ //Check if swap can replenish the resource
-                        resource_state = updateResourceState("swap "+ j + " " + i,resource_state);
-                        board_state=updateBoardState("swap "+ j + " " + i,board_state);
-                        act.add("swap "+ j + " " + i);
+                // If it can trade, use trade first
+                if(new_resource_state[5]>=2){ //Check if trade can replenish the resource
+                    updateResourceState("trade " + i, new_resource_state);
+                    act.add("trade " +i);
+                    if(new_resource_state[i]==0) {
+                        continue;
+                    }
+                }
+
+
+                board_state = useSwap(board_state, act, new_resource_state, i);
+
+                if(new_resource_state[i]<0){
+                    if(canDoAction("build J"+(i+1),board_state,resource_state)){
+                        act.add("build J"+(i+1));
+                        board_state=updateBoardState("build J"+(i+1),board_state);
+                        updateResourceState("build J" + (i + 1), new_resource_state);
+                        i--;
                     }
                 }
             }
         }
         for(int i = 0;i<=5;i++){
-            if(resource_state[i]<0){
+            if(new_resource_state[i]<0){
                 return null;
             }
         }
@@ -374,7 +277,16 @@ public class CatanDice {
         return actions;
     }
 
-
+    public static String useSwap(String board_state, List<String> act, int[] new_resource_state, int i) {
+        for (int j = 0;j<=5;j++){
+            if (checkCanSwap(board_state,new_resource_state,j,i)){ //Check if swap can replenish the resource
+                updateResourceState("swap " + j + " " + i, new_resource_state);
+                board_state=updateBoardState("swap "+ j + " " + i,board_state);
+                act.add("swap "+ j + " " + i);
+            }
+        }
+        return board_state;
+    }
 
 
     /**
@@ -394,12 +306,13 @@ public class CatanDice {
     public static boolean checkResourcesWithTradeAndSwap(String structure,
                                                          String board_state,
                                                          int[] resource_state) {
+        System.out.println("\n");
         int[] new_resource_state = new int[6];
         String[] actions = null;
         System.arraycopy(resource_state,0,new_resource_state,0,6);
         if(checkBuildConstraints(structure,board_state)){
-            if (!checkResources(structure, resource_state)){
-                new_resource_state = updateResourceState("build "+structure,resource_state);//Lets minus the resources first, which resource amount less than 0 is the target resource.
+            if (!checkResources(structure, new_resource_state)){
+                updateResourceState("build " + structure, new_resource_state);//Lets minus the resources first, which resource amount less than 0 is the target resource.
                 actions = autoChangeResource(board_state,new_resource_state);
             }
         }
@@ -473,11 +386,13 @@ public class CatanDice {
     }
 
     /**
-     * //fixme: 2
+     * When execute an action
+     * change the board state
      *
-     * @param action
-     * @param board_state
-     * @return
+     * @param action the action to execute
+     * @param board_state the current board state
+     * @return the new board state
+     * @auther Zihan Ai (uid: u7528678)
      */
     public static String updateBoardState(String action, String board_state) {
         String behaviour = action.split(" ")[0];
@@ -515,11 +430,12 @@ public class CatanDice {
 
     /**
      * Change the quantity of resources after action
-     * //fixme: 3
      *
-     * @param action
-     * @param resource_state
-     * @return
+     *
+     * @param action the action will execute
+     * @param resource_state the current resource state
+     * @return the new resource state
+     * @auther Zihan Ai (uid: u7528678),
      */
     public static int[] updateResourceState(String action, int[] resource_state) {
         String behaviour = action.split(" ")[0];
@@ -717,14 +633,69 @@ public class CatanDice {
      * @return An array of string representations of player actions. If
      * there exists no valid build plan for the target structure,
      * the method should return null.
+     * @auther Zihan Ai (uid: u7528678)
      */
     public static String[] buildPlan(String target_structure,
                                      String board_state,
                                      int[] resource_state) {
+        Structure myStructure = new Structure();
+        List<String> sList = myStructure.getAllSettles();
+        List<String> cList = myStructure.getAllCities();
+        List<String> jList = myStructure.getAllJokers();
+        List<String> kList = myStructure.getAllKnights();
+        String[] st = board_state.split(",");
+        List<String> board = new ArrayList<>(Arrays.asList(st));
+        List<String> build = new ArrayList<>();
+        List<String> p =  new ArrayList<>();
+
+        if(target_structure.charAt(0)=='S'&& !target_structure.equals("S3")){
+            if (!board.contains(sList.get(sList.indexOf(target_structure)-1))){
+                return null;
+            }
+        }
+        if(target_structure.charAt(0)=='C'&& !target_structure.equals("C7")){
+            if (!board.contains(cList.get(cList.indexOf(target_structure)-1))){
+                return null;
+            }
+        }
+        if(target_structure.charAt(0)=='J'&& !target_structure.equals("J1")){
+            if(!board.contains(jList.get(jList.indexOf(target_structure)-1))&&!board.contains(kList.get(jList.indexOf(target_structure)-1))){
+                build.add("build "+jList.get(jList.indexOf(target_structure)-1));
+            }
+        }
+
+        int[] new_resource_state = new int[6];
         String[] path =pathTo(target_structure,board_state);
+        for(String road:path){
+            build.add("build "+road);
+        }
+        build.add("build "+target_structure);
+        System.arraycopy(resource_state,0,new_resource_state,0,6);
+        for(String action:build){
+            if(canDoAction(action,board_state,new_resource_state)) {
+                new_resource_state = updateResourceState(action,resource_state);
+                board_state = updateBoardState(action,board_state);
+                p.add(action);
+            }
+            else if (checkResourcesWithTradeAndSwap(action.split(" ")[1],board_state,new_resource_state)){
+//                System.out.println("1");
+                updateResourceState(action, new_resource_state);
+                String[] s = autoChangeResource(board_state,new_resource_state);
+                if (s==null)
+                    return null;
 
-
-        return new String[]{}; // FIXME: Task #14
+                p.addAll(Arrays.asList(s));
+                p.add(action);
+            }
+            else
+                return null;
+        }
+        String[] plan= new String[p.size()];
+        for (int i = 0;i<=p.size()-1;i++){
+            plan[i]=p.get(i);
+            System.out.println(plan[i]);
+        }
+        return plan; 
     }
 
 }
