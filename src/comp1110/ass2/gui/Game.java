@@ -1,13 +1,11 @@
 package comp1110.ass2.gui;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -188,6 +186,20 @@ public class Game extends Application {
 
     }
 
+    public void displayResource() {
+        Group resourceGroup = new Group();
+
+        Button bSwapTrade = new Button("Would like Swap or Trade?");
+        //fixme 在这里加点击按钮后的操作
+
+        resourceGroup.getChildren().add(bSwapTrade);
+        resourceGroup.setLayoutX(WINDOW_WIDTH / 2.0 + 10);
+        resourceGroup.setLayoutY(WINDOW_HEIGHT / 2.0 + 200);
+        if (!(root.getChildren().contains(resourceGroup)))
+            root.getChildren().add(resourceGroup);
+
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Catan Dice");
@@ -195,6 +207,7 @@ public class Game extends Application {
 
         displayBoard();
         displayScore();
+        displayResource();
 
         stage.setScene(scene);
         stage.show();
