@@ -685,11 +685,7 @@ public class CatanDice {
             } else
                 return null;
         }
-        String[] plan = new String[p.size()];
-        for (int i = 0; i <= p.size() - 1; i++) {
-            plan[i] = p.get(i);
-            System.out.println(plan[i]);
-        }
+        String[] plan= new String[p.size()];
         return plan;
     }
 

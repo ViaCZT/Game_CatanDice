@@ -13,10 +13,27 @@ import java.util.Random;
  * @author Zetian Chen   uid: u7564812
  */
 public class Player {
-//    private String board_state;
-//    private String resource_state;
+    private String board_state;
+    private int[] resource_state;
 
     public Player() {
+
+    }
+
+    public void setBoard_state(String bs){
+        this.board_state=bs;
+    }
+
+    public void setResource_state(int[] rs){
+        this.resource_state=rs;
+    }
+
+    public String getBoard_state(){
+        return this.board_state;
+    }
+
+    public int[] getResource_state(){
+        return this.resource_state;
     }
 
     /**
@@ -64,4 +81,5 @@ public class Player {
             resource_state[resource_index]++;
         }
     }
+
 }
