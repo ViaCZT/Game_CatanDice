@@ -83,7 +83,7 @@ public class Viewer extends Application {
             root.getChildren().add(boardStateGroup);
     }
 
-    private void importBoardImage(Group node) {
+    public void importBoardImage(Group node) {
         //导入图片并使其居中 import and center the image.
 //        Image boardImage = new Image(Viewer.class.getResource("island-one-with-numbering.png").toString());
         Image boardImage = new Image(Objects.requireNonNull(Viewer.class.getResource("island-one-with-numbering.png")).toString());
@@ -98,7 +98,7 @@ public class Viewer extends Application {
         node.getChildren().add(boardImg);
     }
 
-    private void makeText(Text text, Group node) {
+    public void makeText(Text text, Group node) {
         DropShadow ds = new DropShadow();
         ds.setOffsetY(4.0f);
         ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
@@ -119,7 +119,7 @@ public class Viewer extends Application {
     /**
      * @param indexString : "0"-"15"
      */
-    private void makeRoad(String indexString, Group node) {
+    public void makeRoad(String indexString, Group node) {
         switch (indexString) {
             case "0" -> {
                 Rectangle road0 = new Rectangle(20, 60, Color.BLACK);
@@ -236,7 +236,7 @@ public class Viewer extends Application {
         }
     }
 
-    private void makeSettlement(String indexString, Group node) {
+    public void makeSettlement(String indexString, Group node) {
         switch (indexString) {
             case "3" -> {
                 Rectangle s3 = new Rectangle(25, 25, Color.BLACK);
@@ -283,7 +283,7 @@ public class Viewer extends Application {
         }
     }
 
-    private void makeCity(String indexString, Group node) {
+    public void makeCity(String indexString, Group node) {
         switch (indexString) {
             case "7" -> {
                 Rectangle c7 = new Rectangle(44, 20, Color.BLACK);
@@ -316,7 +316,7 @@ public class Viewer extends Application {
         }
     }
 
-    private void makeJokerOrKnight(String indexString, Group node, Color color) {
+    public void makeJokerOrKnight(String indexString, Group node, Color color) {
         switch (indexString) {
             case "1" -> {
                 Circle j1 = new Circle(421, 180, 12); //X,Y,Radius
