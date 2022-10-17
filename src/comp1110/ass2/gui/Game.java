@@ -1,5 +1,6 @@
 package comp1110.ass2.gui;
 
+import gittest.B;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -190,13 +191,28 @@ public class Game extends Application {
         Group resourceGroup = new Group();
 
         Button bSwapTrade = new Button("Would like Swap or Trade?");
-        //fixme 在这里加点击按钮后的操作
+        bSwapTrade.setOnMouseClicked(event -> {
+            ChangeResources.display("Please change your resources", "Please choose your operation");
+        });
 
         resourceGroup.getChildren().add(bSwapTrade);
         resourceGroup.setLayoutX(WINDOW_WIDTH / 2.0 + 10);
         resourceGroup.setLayoutY(WINDOW_HEIGHT / 2.0 + 200);
         if (!(root.getChildren().contains(resourceGroup)))
             root.getChildren().add(resourceGroup);
+
+    }
+
+    public void displayDices(){
+        Group DiceGroup = new Group();
+        Button roll = new Button("Roll dices");
+        Button[] dices = new Button[6];
+        DiceGroup.getChildren().add(roll);
+//        DiceGroup.getChildren().addAll(dices);
+        DiceGroup.setLayoutX(WINDOW_WIDTH / 2.0 + 50 );
+        DiceGroup.setLayoutY(WINDOW_HEIGHT / 2.0 + 50);
+        if (!(root.getChildren().contains(DiceGroup)))
+            root.getChildren().add(DiceGroup);
 
     }
 
@@ -208,6 +224,7 @@ public class Game extends Application {
         displayBoard();
         displayScore();
         displayResource();
+        displayDices();
 
         stage.setScene(scene);
         stage.show();

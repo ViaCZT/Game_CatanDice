@@ -1,5 +1,6 @@
 package comp1110.ass2.Main;
 
+import comp1110.ass2.gui.ChangeResources;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

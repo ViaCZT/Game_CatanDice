@@ -1,12 +1,18 @@
-package comp1110.ass2.Main;
+package comp1110.ass2.gui;
 
+import comp1110.ass2.CatanDice;
 import comp1110.ass2.Player;
+import gittest.A;
+import gittest.B;
+import javafx.animation.PauseTransition;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -53,7 +59,7 @@ public class ChangeResources {
         Text re =new Text();
         re.setText(t1);
         Text bo = new Text();
-        bo.setText("your board state: " +b);
+        bo.setText("your board state: " +player.getBoard_state());
 
 
         Stage stage = new Stage();
@@ -63,6 +69,7 @@ public class ChangeResources {
         Button swap = new Button("Swap");
         Button trade = new Button("trade");
         Button cancel = new Button("Cancel");
+        Button ok = new Button("OK");
 
         for(Button button:resources){
             button.setDisable(true);
@@ -75,13 +82,33 @@ public class ChangeResources {
         }
 
 
-
+        Text t2 = new Text();
+        Text t3 = new Text();
+        Text t4 = new Text();
         swap.setOnAction(event -> {
             res=true;
-            lightOnButtonsSwap(resource_state,b);
+            for(int i =0;i<=5;i++){
+                if(player.getResource_state()[i]>0)
+                resources[i].setDisable(false);
+            }
             cancel.setDisable(false);
             swap.setDisable(true);
             trade.setDisable(true);
+            t2.setText("swap");
+            for(Button bu:resources){
+                bu.setOnMouseClicked(event2->{
+                    t3.setText(bu.getText());
+                    for(Button bb :resources){
+                        bb.setDisable(true);
+                    }
+                    lightOnButtonsSwap(player.getResource_state(), player.getBoard_state());
+                    for (Button bb0:resources){
+                        bb0.setOnMouseClicked(event0->{
+                            t4.setText(bb0.getText());
+                        });
+                    }
+                });
+            }
         });
 
         trade.setOnAction(event -> {
@@ -90,8 +117,14 @@ public class ChangeResources {
             cancel.setDisable(false);
             swap.setDisable(true);
             trade.setDisable(true);
-
+            t2.setText("trade");
+            for(Button bu:resources){
+                bu.setOnMouseClicked(event2->{
+                    t3.setText(bu.getText());
+                });
+            }
         });
+
         cancel.setOnMouseClicked(event ->{
             ore.setDisable(true);
             grain.setDisable(true);
@@ -104,14 +137,33 @@ public class ChangeResources {
             if(resource_state[5]>=2){
                 trade.setDisable(false);
             }
+            t2.setText("");
+            t3.setText("");
+            t4.setText("");
         });
 
-
-
-
+        ok.setOnMouseClicked(event->{
+            String s ="";
+            if(t4.getText()==""&&t2.getText()=="trade"){
+                s+="trade ";
+                s+=resourceToNum(t3.getText());
+            }
+            else if(t2.getText()=="swap"&&t4.getText()!=""){
+                s="swap "+resourceToNum(t3.getText())+" "+resourceToNum(t4.getText());
+            }
+            System.out.println(s);
+            player.setResource_state(CatanDice.updateResourceState(s,player.getResource_state()));
+            String bb = CatanDice.updateBoardState(s,player.getBoard_state());
+            player.setBoard_state(bb);
+            re.setText(resourceStateToString(player.getResource_state()));
+            bo.setText("your board state: "+bb);
+            for(Button bb1:resources){
+                bb1.setDisable(true);
+            }
+        });
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(label,swap,trade,ore,grain,wool,timber,brick,gold,cancel,re,bo);
+        vBox.getChildren().addAll(label,swap,trade,ore,grain,wool,timber,brick,gold,cancel,re,bo,ok,t2,t3,t4);
 
         //设置居中
         vBox.setAlignment(Pos.CENTER);
@@ -128,7 +180,7 @@ public class ChangeResources {
         List<String> b= new ArrayList<>();
         b.addAll(Arrays.asList(bs));
         for(int i = 0;i<=5;i++){
-            if(rs[i]>0&&b.contains("J"+(i+1))){
+            if(b.contains("J"+(i+1))||b.contains("J6")){
                 resources[i].setDisable(false);
             }
         }
@@ -151,6 +203,22 @@ public class ChangeResources {
         s+="Gold : "+resource_state[5]+"\n";
         return s;
     }
-    
+
+    public static String resourceToNum(String s){
+        String i = null;
+        switch (s){
+            case "Ore"-> i="0";
+            case "Grain"-> i="1";
+            case "Wool"-> i="2";
+            case "Timber"-> i="3";
+            case "Brick"-> i="4";
+            case "gold"-> i="5";
+        }
+        return i;
+    }
+
+
+
+
 }
 
