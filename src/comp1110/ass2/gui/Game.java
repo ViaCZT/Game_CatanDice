@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
@@ -39,115 +38,20 @@ public class Game extends Application {
         node.getChildren().add(Img);
     }
 
-    public void makeResourceLabel(Group node, Player player) {
-        Label label1 = new Label("Ore");
-        label1.setLayoutX(410);
-        label1.setLayoutY(215);
-        node.getChildren().add(label1);
-        Label label2 = new Label("Grain");
-        label2.setLayoutX(410);
-        label2.setLayoutY(435);
-        node.getChildren().add(label2);
-        Label label3 = new Label("Wool");
-        label3.setLayoutX(578);
-        label3.setLayoutY(510);
-        node.getChildren().add(label3);
-//        Label label1 = new Label("Ore");
-//        label1.setLayoutX(410);
-//        label1.setLayoutY(215);
-//        node.getChildren().add(label1);
-//        Label label1 = new Label("Ore");
-//        label1.setLayoutX(410);
-//        label1.setLayoutY(215);
-//        node.getChildren().add(label1);
-    }
-
     void displayBoard(Player player) {
         Group boardGroup = new Group();
 
         Image boardImage = new Image(Objects.requireNonNull(Viewer.class.getResource("island-one-with-numbering.png")).toString());
         importImage(boardGroup, boardImage, 600.0, 600.0);
 
-        makeResourceLabel(boardGroup, player);
         //put on buttons for every structure in the board
         makeRoadButton(boardGroup, player);
         makeSettleButton(boardGroup, player);
-        makeCityButton(boardGroup, player);
 
         boardGroup.setLayoutX(-300);        //the distance from board image to the right border is 300
         if (!(root.getChildren().contains(boardGroup)))
             root.getChildren().add(boardGroup);
 
-    }
-
-    public void makeCityButton(Group node, Player player) {
-        List<Button> settleButton = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            settleButton.add(new Button());
-            Button bSettle = settleButton.get(i);
-            bSettle.setPrefHeight(30);
-            bSettle.setPrefWidth(30);
-
-            String settlement = "S";
-            switch (i) {
-                case 0 -> {
-                    settlement += "3";
-                    bSettle.setText("3");
-                }
-                case 1 -> {
-                    settlement += "4";
-                    bSettle.setText("4");
-                }
-                case 2 -> {
-                    settlement += "5";
-                    bSettle.setText("5");
-                }
-                case 3 -> {
-                    settlement += "7";
-                    bSettle.setText("7");
-                }
-                case 4 -> {
-                    settlement += "9";
-                    bSettle.setText("9");
-                }
-                case 5 -> {
-                    settlement += "11";
-                    bSettle.setText("11");
-                }
-            }
-            String finalSettlement = settlement;
-            bSettle.setOnAction(actionEvent -> {
-                int[] resourceState = player.getResource_state();
-                String boardState = player.getBoard_state();
-                System.out.print("\nsettleButton:");
-                for (int res : resourceState) {
-                    System.out.print(res);
-                }
-                if (!(CatanDice.checkResources("S", resourceState))) {
-                    AlertWindow.display("Resource Constrain", "Not enough resources to build a settlement!");
-                } else if (!(CatanDice.checkBuildConstraints(finalSettlement, boardState))) {
-                    System.out.print("\nsettlement Build Constrain: ");
-                    System.out.println(boardState);
-                    AlertWindow.display("Build Constrain", "Cannot build this settlement!");
-                } else {
-                    bSettle.setStyle("-fx-background-color:#FFCC00;" +   //设置背景颜色
-                            "-fx-text-fill:#000000;");                 //设置字体颜色
-                    if (boardState.equals("")) {
-                        player.setBoard_state(finalSettlement);
-                    } else {
-                        player.setBoard_state(boardState + "," + finalSettlement);
-                    }
-//                    System.out.println("\nsettleButton boardState: " + player.getBoard_state() + "\n");
-                    resourceState[4] -= 1;
-                    resourceState[3] -= 1;
-                    resourceState[2] -= 1;
-                    resourceState[1] -= 1;
-                    player.setResource_state(resourceState);
-                    // show resource
-                    showResource(player);
-                }
-            });
-        }
     }
 
     public void makeSettleButton(Group node, Player player) {
@@ -196,18 +100,20 @@ public class Game extends Application {
                 if (!(CatanDice.checkResources("S", resourceState))) {
                     AlertWindow.display("Resource Constrain", "Not enough resources to build a settlement!");
                 } else if (!(CatanDice.checkBuildConstraints(finalSettlement, boardState))) {
-                    System.out.print("\nsettlement Build Constrain: ");
+                    System.out.print("settlement Build Constrain: ");
                     System.out.println(boardState);
                     AlertWindow.display("Build Constrain", "Cannot build this settlement!");
                 } else {
                     bSettle.setStyle("-fx-background-color:#FFCC00;" +   //设置背景颜色
                             "-fx-text-fill:#000000;");                 //设置字体颜色
-                    if (boardState.equals("")) {
+                    if(player.getBoard_state()==""){
                         player.setBoard_state(finalSettlement);
-                    } else {
+                    }
+                    else {
                         player.setBoard_state(boardState + "," + finalSettlement);
                     }
-//                    System.out.println("\nsettleButton boardState: " + player.getBoard_state() + "\n");
+
+                    System.out.println(boardState);
                     resourceState[4] -= 1;
                     resourceState[3] -= 1;
                     resourceState[2] -= 1;
@@ -251,21 +157,25 @@ public class Game extends Application {
             bRoad.setOnAction(actionEvent -> {
                 int[] resourceState = player.getResource_state();
                 String boardState = player.getBoard_state();
+                System.out.print("\nroadButton:");
+                for (int res : resourceState) {
+                    System.out.print(res);
+                }
                 if (!(CatanDice.checkResources("R", resourceState))) {
                     AlertWindow.display("Resource Constrain", "Not enough resources to build a road!");
                 } else if (!(CatanDice.checkBuildConstraints(road, boardState))) {
-                    System.out.print("\nroad Build Constrain: ");
+                    System.out.print("road Build Constrain: ");
                     System.out.println(boardState);
                     AlertWindow.display("Build Constrain", "Cannot build this road!");
                 } else {
                     bRoad.setStyle("-fx-background-color:#696969;" +   //设置背景颜色
                             "-fx-text-fill:#FFF;");                 //设置字体颜色
-                    if (boardState.equals("")) {
+                    if(player.getBoard_state()==""){
                         player.setBoard_state(road);
-                    } else {
+                    }
+                    else {
                         player.setBoard_state(boardState + "," + road);
                     }
-//                    System.out.println("\nroadButton boardState: " + player.getBoard_state() + "\n");
                     resourceState[4] -= 1;
                     resourceState[3] -= 1;
                     player.setResource_state(resourceState);
@@ -390,7 +300,6 @@ public class Game extends Application {
         }
         return s;
     }
-
     Button roll1 = new Button("Roll dices");
     Button roll2 = new Button("Roll dices");
     Button roll3 = new Button("Roll dices");
@@ -514,12 +423,12 @@ public class Game extends Application {
                 System.out.print(res_s[i]);
             }
             int[] r_s = new int[6];
-            System.arraycopy(res_s, 0, r_s, 0, 6);
+            System.arraycopy(res_s,0,r_s,0,6);
 
             player.setResource_state(r_s);
             showResource(player);
-            for (int i = 0; i <= 5; i++) {
-                res_s[i] = 0;
+            for(int i =0;i<=5;i++){
+                res_s[i]=0;
             }
 
         });
@@ -588,7 +497,7 @@ public class Game extends Application {
             root.getChildren().add(showturn);
 
         end.setOnAction(event -> {
-            if (player.turn == 15) {
+            if(player.turn==15){
                 turn.setText("Game Over!");
                 roll1.setDisable(true);
                 roll2.setDisable(true);
@@ -598,7 +507,8 @@ public class Game extends Application {
                 sb.setDisable(true);
                 bSwapTrade.setDisable(true);
 
-            } else {
+            }
+            else {
                 player.resource_state = new int[6];
                 showResource(player);
                 player.setTurn(player.getTurn() + 1);
@@ -609,46 +519,93 @@ public class Game extends Application {
                 r.setDisable(false);
                 ready.setDisable(false);
             }
+            System.out.println(player.getBoard_state());
 
         });
     }
 
-    public void getPoint(Player player) {
+    public void getPoint(Player player){
         int all_point = 0;
         int turn = player.getTurn();
-        String[] state = player.getBoard_state().split(",");
-        for (String str : state) {
-            switch (str.charAt(0)) {
-                case 'R' -> all_point++;//道路得分
-                default -> {
-                    int p = Integer.parseInt(str.substring(1));//房子 城市 骑士的得分
-                    all_point += p;
+        String[] state =player.getBoard_state().split(",");
+        if(state[0]!=""){
+            for(String str : state){
+                switch (str.charAt(0)){
+                    case 'R' -> all_point++;//道路得分
+                    default -> {
+                        int p = Integer.parseInt(str.substring(1));//房子 城市 骑士的得分
+                        all_point+=p;
+                    }
                 }
             }
-        }
-        if (turn == 0) {
-            player.point[0] = all_point;
-        } else
-            player.point[turn] = all_point - player.point[turn - 1];
+            if(turn == 0){
+                player.point[0] = all_point;
+            }
+            else
+                player.point[turn] = all_point - player.point[turn-1];
 
-        if (player.point[turn] == 0) {
-            player.point[turn] = -2;
+            if(player.point[turn]==0){
+                player.point[turn]=-2;
+            }
         }
+
     }
 
 
-    public void showPoints(Player player) {
+    public void showPoints(Player player){
+        getPoint(player);
         Group points = new Group();
         List<Text> point = new ArrayList<>();
-        Text allPoint = new Text();
-        for (int i = 0; i <= 4; i++) {
+        for(int i = 0;i<=4;i++){
             Text point0 = new Text();
             point.add(point0);
             point0.setText("12");
             point0.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
-            point0.setLayoutX(970 + 47 * i);
+            point0.setLayoutX(970+47*i);
             point0.setLayoutY(45);
         }
+        Text point1 = new Text();
+        point.add(point1);
+        point1.setText("12");
+        point1.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+        point1.setLayoutX(970+47*4);
+        point1.setLayoutY(45+58);
+        for(int i = 0;i<=4;i++){
+            Text point0 = new Text();
+            point.add(point0);
+            point0.setText("12");
+            point0.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+            point0.setLayoutX(970+47*(4-i));
+            point0.setLayoutY(45+58*2);
+        }
+        Text point2 = new Text();
+        point.add(point2);
+        point2.setText("12");
+        point2.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+        point2.setLayoutX(970);
+        point2.setLayoutY(45+58*3);
+        for(int i = 0;i<=2;i++){
+            Text point0 = new Text();
+            point.add(point0);
+            point0.setText("12");
+            point0.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+            point0.setLayoutX(970+47*i);
+            point0.setLayoutY(45+58*4);
+        }
+        Text allPoint = new Text();
+        point.add(allPoint);
+        allPoint.setText("12");
+        allPoint.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+        allPoint.setLayoutX(970+47*2+82);
+        allPoint.setLayoutY(45+58*4);
+
+        for(int i = 0;i<=14;i++){
+            point.get(i).setText(String.valueOf(player.point[i]));
+            if(point.get(i).getText()=="0"){
+                point.get(i).setText("");
+            }
+        }
+
 
         points.getChildren().addAll(point);
         if (!(root.getChildren().contains(points)))
@@ -663,8 +620,7 @@ public class Game extends Application {
         Scene scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
         Player player = new Player();
         player.resource_state = new int[]{0, 0, 0, 0, 0, 0};
-//        player.board_state = "";
-        player.board_state = "J1,J2,J3,J6";
+        player.board_state = "";
         player.turn = 1;
         displayBoard(player);
         displayScore();
