@@ -39,10 +39,10 @@ public class Game extends Application {
         node.getChildren().add(Img);
     }
 
-    public void makeResourceLabel(Group node, Player player) {
+    public void makeResourceLabel(Group node) {
         Label label1 = new Label("Ore");
-        label1.setLayoutX(410);
-        label1.setLayoutY(215);
+        label1.setLayoutX(411);
+        label1.setLayoutY(216);
         node.getChildren().add(label1);
         Label label2 = new Label("Grain");
         label2.setLayoutX(410);
@@ -52,14 +52,14 @@ public class Game extends Application {
         label3.setLayoutX(578);
         label3.setLayoutY(510);
         node.getChildren().add(label3);
-//        Label label1 = new Label("Ore");
-//        label1.setLayoutX(410);
-//        label1.setLayoutY(215);
-//        node.getChildren().add(label1);
-//        Label label1 = new Label("Ore");
-//        label1.setLayoutX(410);
-//        label1.setLayoutY(215);
-//        node.getChildren().add(label1);
+        Label label4 = new Label("Timber");
+        label4.setLayoutX(752);
+        label4.setLayoutY(415);
+        node.getChildren().add(label4);
+        Label label5 = new Label("Brick");
+        label5.setLayoutX(754);
+        label5.setLayoutY(219);
+        node.getChildren().add(label5);
     }
 
     void displayBoard(Player player) {
@@ -68,7 +68,7 @@ public class Game extends Application {
         Image boardImage = new Image(Objects.requireNonNull(Viewer.class.getResource("island-one-with-numbering.png")).toString());
         importImage(boardGroup, boardImage, 600.0, 600.0);
 
-        makeResourceLabel(boardGroup, player);
+        makeResourceLabel(boardGroup);
         //put on buttons for every structure in the board
         makeRoadButton(boardGroup, player);
         makeSettleButton(boardGroup, player);
