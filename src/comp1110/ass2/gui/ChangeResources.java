@@ -51,7 +51,7 @@ public class ChangeResources {
 
     public static boolean display(String title, String msg){
         int[] r = {0,1,2,1,1,2};
-        String b = "J1,J2,J3";
+        String b = "J1,J2,J3,J6";
         player.setResource_state(r);
         player.setBoard_state(b);
         int[] resource_state = player.getResource_state();
@@ -80,6 +80,7 @@ public class ChangeResources {
         if(resource_state[5]>=2){
             trade.setDisable(false);
         }
+        ok.setDisable(true);
 
 
         Text t2 = new Text();
@@ -105,6 +106,7 @@ public class ChangeResources {
                     for (Button bb0:resources){
                         bb0.setOnMouseClicked(event0->{
                             t4.setText(bb0.getText());
+                            ok.setDisable(false);
                         });
                     }
                 });
@@ -121,6 +123,7 @@ public class ChangeResources {
             for(Button bu:resources){
                 bu.setOnMouseClicked(event2->{
                     t3.setText(bu.getText());
+                    ok.setDisable(false);
                 });
             }
         });
@@ -140,6 +143,7 @@ public class ChangeResources {
             t2.setText("");
             t3.setText("");
             t4.setText("");
+            ok.setDisable(true);
         });
 
         ok.setOnMouseClicked(event->{
@@ -160,6 +164,7 @@ public class ChangeResources {
             for(Button bb1:resources){
                 bb1.setDisable(true);
             }
+            ok.setDisable(true);
         });
 
         VBox vBox = new VBox();
@@ -212,7 +217,7 @@ public class ChangeResources {
             case "Wool"-> i="2";
             case "Timber"-> i="3";
             case "Brick"-> i="4";
-            case "gold"-> i="5";
+            case "Gold"-> i="5";
         }
         return i;
     }

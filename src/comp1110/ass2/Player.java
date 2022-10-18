@@ -13,8 +13,8 @@ import java.util.Random;
  * @author Zetian Chen   uid: u7564812
  */
 public class Player {
-    private String board_state;
-    private int[] resource_state;
+    public String board_state;
+    public int[] resource_state;
 
     public Player() {
 

@@ -56,6 +56,16 @@ public class CatanDice {
         return false;
     }
 
+    public static int[] diceState(int n_dice){
+        int[] dices  = new int[n_dice];
+        Random ran = new Random();
+        for(int i =0;i<=n_dice-1;i++){
+            int resource_index = ran.nextInt(6);
+            dices[i] = resource_index;
+        }
+        return dices;
+    }
+
     /**
      * Roll the specified number of dice and add the result to the
      * resource state.
@@ -75,11 +85,9 @@ public class CatanDice {
      */
     public static void rollDice(int n_dice, int[] resource_state) {
         // FIXME: Task #6
-        Random ran = new Random();
-//        ran.nextInt(5);
-        for (int i = 1; i <= n_dice; i++) {
-            int resource_index = ran.nextInt(5);
-            resource_state[resource_index]++;
+        int[] dices = diceState(n_dice);
+        for(int i=0;i<=n_dice-1;i++) {
+            resource_state[dices[i]]++;
         }
     }
 
