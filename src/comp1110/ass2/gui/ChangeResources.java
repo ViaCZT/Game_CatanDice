@@ -49,8 +49,8 @@ public class ChangeResources {
     static Button gold = new Button("Gold");
     static Button[] resources = {ore,grain,wool,timber,brick,gold};
 
-    public static boolean display(String title, String msg){
-        int[] r = {0,1,2,1,1,2};
+    public static boolean display(String title, String msg, Player player){
+        int[] r = player.getResource_state();
         String b = "J1,J2,J3,J6";
         player.setResource_state(r);
         player.setBoard_state(b);
@@ -167,8 +167,13 @@ public class ChangeResources {
             ok.setDisable(true);
         });
 
+        Button close = new Button("Close");
+        close.setOnAction(event->{
+            stage.close();
+        });
+
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(label,swap,trade,ore,grain,wool,timber,brick,gold,cancel,re,bo,ok,t2,t3,t4);
+        vBox.getChildren().addAll(label,swap,trade,ore,grain,wool,timber,brick,gold,cancel,re,bo,ok,t2,t3,t4,close);
 
         //设置居中
         vBox.setAlignment(Pos.CENTER);

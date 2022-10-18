@@ -16,6 +16,8 @@ public class Player {
     public String board_state;
     public int[] resource_state;
 
+    public int turn;
+
     public Player() {
 
     }
@@ -31,10 +33,11 @@ public class Player {
     public String getBoard_state(){
         return this.board_state;
     }
-
     public int[] getResource_state(){
         return this.resource_state;
     }
+    public int getTurn(){return this.turn;}
+    public void setTurn(int turn){this.turn = turn; }
 
     /**
      * To get the type of action according to an Action String.

@@ -200,7 +200,7 @@ public class Game extends Application {
 
         Button bSwapTrade = new Button("Would like Swap or Trade?");
         bSwapTrade.setOnMouseClicked(event -> {
-            ChangeResources.display("Please change your resources", "Please choose your operation");
+            ChangeResources.display("Please change your resources", "Please choose your operation",player);
         });
         resourceGroup.getChildren().add(bSwapTrade);
         resourceGroup.setLayoutX(WINDOW_WIDTH / 2.0 + 10);
@@ -357,15 +357,6 @@ public class Game extends Application {
                 System.out.print(res_s[i]);
             }
             player.setResource_state(res_s);
-            String resource_state = ChangeResources.resourceStateToString(player.resource_state);
-            Group showResources = new Group();
-            Text show = new Text();
-            show.setText(resource_state);
-            showResources.getChildren().add(show);
-            showResources.setLayoutX(WINDOW_WIDTH / 2.0 + 300 );
-            showResources.setLayoutY(WINDOW_HEIGHT / 2.0 +60);
-            if (!(root.getChildren().contains(showResources)))
-                root.getChildren().add(showResources);
 
         });
 
@@ -375,26 +366,79 @@ public class Game extends Application {
                 b.setDisable(false);
             }
         });
+    }
 
+    public void show(Player player){
+        Group showButton = new Group();
+        Button sb = new Button("Show resource");
+        showButton.getChildren().add(sb);
+        showButton.setLayoutX(WINDOW_WIDTH / 2.0 + 200 );
+        showButton.setLayoutY(WINDOW_HEIGHT / 2.0 +40);
+        if (!(root.getChildren().contains(showButton)))
+            root.getChildren().add(showButton);
 
+        Group showResources = new Group();
+        Text show = new Text();
+        showResources.getChildren().add(show);
+        showResources.setLayoutX(WINDOW_WIDTH / 2.0 + 400 );
+        showResources.setLayoutY(WINDOW_HEIGHT / 2.0 +50);
+        if (!(root.getChildren().contains(showResources)))
+            root.getChildren().add(showResources);
+        sb.setOnAction(event->{
+            String resource_state = ChangeResources.resourceStateToString(player.resource_state);
+            show.setText(resource_state);
+        });
+    }
+
+    public void endTurn(Player player){
+        Group endturn = new Group();
+        Button end = new Button("End this turn and calculate score");
+        endturn.getChildren().add(end);
+        endturn.setLayoutX(WINDOW_WIDTH / 2.0 + 350);
+        endturn.setLayoutY(WINDOW_HEIGHT / 2.0 +280);
+        if (!(root.getChildren().contains(endturn)))
+            root.getChildren().add(endturn);
+
+        Group showturn = new Group();
+        Text turn = new Text();
+        turn.setText("Turn 1");
+        showturn.getChildren().add(turn);
+        showturn.setLayoutX(WINDOW_WIDTH / 2.0 + 430);
+        showturn.setLayoutY(WINDOW_HEIGHT / 2.0 +260);
+        if (!(root.getChildren().contains(showturn)))
+            root.getChildren().add(showturn);
+
+        end.setOnAction(event->{
+            player.setResource_state(new int[]{0, 0, 0, 0, 0, 0});
+            player.setTurn(player.getTurn()+1);
+            turn.setText("Turn "+player.getTurn());
+
+        });
 
 
 
 
     }
 
+
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Catan Dice");
         Scene scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
         Player player = new Player();
+
         player.resource_state = new int[]{0, 0, 0, 0, 0, 0};
         player.board_state = "";
+        player.turn=1;
 
         displayBoard();
         displayScore();
-        displayResource(player);
         displayDices(player);
+        displayResource(player);
+        show(player);
+        endTurn(player);
+
+
 
         stage.setScene(scene);
         stage.show();
