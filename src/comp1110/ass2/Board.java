@@ -33,28 +33,7 @@ public class Board {
         return Arrays.asList(s);
     }
 */
-    public int point[] = {0 ,0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-    public void getPoint(int turn){
-        int all_point = 0;
-        String[] state = getStructure();
-        for(String str : state){
-            switch (str.charAt(0)){
-                case 'R' -> all_point++;//道路得分
-                default -> {
-                    int p = Integer.parseInt(str.substring(1));//房子 城市 骑士的得分
-                    all_point+=p;
-                }
-            }
-        }
-        if(turn == 0){
-            point[0] = all_point;
-        }
-        else
-            point[turn] = all_point - point[turn-1];
 
-        if(point[turn]==0){
-            point[turn]=-2;
-        }
-    }
+
 }

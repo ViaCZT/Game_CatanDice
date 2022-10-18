@@ -17,6 +17,7 @@ public class Player {
     public int[] resource_state;
 
     public int turn;
+    public int point[] = {0 ,0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     public Player() {
 

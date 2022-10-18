@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -461,8 +463,7 @@ public class Game extends Application {
         if (!(root.getChildren().contains(showResources)))
             root.getChildren().add(showResources);
         sb.setOnAction(event -> {
-            String resource_state = ChangeResources.resourceStateToString(player.resource_state);
-            show.setText(resource_state);
+            showResource(player);
         });
     }
 
@@ -511,6 +512,50 @@ public class Game extends Application {
         });
     }
 
+    public void getPoint(Player player){
+        int all_point = 0;
+        int turn = player.getTurn();
+        String[] state =player.getBoard_state().split(",");
+        for(String str : state){
+            switch (str.charAt(0)){
+                case 'R' -> all_point++;//道路得分
+                default -> {
+                    int p = Integer.parseInt(str.substring(1));//房子 城市 骑士的得分
+                    all_point+=p;
+                }
+            }
+        }
+        if(turn == 0){
+            player.point[0] = all_point;
+        }
+        else
+            player.point[turn] = all_point - player.point[turn-1];
+
+        if(player.point[turn]==0){
+            player.point[turn]=-2;
+        }
+    }
+
+
+    public void showPoints(Player player){
+        Group points = new Group();
+        List<Text> point = new ArrayList<>();
+        Text allPoint = new Text();
+        for(int i = 0;i<=4;i++){
+            Text point0 = new Text();
+            point.add(point0);
+            point0.setText("12");
+            point0.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+            point0.setLayoutX(970+47*i);
+            point0.setLayoutY(45);
+        }
+
+        points.getChildren().addAll(point);
+        if (!(root.getChildren().contains(points)))
+            root.getChildren().add(points);
+
+    }
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -526,6 +571,7 @@ public class Game extends Application {
         displayResource(player);
         show(player);
         endTurn(player);
+        showPoints(player);
         stage.setScene(scene);
         stage.show();
     }
