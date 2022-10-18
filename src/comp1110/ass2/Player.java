@@ -39,6 +39,8 @@ public class Player {
     }
     public int getTurn(){return this.turn;}
     public void setTurn(int turn){this.turn = turn; }
+    public void setPoint(int turn, int i){this.point[turn] = i;}
+    public int[] getPoint(){return this.point;}
 
     /**
      * To get the type of action according to an Action String.

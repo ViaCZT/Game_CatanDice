@@ -520,6 +520,7 @@ public class Game extends Application {
                 ready.setDisable(false);
             }
             System.out.println(player.getBoard_state());
+            showPoints(player);
 
         });
     }
@@ -539,13 +540,13 @@ public class Game extends Application {
                 }
             }
             if(turn == 0){
-                player.point[0] = all_point;
+                player.setPoint(turn,all_point);
             }
             else
-                player.point[turn] = all_point - player.point[turn-1];
+                player.setPoint(turn,all_point-player.getPoint()[turn-1]);
 
-            if(player.point[turn]==0){
-                player.point[turn]=-2;
+            if(player.getPoint()[turn]==0){
+                player.setPoint(turn,-2);
             }
         }
 
@@ -559,51 +560,42 @@ public class Game extends Application {
         for(int i = 0;i<=4;i++){
             Text point0 = new Text();
             point.add(point0);
-            point0.setText("12");
             point0.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
             point0.setLayoutX(970+47*i);
             point0.setLayoutY(45);
         }
         Text point1 = new Text();
         point.add(point1);
-        point1.setText("12");
         point1.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
         point1.setLayoutX(970+47*4);
         point1.setLayoutY(45+58);
         for(int i = 0;i<=4;i++){
             Text point0 = new Text();
             point.add(point0);
-            point0.setText("12");
             point0.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
             point0.setLayoutX(970+47*(4-i));
             point0.setLayoutY(45+58*2);
         }
         Text point2 = new Text();
         point.add(point2);
-        point2.setText("12");
         point2.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
         point2.setLayoutX(970);
         point2.setLayoutY(45+58*3);
         for(int i = 0;i<=2;i++){
             Text point0 = new Text();
             point.add(point0);
-            point0.setText("12");
             point0.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
             point0.setLayoutX(970+47*i);
             point0.setLayoutY(45+58*4);
         }
         Text allPoint = new Text();
         point.add(allPoint);
-        allPoint.setText("12");
         allPoint.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
         allPoint.setLayoutX(970+47*2+82);
         allPoint.setLayoutY(45+58*4);
 
         for(int i = 0;i<=14;i++){
-            point.get(i).setText(String.valueOf(player.point[i]));
-            if(point.get(i).getText()=="0"){
-                point.get(i).setText("");
-            }
+            point.get(i).setText(String.valueOf(player.getPoint()[i]));
         }
 
 
@@ -628,7 +620,6 @@ public class Game extends Application {
         displayResource(player);
         show(player);
         endTurn(player);
-        showPoints(player);
         stage.setScene(scene);
         stage.show();
     }
