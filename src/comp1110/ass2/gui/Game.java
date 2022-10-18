@@ -246,10 +246,10 @@ public class Game extends Application {
 
     }
 
+    Button bSwapTrade = new Button("Would like Swap or Trade?");
+
     public void displayResource(Player player) {
         Group resourceGroup = new Group();
-
-        Button bSwapTrade = new Button("Would like Swap or Trade?");
         bSwapTrade.setOnMouseClicked(event -> {
             ChangeResources.display("Please change your resources", "Please choose your operation", player);
         });
@@ -287,10 +287,15 @@ public class Game extends Application {
         }
         return s;
     }
+    Button roll1 = new Button("Roll dices");
+    Button roll2 = new Button("Roll dices");
+    Button roll3 = new Button("Roll dices");
+    Button ready = new Button("Ready");
+    Button r = new Button("Reset");
+
 
     public void displayDices(Player player) {
         Group DiceGroup = new Group();
-        Button roll1 = new Button("Roll dices");
         DiceGroup.getChildren().add(roll1);
         DiceGroup.setLayoutX(WINDOW_WIDTH / 2.0 + 50);
         DiceGroup.setLayoutY(WINDOW_HEIGHT / 2.0 - 20);
@@ -304,7 +309,7 @@ public class Game extends Application {
             root.getChildren().add(DiceGroup);
 
         Group DiceGroup2 = new Group();
-        Button roll2 = new Button("Roll dices");
+
         DiceGroup2.getChildren().add(roll2);
         DiceGroup2.setLayoutX(WINDOW_WIDTH / 2.0 + 50);
         DiceGroup2.setLayoutY(WINDOW_HEIGHT / 2.0 + 30);
@@ -313,7 +318,6 @@ public class Game extends Application {
         roll2.setDisable(true);
 
         Group DiceGroup3 = new Group();
-        Button roll3 = new Button("Roll dices");
         DiceGroup3.getChildren().add(roll3);
         DiceGroup3.setLayoutX(WINDOW_WIDTH / 2.0 + 50);
         DiceGroup3.setLayoutY(WINDOW_HEIGHT / 2.0 + 80);
@@ -372,7 +376,6 @@ public class Game extends Application {
         });
 
         Group Ready = new Group();
-        Button ready = new Button("Ready");
         Ready.getChildren().add(ready);
         Ready.setLayoutX(WINDOW_WIDTH / 2.0 + 500);
         Ready.setLayoutY(WINDOW_HEIGHT / 2.0 + 30);
@@ -380,7 +383,7 @@ public class Game extends Application {
             root.getChildren().add(Ready);
 
         Group reset = new Group();
-        Button r = new Button("Reset");
+
         reset.getChildren().add(r);
         reset.setLayoutX(WINDOW_WIDTH / 2.0 + 500);
         reset.setLayoutY(WINDOW_HEIGHT / 2.0 - 20);
@@ -406,7 +409,14 @@ public class Game extends Application {
             for (int i = 0; i <= 5; i++) {
                 System.out.print(res_s[i]);
             }
+
             player.setResource_state(res_s);
+            showResource(player);
+            for(int i =0;i<=5;i++){
+                res_s[i]=0;
+            }
+
+
 
         });
 
@@ -432,9 +442,11 @@ public class Game extends Application {
             root.getChildren().add(showResources);
     }
 
+    Button sb = new Button("Show resource");
+
     public void show(Player player) {
         Group showButton = new Group();
-        Button sb = new Button("Show resource");
+
         showButton.getChildren().add(sb);
         showButton.setLayoutX(WINDOW_WIDTH / 2.0 + 200);
         showButton.setLayoutY(WINDOW_HEIGHT / 2.0 + 40);
@@ -473,13 +485,30 @@ public class Game extends Application {
             root.getChildren().add(showturn);
 
         end.setOnAction(event -> {
-            player.setResource_state(new int[]{0, 0, 0, 0, 0, 0});
-            player.setTurn(player.getTurn() + 1);
-            turn.setText("Turn " + player.getTurn());
+            if(player.turn==15){
+                turn.setText("Game Over!");
+                roll1.setDisable(true);
+                roll2.setDisable(true);
+                roll3.setDisable(true);
+                r.setDisable(true);
+                ready.setDisable(true);
+                sb.setDisable(true);
+                bSwapTrade.setDisable(true);
+
+            }
+            else {
+                player.resource_state = new int[6];
+                showResource(player);
+                player.setTurn(player.getTurn() + 1);
+                turn.setText("Turn " + player.getTurn());
+                roll1.setDisable(false);
+                roll2.setDisable(true);
+                roll3.setDisable(true);
+                r.setDisable(false);
+                ready.setDisable(false);
+            }
 
         });
-
-
     }
 
 
@@ -488,19 +517,15 @@ public class Game extends Application {
         stage.setTitle("Catan Dice");
         Scene scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
         Player player = new Player();
-
         player.resource_state = new int[]{0, 0, 0, 0, 0, 0};
         player.board_state = "";
         player.turn = 1;
-
         displayBoard(player);
         displayScore();
         displayDices(player);
         displayResource(player);
         show(player);
         endTurn(player);
-
-
         stage.setScene(scene);
         stage.show();
     }

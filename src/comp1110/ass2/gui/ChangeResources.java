@@ -48,10 +48,14 @@ public class ChangeResources {
     static Button brick = new Button("Brick");
     static Button gold = new Button("Gold");
     static Button[] resources = {ore,grain,wool,timber,brick,gold};
+    static Button swap = new Button("Swap");
+    static Button trade = new Button("trade");
+    static Button cancel = new Button("Cancel");
+    static Button ok = new Button("OK");
 
     public static boolean display(String title, String msg, Player player){
         int[] r = player.getResource_state();
-        String b = "J1,J2,J3,J6";
+        String b = player.getBoard_state();
         player.setResource_state(r);
         player.setBoard_state(b);
         int[] resource_state = player.getResource_state();
@@ -66,10 +70,7 @@ public class ChangeResources {
         stage.initModality(Modality.APPLICATION_MODAL);
         Label label = new Label();
         label.setText(msg);
-        Button swap = new Button("Swap");
-        Button trade = new Button("trade");
-        Button cancel = new Button("Cancel");
-        Button ok = new Button("OK");
+
 
         for(Button button:resources){
             button.setDisable(true);
@@ -170,6 +171,7 @@ public class ChangeResources {
         Button close = new Button("Close");
         close.setOnAction(event->{
             stage.close();
+
         });
 
         VBox vBox = new VBox();
