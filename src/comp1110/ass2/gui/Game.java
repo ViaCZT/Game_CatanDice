@@ -1,18 +1,17 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.CatanDice;
 import comp1110.ass2.Player;
-import gittest.B;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static comp1110.ass2.CatanDice.diceState;
@@ -22,7 +21,6 @@ public class Game extends Application {
     private final Group root = new Group();
     private static final int WINDOW_WIDTH = 1200;
     private static final int WINDOW_HEIGHT = 700;
-
 
 
     public void importImage(Group node, Image image, double height, double width) {
@@ -54,134 +52,79 @@ public class Game extends Application {
 
     public void makeRoadButton(Group node) {
 //        Rectangle road0 = new Rectangle(20, 60, Color.BLACK);
-        Button bR1 = new Button("1");
-        bR1.setPrefHeight(20);
-        bR1.setPrefWidth(60);
-        bR1.setLayoutX(470);
-        bR1.setLayoutY(294);
-        bR1.setRotate(-60);
+        List<Button> roadButton = new ArrayList<>();
+        for (int i = 0; i <= 15; i++) {
+            roadButton.add(new Button("1"));
+            Button bRoad = roadButton.get(i);
+            bRoad.setPrefHeight(20);
+            bRoad.setPrefWidth(60);
+            bRoad.setOnAction(actionEvent -> {
+                bRoad.setStyle("-fx-background-color:#696969;" +   //设置背景颜色
+                        "-fx-text-fill:#FFF;");                 //设置字体颜色
+            });
+        }
+        Button bR0 = roadButton.get(0);
+        bR0.setLayoutX(470);
+        bR0.setLayoutY(294);
+        bR0.setRotate(-60);
+        Button bR1 = roadButton.get(1);
+        bR1.setLayoutX(393);
+        bR1.setLayoutY(330);
+        Button bR2 = roadButton.get(2);
+        bR2.setLayoutX(470);
+        bR2.setLayoutY(376);
+        bR2.setRotate(60);
+        Button bR3 = roadButton.get(3);
+        bR3.setLayoutX(470);
+        bR3.setLayoutY(489);
+        bR3.setRotate(-60);
+        Button bR4 = roadButton.get(4);
+        bR4.setLayoutX(393);
+        bR4.setLayoutY(522);
+        Button bR5 = roadButton.get(5);
+        bR5.setLayoutX(471);
+        bR5.setLayoutY(563);
+        bR5.setRotate(60);
+        Button bR6 = roadButton.get(6);
+        bR6.setLayoutX(570);
+        bR6.setLayoutY(617);
+        Button bR7 = roadButton.get(7);
+        bR7.setLayoutX(645);
+        bR7.setLayoutY(577);
+        bR7.setRotate(-60);
+        Button bR8 = roadButton.get(8);
+        bR8.setLayoutX(645);
+        bR8.setLayoutY(468);
+        bR8.setRotate(60);
+        Button bR9 = roadButton.get(9);
+        bR9.setLayoutX(645);
+        bR9.setLayoutY(386);
+        bR9.setRotate(-60);
+        Button bR10 = roadButton.get(10);
+        bR10.setLayoutX(645);
+        bR10.setLayoutY(273);
+        bR10.setRotate(60);
+        Button bR11 = roadButton.get(11);
+        bR11.setLayoutX(647);
+        bR11.setLayoutY(189);
+        bR11.setRotate(-60);
+        Button bR12 = roadButton.get(12);
+        bR12.setLayoutX(744);
+        bR12.setLayoutY(520);
+        Button bR13 = roadButton.get(13);
+        bR13.setLayoutX(812);
+        bR13.setLayoutY(482);
+        bR13.setRotate(-60);
+        Button bR14 = roadButton.get(14);
+        bR14.setLayoutX(814);
+        bR14.setLayoutY(373);
+        bR14.setRotate(60);
+        Button bR15 = roadButton.get(15);
+        bR15.setLayoutX(816);
+        bR15.setLayoutY(288);
+        bR15.setRotate(-60);
 
-        bR1.setOnAction(actionEvent -> {
-            bR1.setStyle("-fx-background-color:#696969;" +   //设置背景颜色
-                    "-fx-text-fill:#FFF;");                 //设置字体颜色
-        });
-
-        node.getChildren().add(bR1);
-
-//        switch (indexString) {
-//            case "0" -> {
-//                Rectangle road0 = new Rectangle(20, 60, Color.BLACK);
-//                road0.setX(490); //LayoutX
-//                road0.setY(274); //LayoutY
-//                road0.setRotate(30);
-//                node.getChildren().add(road0);
-//            }
-//            case "1" -> {
-//                Rectangle road1 = new Rectangle(20, 60, Color.BLACK);
-//                road1.setX(413);
-//                road1.setY(315);
-//                road1.setRotate(90);
-//                node.getChildren().add(road1);
-//            }
-//            case "2" -> {
-//                Rectangle road2 = new Rectangle(20, 60, Color.BLACK);
-//                road2.setX(490);
-//                road2.setY(356);
-//                road2.setRotate(-30);
-//                node.getChildren().add(road2);
-//            }
-//            case "3" -> {
-//                Rectangle road3 = new Rectangle(20, 60, Color.BLACK);
-//                road3.setX(490);
-//                road3.setY(469);
-//                road3.setRotate(30);
-//                node.getChildren().add(road3);
-//            }
-//            case "4" -> {
-//                Rectangle road4 = new Rectangle(20, 60, Color.BLACK);
-//                road4.setX(413);
-//                road4.setY(505);
-//                road4.setRotate(90);
-//                node.getChildren().add(road4);
-//            }
-//            case "5" -> {
-//                Rectangle road5 = new Rectangle(20, 60, Color.BLACK);
-//                road5.setX(491);
-//                road5.setY(546);
-//                road5.setRotate(-30);
-//                node.getChildren().add(road5);
-//            }
-//            case "6" -> {
-//                Rectangle road6 = new Rectangle(20, 60, Color.BLACK);
-//                road6.setX(590);
-//                road6.setY(600);
-//                road6.setRotate(90);
-//                node.getChildren().add(road6);
-//            }
-//            case "7" -> {
-//                Rectangle road7 = new Rectangle(20, 60, Color.BLACK);
-//                road7.setX(665);
-//                road7.setY(560);
-//                road7.setRotate(30);
-//                node.getChildren().add(road7);
-//            }
-//            case "8" -> {
-//                Rectangle road8 = new Rectangle(20, 60, Color.BLACK);
-//                road8.setX(666);
-//                road8.setY(451);
-//                road8.setRotate(-30);
-//                node.getChildren().add(road8);
-//            }
-//            case "9" -> {
-//                Rectangle road9 = new Rectangle(20, 60, Color.BLACK);
-//                road9.setX(665);
-//                road9.setY(367);
-//                road9.setRotate(30);
-//                node.getChildren().add(road9);
-//            }
-//            case "10" -> {
-//                Rectangle road10 = new Rectangle(20, 60, Color.BLACK);
-//                road10.setX(665);
-//                road10.setY(254);
-//                road10.setRotate(-30);
-//                node.getChildren().add(road10);
-//            }
-//            case "11" -> {
-//                Rectangle road11 = new Rectangle(20, 60, Color.BLACK);
-//                road11.setX(667);
-//                road11.setY(169);
-//                road11.setRotate(30);
-//                node.getChildren().add(road11);
-//            }
-//            case "12" -> {
-//                Rectangle road12 = new Rectangle(20, 60, Color.BLACK);
-//                road12.setX(764);
-//                road12.setY(500);
-//                road12.setRotate(90);
-//                node.getChildren().add(road12);
-//            }
-//            case "13" -> {
-//                Rectangle road13 = new Rectangle(20, 60, Color.BLACK);
-//                road13.setX(832);
-//                road13.setY(463);
-//                road13.setRotate(30);
-//                node.getChildren().add(road13);
-//            }
-//            case "14" -> {
-//                Rectangle road14 = new Rectangle(20, 60, Color.BLACK);
-//                road14.setX(835);
-//                road14.setY(354);
-//                road14.setRotate(-30);
-//                node.getChildren().add(road14);
-//            }
-//            case "15" -> {
-//                Rectangle road15 = new Rectangle(20, 60, Color.BLACK);
-//                road15.setX(837);
-//                road15.setY(269);
-//                road15.setRotate(30);
-//                node.getChildren().add(road15);
-//            }
-//        }
+        node.getChildren().addAll(roadButton);
     }
 
     void displayScore() {
@@ -200,7 +143,7 @@ public class Game extends Application {
 
         Button bSwapTrade = new Button("Would like Swap or Trade?");
         bSwapTrade.setOnMouseClicked(event -> {
-            ChangeResources.display("Please change your resources", "Please choose your operation",player);
+            ChangeResources.display("Please change your resources", "Please choose your operation", player);
         });
         resourceGroup.getChildren().add(bSwapTrade);
         resourceGroup.setLayoutX(WINDOW_WIDTH / 2.0 + 10);
@@ -210,13 +153,13 @@ public class Game extends Application {
 
     }
 
-    public Button makeDicesButton(Double X,Double Y){
+    public Button makeDicesButton(Double X, Double Y) {
         Group dice = new Group();
         Button d = new Button(" ");
         dice.getChildren().add(d);
         dice.setLayoutX(X);
         dice.setLayoutY(Y);
-        d.setOnAction(event->{
+        d.setOnAction(event -> {
             d.setDisable(true);
         });
         if (!(root.getChildren().contains(dice)))
@@ -224,29 +167,29 @@ public class Game extends Application {
         return d;
     }
 
-    public String makeDiceResource(int resourceID){
+    public String makeDiceResource(int resourceID) {
         String s = null;
-        switch (resourceID){
-            case 0->s="Ore";
-            case 1->s="Grain";
-            case 2->s="Wool";
-            case 3->s="Timber";
-            case 4->s="Brick";
-            case 5->s="Gold";
+        switch (resourceID) {
+            case 0 -> s = "Ore";
+            case 1 -> s = "Grain";
+            case 2 -> s = "Wool";
+            case 3 -> s = "Timber";
+            case 4 -> s = "Brick";
+            case 5 -> s = "Gold";
         }
         return s;
     }
 
-    public void displayDices(Player player){
+    public void displayDices(Player player) {
         Group DiceGroup = new Group();
         Button roll1 = new Button("Roll dices");
         DiceGroup.getChildren().add(roll1);
-        DiceGroup.setLayoutX(WINDOW_WIDTH / 2.0 + 50 );
-        DiceGroup.setLayoutY(WINDOW_HEIGHT / 2.0 -20);
+        DiceGroup.setLayoutX(WINDOW_WIDTH / 2.0 + 50);
+        DiceGroup.setLayoutY(WINDOW_HEIGHT / 2.0 - 20);
         int[] res_s = new int[6];
         Button[] resourcesButtons = new Button[6];
-        for(int i=0;i<=5;i++) {
-            resourcesButtons[i] = makeDicesButton(WINDOW_WIDTH / 2.0 + 200+50*i, WINDOW_HEIGHT / 2.0 -20);
+        for (int i = 0; i <= 5; i++) {
+            resourcesButtons[i] = makeDicesButton(WINDOW_WIDTH / 2.0 + 200 + 50 * i, WINDOW_HEIGHT / 2.0 - 20);
             resourcesButtons[i].setDisable(true);
         }
         if (!(root.getChildren().contains(DiceGroup)))
@@ -255,7 +198,7 @@ public class Game extends Application {
         Group DiceGroup2 = new Group();
         Button roll2 = new Button("Roll dices");
         DiceGroup2.getChildren().add(roll2);
-        DiceGroup2.setLayoutX(WINDOW_WIDTH / 2.0 + 50 );
+        DiceGroup2.setLayoutX(WINDOW_WIDTH / 2.0 + 50);
         DiceGroup2.setLayoutY(WINDOW_HEIGHT / 2.0 + 30);
         if (!(root.getChildren().contains(DiceGroup2)))
             root.getChildren().add(DiceGroup2);
@@ -264,59 +207,58 @@ public class Game extends Application {
         Group DiceGroup3 = new Group();
         Button roll3 = new Button("Roll dices");
         DiceGroup3.getChildren().add(roll3);
-        DiceGroup3.setLayoutX(WINDOW_WIDTH / 2.0 + 50 );
+        DiceGroup3.setLayoutX(WINDOW_WIDTH / 2.0 + 50);
         DiceGroup3.setLayoutY(WINDOW_HEIGHT / 2.0 + 80);
         if (!(root.getChildren().contains(DiceGroup3)))
             root.getChildren().add(DiceGroup3);
         roll3.setDisable(true);
 
         Text[] t = new Text[6];
-        for(int i  = 0;i<=5;i++){
+        for (int i = 0; i <= 5; i++) {
             Group resource_type = new Group();
             t[i] = new Text();
             resource_type.getChildren().add(t[i]);
-            resource_type.setLayoutX(WINDOW_WIDTH / 2.0 + 200+50*i);
+            resource_type.setLayoutX(WINDOW_WIDTH / 2.0 + 200 + 50 * i);
             resource_type.setLayoutY(WINDOW_HEIGHT / 2.0 + 30);
             if (!(root.getChildren().contains(resource_type)))
                 root.getChildren().add(resource_type);
         }
 
 
-        roll1.setOnAction(event->{
+        roll1.setOnAction(event -> {
 
-            for(int i  = 0;i<=5;i++){
+            for (int i = 0; i <= 5; i++) {
                 t[i].setText(makeDiceResource(diceState(6)[i]));
             }
             roll1.setDisable(true);
-            for(Button b :resourcesButtons){
+            for (Button b : resourcesButtons) {
                 b.setDisable(false);
             }
             roll2.setDisable(false);
         });
 
 
-
-        roll2.setOnAction(event->{
-            for(int i = 0;i<=5;i++){
-                if(resourcesButtons[i].isDisabled()){
+        roll2.setOnAction(event -> {
+            for (int i = 0; i <= 5; i++) {
+                if (resourcesButtons[i].isDisabled()) {
                     t[i].setText(makeDiceResource(diceState(6)[i]));
                 }
             }
             roll2.setDisable(true);
             roll3.setDisable(false);
-            for(Button b :resourcesButtons){
+            for (Button b : resourcesButtons) {
                 b.setDisable(false);
             }
         });
 
-        roll3.setOnAction(event->{
-            for(int i = 0;i<=5;i++){
-                if(resourcesButtons[i].isDisabled()){
+        roll3.setOnAction(event -> {
+            for (int i = 0; i <= 5; i++) {
+                if (resourcesButtons[i].isDisabled()) {
                     t[i].setText(makeDiceResource(diceState(6)[i]));
                 }
             }
             roll3.setDisable(true);
-            for(Button b :resourcesButtons){
+            for (Button b : resourcesButtons) {
                 b.setDisable(true);
             }
         });
@@ -332,28 +274,28 @@ public class Game extends Application {
         Group reset = new Group();
         Button r = new Button("Reset");
         reset.getChildren().add(r);
-        reset.setLayoutX(WINDOW_WIDTH / 2.0 + 500 );
-        reset.setLayoutY(WINDOW_HEIGHT / 2.0 -20);
+        reset.setLayoutX(WINDOW_WIDTH / 2.0 + 500);
+        reset.setLayoutY(WINDOW_HEIGHT / 2.0 - 20);
         if (!(root.getChildren().contains(reset)))
             root.getChildren().add(reset);
 
-        ready.setOnAction(event->{
+        ready.setOnAction(event -> {
             roll1.setDisable(true);
             roll2.setDisable(true);
             roll3.setDisable(true);
             r.setDisable(true);
-            for (Button b:resourcesButtons){
+            for (Button b : resourcesButtons) {
                 b.setDisable(true);
             }
             ready.setDisable(true);
             int[] states = new int[6];
-            for(int i =0;i<=5;i++){
+            for (int i = 0; i <= 5; i++) {
                 states[i] = Integer.parseInt(ChangeResources.resourceToNum(t[i].getText()));
             }
-            for(int i =0;i<=5;i++){
+            for (int i = 0; i <= 5; i++) {
                 res_s[states[i]]++;
             }
-            for(int i = 0;i<=5;i++){
+            for (int i = 0; i <= 5; i++) {
                 System.out.print(res_s[i]);
             }
             player.setResource_state(res_s);
@@ -361,41 +303,41 @@ public class Game extends Application {
         });
 
 
-        r.setOnAction(event->{
-            for(Button b:resourcesButtons){
+        r.setOnAction(event -> {
+            for (Button b : resourcesButtons) {
                 b.setDisable(false);
             }
         });
     }
 
-    public void show(Player player){
+    public void show(Player player) {
         Group showButton = new Group();
         Button sb = new Button("Show resource");
         showButton.getChildren().add(sb);
-        showButton.setLayoutX(WINDOW_WIDTH / 2.0 + 200 );
-        showButton.setLayoutY(WINDOW_HEIGHT / 2.0 +40);
+        showButton.setLayoutX(WINDOW_WIDTH / 2.0 + 200);
+        showButton.setLayoutY(WINDOW_HEIGHT / 2.0 + 40);
         if (!(root.getChildren().contains(showButton)))
             root.getChildren().add(showButton);
 
         Group showResources = new Group();
         Text show = new Text();
         showResources.getChildren().add(show);
-        showResources.setLayoutX(WINDOW_WIDTH / 2.0 + 400 );
-        showResources.setLayoutY(WINDOW_HEIGHT / 2.0 +50);
+        showResources.setLayoutX(WINDOW_WIDTH / 2.0 + 400);
+        showResources.setLayoutY(WINDOW_HEIGHT / 2.0 + 50);
         if (!(root.getChildren().contains(showResources)))
             root.getChildren().add(showResources);
-        sb.setOnAction(event->{
+        sb.setOnAction(event -> {
             String resource_state = ChangeResources.resourceStateToString(player.resource_state);
             show.setText(resource_state);
         });
     }
 
-    public void endTurn(Player player){
+    public void endTurn(Player player) {
         Group endturn = new Group();
         Button end = new Button("End this turn and calculate score");
         endturn.getChildren().add(end);
         endturn.setLayoutX(WINDOW_WIDTH / 2.0 + 350);
-        endturn.setLayoutY(WINDOW_HEIGHT / 2.0 +280);
+        endturn.setLayoutY(WINDOW_HEIGHT / 2.0 + 280);
         if (!(root.getChildren().contains(endturn)))
             root.getChildren().add(endturn);
 
@@ -404,18 +346,16 @@ public class Game extends Application {
         turn.setText("Turn 1");
         showturn.getChildren().add(turn);
         showturn.setLayoutX(WINDOW_WIDTH / 2.0 + 430);
-        showturn.setLayoutY(WINDOW_HEIGHT / 2.0 +260);
+        showturn.setLayoutY(WINDOW_HEIGHT / 2.0 + 260);
         if (!(root.getChildren().contains(showturn)))
             root.getChildren().add(showturn);
 
-        end.setOnAction(event->{
+        end.setOnAction(event -> {
             player.setResource_state(new int[]{0, 0, 0, 0, 0, 0});
-            player.setTurn(player.getTurn()+1);
-            turn.setText("Turn "+player.getTurn());
+            player.setTurn(player.getTurn() + 1);
+            turn.setText("Turn " + player.getTurn());
 
         });
-
-
 
 
     }
@@ -429,7 +369,7 @@ public class Game extends Application {
 
         player.resource_state = new int[]{0, 0, 0, 0, 0, 0};
         player.board_state = "";
-        player.turn=1;
+        player.turn = 1;
 
         displayBoard();
         displayScore();
@@ -437,7 +377,6 @@ public class Game extends Application {
         displayResource(player);
         show(player);
         endTurn(player);
-
 
 
         stage.setScene(scene);
