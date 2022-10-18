@@ -390,7 +390,6 @@ public class Game extends Application {
         }
         return s;
     }
-
     Button roll1 = new Button("Roll dices");
     Button roll2 = new Button("Roll dices");
     Button roll3 = new Button("Roll dices");
@@ -609,46 +608,93 @@ public class Game extends Application {
                 r.setDisable(false);
                 ready.setDisable(false);
             }
+            System.out.println(player.getBoard_state());
 
         });
     }
 
-    public void getPoint(Player player) {
+    public void getPoint(Player player){
         int all_point = 0;
         int turn = player.getTurn();
-        String[] state = player.getBoard_state().split(",");
-        for (String str : state) {
-            switch (str.charAt(0)) {
-                case 'R' -> all_point++;//道路得分
-                default -> {
-                    int p = Integer.parseInt(str.substring(1));//房子 城市 骑士的得分
-                    all_point += p;
+        String[] state =player.getBoard_state().split(",");
+        if(state[0]!=""){
+            for(String str : state){
+                switch (str.charAt(0)){
+                    case 'R' -> all_point++;//道路得分
+                    default -> {
+                        int p = Integer.parseInt(str.substring(1));//房子 城市 骑士的得分
+                        all_point+=p;
+                    }
                 }
             }
-        }
-        if (turn == 0) {
-            player.point[0] = all_point;
-        } else
-            player.point[turn] = all_point - player.point[turn - 1];
+            if(turn == 0){
+                player.point[0] = all_point;
+            }
+            else
+                player.point[turn] = all_point - player.point[turn-1];
 
-        if (player.point[turn] == 0) {
-            player.point[turn] = -2;
+            if(player.point[turn]==0){
+                player.point[turn]=-2;
+            }
         }
+
     }
 
 
-    public void showPoints(Player player) {
+    public void showPoints(Player player){
+        getPoint(player);
         Group points = new Group();
         List<Text> point = new ArrayList<>();
-        Text allPoint = new Text();
-        for (int i = 0; i <= 4; i++) {
+        for(int i = 0;i<=4;i++){
             Text point0 = new Text();
             point.add(point0);
             point0.setText("12");
             point0.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
-            point0.setLayoutX(970 + 47 * i);
+            point0.setLayoutX(970+47*i);
             point0.setLayoutY(45);
         }
+        Text point1 = new Text();
+        point.add(point1);
+        point1.setText("12");
+        point1.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+        point1.setLayoutX(970+47*4);
+        point1.setLayoutY(45+58);
+        for(int i = 0;i<=4;i++){
+            Text point0 = new Text();
+            point.add(point0);
+            point0.setText("12");
+            point0.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+            point0.setLayoutX(970+47*(4-i));
+            point0.setLayoutY(45+58*2);
+        }
+        Text point2 = new Text();
+        point.add(point2);
+        point2.setText("12");
+        point2.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+        point2.setLayoutX(970);
+        point2.setLayoutY(45+58*3);
+        for(int i = 0;i<=2;i++){
+            Text point0 = new Text();
+            point.add(point0);
+            point0.setText("12");
+            point0.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+            point0.setLayoutX(970+47*i);
+            point0.setLayoutY(45+58*4);
+        }
+        Text allPoint = new Text();
+        point.add(allPoint);
+        allPoint.setText("12");
+        allPoint.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+        allPoint.setLayoutX(970+47*2+82);
+        allPoint.setLayoutY(45+58*4);
+
+        for(int i = 0;i<=14;i++){
+            point.get(i).setText(String.valueOf(player.point[i]));
+            if(point.get(i).getText()=="0"){
+                point.get(i).setText("");
+            }
+        }
+
 
         points.getChildren().addAll(point);
         if (!(root.getChildren().contains(points)))
@@ -663,8 +709,7 @@ public class Game extends Application {
         Scene scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
         Player player = new Player();
         player.resource_state = new int[]{0, 0, 0, 0, 0, 0};
-//        player.board_state = "";
-        player.board_state = "J1,J2,J3,J6";
+        player.board_state = "";
         player.turn = 1;
         displayBoard(player);
         displayScore();
