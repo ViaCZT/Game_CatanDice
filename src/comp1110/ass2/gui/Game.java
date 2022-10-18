@@ -409,14 +409,14 @@ public class Game extends Application {
             for (int i = 0; i <= 5; i++) {
                 System.out.print(res_s[i]);
             }
+            int[] r_s = new int[6];
+            System.arraycopy(res_s,0,r_s,0,6);
 
-            player.setResource_state(res_s);
+            player.setResource_state(r_s);
             showResource(player);
             for(int i =0;i<=5;i++){
                 res_s[i]=0;
             }
-
-
 
         });
 
