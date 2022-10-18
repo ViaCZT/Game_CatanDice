@@ -56,10 +56,10 @@ public class CatanDice {
         return false;
     }
 
-    public static int[] diceState(int n_dice){
-        int[] dices  = new int[n_dice];
+    public static int[] diceState(int n_dice) {
+        int[] dices = new int[n_dice];
         Random ran = new Random();
-        for(int i =0;i<=n_dice-1;i++){
+        for (int i = 0; i <= n_dice - 1; i++) {
             int resource_index = ran.nextInt(6);
             dices[i] = resource_index;
         }
@@ -86,7 +86,7 @@ public class CatanDice {
     public static void rollDice(int n_dice, int[] resource_state) {
         // FIXME: Task #6
         int[] dices = diceState(n_dice);
-        for(int i=0;i<=n_dice-1;i++) {
+        for (int i = 0; i <= n_dice - 1; i++) {
             resource_state[dices[i]]++;
         }
     }
@@ -145,12 +145,14 @@ public class CatanDice {
                 return myBoardState.contains(sList.get(sList.indexOf(structure) - 1)) && myBoardState.contains(getRoad(structure));
             } else {
                 return myBoardState.contains(getRoad(structure));
+//                return true;
             }
         } else if (cList.contains(structure)) {
             if (!structure.equals("C7")) {
                 return myBoardState.contains(cList.get(cList.indexOf(structure) - 1)) && myBoardState.contains(getRoad(structure));
             } else {
-                return myBoardState.contains(getRoad(structure));
+//                return myBoardState.contains(getRoad(structure));
+                return true;
             }
         } else if (jList.contains(structure)) {
             if (structure.equals("J1")) {
@@ -643,6 +645,7 @@ public class CatanDice {
     public static String[] buildPlan(String target_structure,
                                      String board_state,
                                      int[] resource_state) {
+        //FIXME: task #14
         Structure myStructure = new Structure();
         List<String> sList = myStructure.getAllSettles();
         List<String> cList = myStructure.getAllCities();
@@ -693,7 +696,7 @@ public class CatanDice {
             } else
                 return null;
         }
-        String[] plan= new String[p.size()];
+        String[] plan = new String[p.size()];
         return plan;
     }
 

@@ -1,5 +1,6 @@
 package comp1110.ass2.gui;
 
+import comp1110.ass2.CatanDice;
 import comp1110.ass2.Player;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -35,14 +36,15 @@ public class Game extends Application {
         node.getChildren().add(Img);
     }
 
-    void displayBoard() {
+    void displayBoard(Player player) {
         Group boardGroup = new Group();
 
         Image boardImage = new Image(Objects.requireNonNull(Viewer.class.getResource("island-one-with-numbering.png")).toString());
         importImage(boardGroup, boardImage, 600.0, 600.0);
 
         //put on buttons for every structure in the board
-        makeRoadButton(boardGroup);
+        makeRoadButton(boardGroup, player);
+        makeSettleButton(boardGroup, player);
 
         boardGroup.setLayoutX(-300);        //the distance from board image to the right border is 300
         if (!(root.getChildren().contains(boardGroup)))
@@ -50,17 +52,123 @@ public class Game extends Application {
 
     }
 
-    public void makeRoadButton(Group node) {
-//        Rectangle road0 = new Rectangle(20, 60, Color.BLACK);
+    public void makeSettleButton(Group node, Player player) {
+        List<Button> settleButton = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            settleButton.add(new Button());
+            Button bSettle = settleButton.get(i);
+            bSettle.setPrefHeight(30);
+            bSettle.setPrefWidth(30);
+
+            String settlement = "S";
+            switch (i) {
+                case 0 -> {
+                    settlement += "3";
+                    bSettle.setText("3");
+                }
+                case 1 -> {
+                    settlement += "4";
+                    bSettle.setText("4");
+                }
+                case 2 -> {
+                    settlement += "5";
+                    bSettle.setText("5");
+                }
+                case 3 -> {
+                    settlement += "7";
+                    bSettle.setText("7");
+                }
+                case 4 -> {
+                    settlement += "9";
+                    bSettle.setText("9");
+                }
+                case 5 -> {
+                    settlement += "11";
+                    bSettle.setText("11");
+                }
+            }
+            String finalSettlement = settlement;
+            bSettle.setOnAction(actionEvent -> {
+                int[] resourceState = player.getResource_state();
+                String boardState = player.getBoard_state();
+                System.out.print("\nsettleButton:");
+                for (int res : resourceState) {
+                    System.out.print(res);
+                }
+                if (!(CatanDice.checkResources("S", resourceState))) {
+                    AlertWindow.display("Resource Constrain", "Not enough resources to build a settlement!");
+                } else if (!(CatanDice.checkBuildConstraints(finalSettlement, boardState))) {
+                    System.out.print("settlement Build Constrain: ");
+                    System.out.println(boardState);
+                    AlertWindow.display("Build Constrain", "Cannot build this settlement!");
+                } else {
+                    bSettle.setStyle("-fx-background-color:#FFCC00;" +   //设置背景颜色
+                            "-fx-text-fill:#000000;");                 //设置字体颜色
+                    player.setBoard_state(boardState + "," + finalSettlement);
+                    System.out.println(boardState);
+                    resourceState[4] -= 1;
+                    resourceState[3] -= 1;
+                    resourceState[2] -= 1;
+                    resourceState[1] -= 1;
+                    player.setResource_state(resourceState);
+                    // show resource
+                    showResource(player);
+                }
+            });
+        }
+        Button bS3 = settleButton.get(0);
+        bS3.setLayoutX(518);
+        bS3.setLayoutY(235);
+        Button bS4 = settleButton.get(1);
+        bS4.setLayoutX(518);
+        bS4.setLayoutY(435);
+        Button bS5 = settleButton.get(2);
+        bS5.setLayoutX(525);
+        bS5.setLayoutY(620);
+        Button bS7 = settleButton.get(3);
+        bS7.setLayoutX(698);
+        bS7.setLayoutY(527);
+        Button bS9 = settleButton.get(4);
+        bS9.setLayoutX(690);
+        bS9.setLayoutY(335);
+        Button bS11 = settleButton.get(5);
+        bS11.setLayoutX(695);
+        bS11.setLayoutY(139);
+        node.getChildren().addAll(settleButton);
+    }
+
+    public void makeRoadButton(Group node, Player player) {
         List<Button> roadButton = new ArrayList<>();
         for (int i = 0; i <= 15; i++) {
             roadButton.add(new Button("1"));
             Button bRoad = roadButton.get(i);
             bRoad.setPrefHeight(20);
             bRoad.setPrefWidth(60);
+
+            String road = "R" + i;
             bRoad.setOnAction(actionEvent -> {
-                bRoad.setStyle("-fx-background-color:#696969;" +   //设置背景颜色
-                        "-fx-text-fill:#FFF;");                 //设置字体颜色
+                int[] resourceState = player.getResource_state();
+                String boardState = player.getBoard_state();
+                System.out.print("\nroadButton:");
+                for (int res : resourceState) {
+                    System.out.print(res);
+                }
+                if (!(CatanDice.checkResources("R", resourceState))) {
+                    AlertWindow.display("Resource Constrain", "Not enough resources to build a road!");
+                } else if (!(CatanDice.checkBuildConstraints(road, boardState))) {
+                    System.out.print("road Build Constrain: ");
+                    System.out.println(boardState);
+                    AlertWindow.display("Build Constrain", "Cannot build this road!");
+                } else {
+                    bRoad.setStyle("-fx-background-color:#696969;" +   //设置背景颜色
+                            "-fx-text-fill:#FFF;");                 //设置字体颜色
+                    player.setBoard_state(boardState + "," + road);
+                    resourceState[4] -= 1;
+                    resourceState[3] -= 1;
+                    player.setResource_state(resourceState);
+                    // show resource
+                    showResource(player);
+                }
             });
         }
         Button bR0 = roadButton.get(0);
@@ -310,6 +418,20 @@ public class Game extends Application {
         });
     }
 
+    Group showResources = new Group();
+
+    public void showResource(Player player) {
+        Text show = new Text();
+        showResources.getChildren().clear();
+        showResources.getChildren().add(show);
+        showResources.setLayoutX(WINDOW_WIDTH / 2.0 + 400);
+        showResources.setLayoutY(WINDOW_HEIGHT / 2.0 + 50);
+        String resource_state = ChangeResources.resourceStateToString(player.resource_state);
+        show.setText(resource_state);
+        if (!(root.getChildren().contains(showResources)))
+            root.getChildren().add(showResources);
+    }
+
     public void show(Player player) {
         Group showButton = new Group();
         Button sb = new Button("Show resource");
@@ -319,7 +441,7 @@ public class Game extends Application {
         if (!(root.getChildren().contains(showButton)))
             root.getChildren().add(showButton);
 
-        Group showResources = new Group();
+//        Group showResources = new Group();
         Text show = new Text();
         showResources.getChildren().add(show);
         showResources.setLayoutX(WINDOW_WIDTH / 2.0 + 400);
@@ -371,7 +493,7 @@ public class Game extends Application {
         player.board_state = "";
         player.turn = 1;
 
-        displayBoard();
+        displayBoard(player);
         displayScore();
         displayDices(player);
         displayResource(player);
