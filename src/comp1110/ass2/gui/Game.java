@@ -683,9 +683,7 @@ public class Game extends Application {
         allPoint.setLayoutX(970+47*2+82);
         allPoint.setLayoutY(45+58*4);
 
-        for(int i = 0;i<=14;i++){
-            point.get(i).setText(String.valueOf(player.getPoint()[i]));
-        }
+
 
 
         points.getChildren().addAll(point);
