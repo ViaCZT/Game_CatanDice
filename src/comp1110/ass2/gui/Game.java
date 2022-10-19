@@ -692,32 +692,7 @@ public class Game extends Application {
 
         end.setOnAction(event -> {
             makeKnight(player, boardGroup); // change Joker to Knight if there is
-//            if (player.turn == 15) {
-//                roll1.setDisable(true);
-//                roll2.setDisable(true);
-//                roll3.setDisable(true);
-//                r.setDisable(true);
-//                ready.setDisable(true);
-//                sb.setDisable(true);
-//                bSwapTrade.setDisable(true);
-//                EndWindow.display(player);
-//            } else {
-//                player.resource_state = new int[6];
-//                showResource(player);
-//                player.setTurn(player.getTurn() + 1);
-//                roll1.setDisable(false);
-//                roll2.setDisable(true);
-//                roll3.setDisable(true);
-//                r.setDisable(false);
-//                ready.setDisable(false);
-//                for (int i = 0; i <= 5; i++) {
-//                    t[i].setText("");
-//                }
-//                ready.setDisable(true);
-//            }
-//            System.out.println(player.getBoard_state());
-//            showPoints(player);
-//            displayTotalPoint(player);
+
 
             //new
             player.resource_state = new int[6];
@@ -743,7 +718,10 @@ public class Game extends Application {
                 ready.setDisable(true);
                 sb.setDisable(true);
                 bSwapTrade.setDisable(true);
+                end.setDisable(true);
                 EndWindow.display(player);
+
+
             }
 
         });

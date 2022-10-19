@@ -158,6 +158,10 @@ public class ChangeResources {
                 bb1.setDisable(true);
             }
             ok.setDisable(true);
+            if(resource_state[5]>=2){
+                trade.setDisable(false);
+            }
+            swap.setDisable(false);
         });
 
         Button close = new Button("Close");
@@ -169,7 +173,6 @@ public class ChangeResources {
         VBox vBox = new VBox();
         vBox.getChildren().addAll(label,swap,trade,ore,grain,wool,timber,brick,gold,cancel,re,bo,ok,t2,t3,t4,close);
 
-        //设置居中
         vBox.setAlignment(Pos.CENTER);
         Scene scene = new Scene(vBox,200,500);
         stage.setScene(scene);
