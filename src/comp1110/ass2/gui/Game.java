@@ -1,5 +1,6 @@
 package comp1110.ass2.gui;
 
+import comp1110.ass2.Board;
 import comp1110.ass2.CatanDice;
 import comp1110.ass2.Player;
 import javafx.application.Application;
@@ -15,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -62,9 +64,9 @@ public class Game extends Application {
         node.getChildren().add(label5);
     }
 
-    void displayBoard(Player player) {
-        Group boardGroup = new Group();
+    Group boardGroup = new Group();
 
+    void displayBoard(Player player) {
         Image boardImage = new Image(Objects.requireNonNull(Viewer.class.getResource("island-one-with-numbering.png")).toString());
         importImage(boardGroup, boardImage, 600.0, 600.0);
 
@@ -88,7 +90,6 @@ public class Game extends Application {
             Button bJoker = jokerButton.get(i);
 
             String joker = "J" + (i + 1);
-            String knight = "K" + (i + 1);
             bJoker.setOnAction(actionEvent -> {
                 int[] resourceState = player.getResource_state();
                 String boardState = player.getBoard_state();
@@ -97,7 +98,7 @@ public class Game extends Application {
                 } else if (!(CatanDice.checkBuildConstraints(joker, boardState))) {
                     AlertWindow.display("Build Constrain", "Cannot build this joker!");
                 } else {
-                    bJoker.setStyle("-fx-background-color:#339933;" +   //设置背景颜色
+                    bJoker.setStyle("-fx-background-color:#0000CD;" +   //设置背景颜色
                             "-fx-text-fill:#FFF;");                 //设置字体颜色
                     if (boardState.equals("")) {
                         player.setBoard_state(joker);
@@ -105,26 +106,15 @@ public class Game extends Application {
                         player.setBoard_state(boardState + "," + joker);
                     }
                     System.out.println("\njokerButton boardState: " + player.getBoard_state());
-//                    if (player.getBoard_state().contains(knight)) {
-//                        System.out.println("\nKnight" + player.getBoard_state());
-//                        bJoker.setStyle("-fx-background-color:#DC143C;" +
-//                                "-fx-text-fill:#FFF;");
-//                        bJoker.setText("Knight");
-//                    }
                     resourceState[0] -= 1;
                     resourceState[1] -= 1;
                     resourceState[2] -= 1;
                     player.setResource_state(resourceState);
+                    bJoker.setDisable(true);
                     // show resource
                     showResource(player);
                 }
             });
-            if (player.getBoard_state().contains(knight)) {
-                System.out.println("\nKnight" + player.getBoard_state());
-                bJoker.setStyle("-fx-background-color:#DC143C;" +
-                        "-fx-text-fill:#FFF;");
-                bJoker.setText("Knight");
-            }
         }
         Button bJ0 = jokerButton.get(0);
         bJ0.setLayoutX(360);
@@ -182,7 +172,7 @@ public class Game extends Application {
                 } else if (!(CatanDice.checkBuildConstraints(finalCity, boardState))) {
                     AlertWindow.display("Build Constrain", "Cannot build this city!");
                 } else {
-                    bCity.setStyle("-fx-background-color:#CCCCFF;" +   //设置背景颜色
+                    bCity.setStyle("-fx-background-color:#006400;" +   //设置背景颜色
                             "-fx-text-fill:#000000;");                 //设置字体颜色
                     if (boardState.equals("")) {
                         player.setBoard_state(finalCity);
@@ -193,6 +183,7 @@ public class Game extends Application {
                     resourceState[0] -= 3;
                     resourceState[1] -= 2;
                     player.setResource_state(resourceState);
+                    bCity.setDisable(true);
                     // show resource
                     showResource(player);
                 }
@@ -255,11 +246,11 @@ public class Game extends Application {
                 if (!(CatanDice.checkResources("S", resourceState))) {
                     AlertWindow.display("Resource Constrain", "Not enough resources to build a settlement!");
                 } else if (!(CatanDice.checkBuildConstraints(finalSettlement, boardState))) {
-                    System.out.print("\nsettlement Build Constrain: "+boardState+"\n");
+                    System.out.print("\nsettlement Build Constrain: " + boardState + "\n");
                     System.out.println(finalSettlement);
                     AlertWindow.display("Build Constrain", "Cannot build this settlement!");
                 } else {
-                    bSettle.setStyle("-fx-background-color:#FFCC00;" +   //设置背景颜色
+                    bSettle.setStyle("-fx-background-color:#FF0000;" +   //设置背景颜色 #FFCC00橘色
                             "-fx-text-fill:#000000;");                 //设置字体颜色
                     if (boardState.equals("")) {
                         player.setBoard_state(finalSettlement);
@@ -272,6 +263,7 @@ public class Game extends Application {
                     resourceState[2] -= 1;
                     resourceState[1] -= 1;
                     player.setResource_state(resourceState);
+                    bSettle.setDisable(true);
                     // show resource
                     showResource(player);
                 }
@@ -327,6 +319,7 @@ public class Game extends Application {
                     resourceState[4] -= 1;
                     resourceState[3] -= 1;
                     player.setResource_state(resourceState);
+                    bRoad.setDisable(true);
                     // show resource
                     showResource(player);
                 }
@@ -448,6 +441,7 @@ public class Game extends Application {
         }
         return s;
     }
+
     Button roll1 = new Button("Roll dices");
     Button roll2 = new Button("Roll dices");
     Button roll3 = new Button("Roll dices");
@@ -629,6 +623,70 @@ public class Game extends Application {
         });
     }
 
+    public void changeKnightButton(String knight, Group node) {
+        switch (knight) {
+            case "K1" -> {
+                Button k = new Button("Knight");
+                k.setStyle("-fx-background-color:#0000CD;" +   //设置背景颜色
+                        "-fx-text-fill:#FFF;");                 //设置字体颜色
+                k.setLayoutX(360);
+                k.setLayoutY(165);
+                node.getChildren().add(k);
+            }
+            case "K2" -> {
+                Button k = new Button("Knight");
+                k.setStyle("-fx-background-color:#0000CD;" +   //设置背景颜色
+                        "-fx-text-fill:#FFF;");                 //设置字体颜色
+                k.setLayoutX(360);
+                k.setLayoutY(363);
+                node.getChildren().add(k);
+            }
+            case "K3" -> {
+                Button k = new Button("Knight");
+                k.setStyle("-fx-background-color:#0000CD;" +   //设置背景颜色
+                        "-fx-text-fill:#FFF;");                 //设置字体颜色
+                k.setLayoutX(574);
+                k.setLayoutY(450);
+                node.getChildren().add(k);
+            }
+            case "K4" -> {
+                Button k = new Button("Knight");
+                k.setStyle("-fx-background-color:#0000CD;" +   //设置背景颜色
+                        "-fx-text-fill:#FFF;");                 //设置字体颜色
+                k.setLayoutX(747);
+                k.setLayoutY(354);
+                node.getChildren().add(k);
+            }
+            case "K5" -> {
+                Button k = new Button("Knight");
+                k.setStyle("-fx-background-color:#0000CD;" +   //设置背景颜色
+                        "-fx-text-fill:#FFF;");                 //设置字体颜色
+                k.setLayoutX(786);
+                k.setLayoutY(171);
+                node.getChildren().add(k);
+            }
+            case "K6" -> {
+                Button k = new Button("Knight");
+                k.setStyle("-fx-background-color:#0000CD;" +   //设置背景颜色
+                        "-fx-text-fill:#FFF;");                 //设置字体颜色
+                k.setLayoutX(614);
+                k.setLayoutY(62);
+                node.getChildren().add(k);
+            }
+        }
+    }
+
+    public void makeKnight(Player player, Group node) {
+        String board_state = player.getBoard_state();
+        List<String> myBoardState = Arrays.asList(new Board(board_state).getStructure());
+        for (int i = 1; i <= 6; i++) {
+            String knight = "K" + i;
+            if (myBoardState.contains(knight)) {
+                changeKnightButton(knight, node);
+            }
+        }
+    }
+
     public void endTurn(Player player) {
         Group endturn = new Group();
         Button end = new Button("End this turn and calculate score");
@@ -639,9 +697,8 @@ public class Game extends Application {
             root.getChildren().add(endturn);
 
 
-
-
         end.setOnAction(event -> {
+            makeKnight(player, boardGroup); // change Joker to Knight if there is
             if (player.turn == 15) {
                 roll1.setDisable(true);
                 roll2.setDisable(true);
@@ -661,7 +718,7 @@ public class Game extends Application {
                 roll3.setDisable(true);
                 r.setDisable(false);
                 ready.setDisable(false);
-                for(int i =0;i<=5;i++){
+                for (int i = 0; i <= 5; i++) {
                     t[i].setText("");
                 }
                 ready.setDisable(true);
@@ -678,73 +735,72 @@ public class Game extends Application {
 
     public void getPoint(Player player) {
         int point = 0;
-        String[] state =player.getBoard_state().split(",");
-        if(state[0]!=""){
-            for(String str : state){
-                switch (str.charAt(0)){
+        String[] state = player.getBoard_state().split(",");
+        if (state[0] != "") {
+            for (String str : state) {
+                switch (str.charAt(0)) {
                     case 'R' -> point++;//道路得分
                     default -> {
                         int p = Integer.parseInt(str.substring(1));//房子 城市 骑士的得分
-                        point+=p;
+                        point += p;
                     }
                 }
             }
         }
-        for(int i =0;i<=player.getTurn()-1;i++){
-            all_point +=player.getPoint()[i];
+        for (int i = 0; i <= player.getTurn() - 1; i++) {
+            all_point += player.getPoint()[i];
         }
-        if(point==all_point){
-            player.setPoint(player.getTurn()-1,-2);
+        if (point == all_point) {
+            player.setPoint(player.getTurn() - 1, -2);
             punish++;
+        } else {
+            player.setPoint(player.getTurn() - 1, point - all_point);
         }
-        else {
-            player.setPoint(player.getTurn()-1,point-all_point);
-        }
-        all_point=0+punish*2;
+        all_point = 0 + punish * 2;
 
     }
+
     Group points = new Group();
     List<Text> point = new ArrayList<>();
     Text[] p = new Text[15];
-    int a=1;
+    int a = 1;
 
 
-
-    public void showPoints(Player player){
+    public void showPoints(Player player) {
         getPoint(player);
-        for(int i =0;i<=14;i++){
+        for (int i = 0; i <= 14; i++) {
             p[i] = new Text();
         }
-        for(int i = 0;i<=4;i++){
+        for (int i = 0; i <= 4; i++) {
             point.add(p[i]);
-            p[i].setLayoutX(970+47*i);
+            p[i].setLayoutX(970 + 47 * i);
             p[i].setLayoutY(45);
         }
         point.add(p[5]);
 
-        p[5].setLayoutX(970+47*4);
-        p[5].setLayoutY(45+58);
-        for(int i = 6;i<=10;i++){
+        p[5].setLayoutX(970 + 47 * 4);
+        p[5].setLayoutY(45 + 58);
+        for (int i = 6; i <= 10; i++) {
             point.add(p[i]);
-            p[i].setLayoutX(970+47*(4-i+6));
-            p[i].setLayoutY(45+58*2);
+            p[i].setLayoutX(970 + 47 * (4 - i + 6));
+            p[i].setLayoutY(45 + 58 * 2);
         }
         point.add(p[11]);
         p[11].setLayoutX(970);
-        p[11].setLayoutY(45+58*3);
-        for(int i = 12;i<=14;i++){
+        p[11].setLayoutY(45 + 58 * 3);
+        for (int i = 12; i <= 14; i++) {
             point.add(p[i]);
-            p[i].setLayoutX(970+47*(i-12));
-            p[i].setLayoutY(45+58*4);
+            p[i].setLayoutX(970 + 47 * (i - 12));
+            p[i].setLayoutY(45 + 58 * 4);
         }
 
-        for(int i = 0;i<=14;i++){
+        for (int i = 0; i <= 14; i++) {
             point.get(i).setText(String.valueOf(player.getPoint()[i]));
             p[i].setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
         }
 
 
-        if(a==1) {
+        if (a == 1) {
             points.getChildren().addAll(point);
             a++;
         }
@@ -758,19 +814,19 @@ public class Game extends Application {
     int b = 0;
 
 
-    public int displayTotalPoint(Player player){
-        if(b==0){
+    public int displayTotalPoint(Player player) {
+        if (b == 0) {
             allp.getChildren().add(allPoint);
             b++;
         }
         allPoint.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
-        allPoint.setLayoutX(970+47*2+82);
-        allPoint.setLayoutY(45+58*4);
+        allPoint.setLayoutX(970 + 47 * 2 + 82);
+        allPoint.setLayoutY(45 + 58 * 4);
         if (!(root.getChildren().contains(allp)))
             root.getChildren().add(allp);
         int total = 0;
-        for(int point:player.getPoint()){
-            total+=point;
+        for (int point : player.getPoint()) {
+            total += point;
         }
         allPoint.setText(String.valueOf(total));
         return total;
@@ -783,6 +839,7 @@ public class Game extends Application {
         Scene scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
         Player player = new Player();
         player.resource_state = new int[]{0, 0, 0, 0, 0, 0};
+//        player.resource_state = new int[]{99, 99, 99, 99, 99, 99};
         player.board_state = "";
         player.turn = 0;
         displayBoard(player);
