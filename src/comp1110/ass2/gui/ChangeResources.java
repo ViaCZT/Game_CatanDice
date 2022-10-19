@@ -25,15 +25,7 @@ import java.util.List;
 
 public class ChangeResources {
 
-    private static final int VIEWER_WIDTH = 1200;
-    private static final int VIEWER_HEIGHT = 700;
 
-    private static final Group root = new Group();
-    private final Group controls = new Group();
-    private static final Group boardStateGroup = new Group();
-
-    private TextField playerTextField;
-    private TextField boardTextField;
     private static boolean res;
     private static boolean b1=false;
 

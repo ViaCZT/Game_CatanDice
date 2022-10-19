@@ -453,6 +453,7 @@ public class Game extends Application {
     Button roll3 = new Button("Roll dices");
     Button ready = new Button("Ready");
     Button r = new Button("Reset");
+    Text[] t = new Text[6];
 
 
     public void displayDices(Player player) {
@@ -486,7 +487,7 @@ public class Game extends Application {
             root.getChildren().add(DiceGroup3);
         roll3.setDisable(true);
 
-        Text[] t = new Text[6];
+
         for (int i = 0; i <= 5; i++) {
             Group resource_type = new Group();
             t[i] = new Text();
@@ -508,6 +509,7 @@ public class Game extends Application {
                 b.setDisable(false);
             }
             roll2.setDisable(false);
+            ready.setDisable(false);
         });
 
 
@@ -551,6 +553,7 @@ public class Game extends Application {
         if (!(root.getChildren().contains(reset)))
             root.getChildren().add(reset);
 
+        ready.setDisable(true);
         ready.setOnAction(event -> {
             roll1.setDisable(true);
             roll2.setDisable(true);
@@ -635,18 +638,11 @@ public class Game extends Application {
         if (!(root.getChildren().contains(endturn)))
             root.getChildren().add(endturn);
 
-        Group showturn = new Group();
-        Text turn = new Text();
-        turn.setText("Turn 1");
-        showturn.getChildren().add(turn);
-        showturn.setLayoutX(WINDOW_WIDTH / 2.0 + 430);
-        showturn.setLayoutY(WINDOW_HEIGHT / 2.0 + 260);
-        if (!(root.getChildren().contains(showturn)))
-            root.getChildren().add(showturn);
+
+
 
         end.setOnAction(event -> {
             if (player.turn == 15) {
-                turn.setText("Game Over!");
                 roll1.setDisable(true);
                 roll2.setDisable(true);
                 roll3.setDisable(true);
@@ -654,25 +650,31 @@ public class Game extends Application {
                 ready.setDisable(true);
                 sb.setDisable(true);
                 bSwapTrade.setDisable(true);
+                EndWindow.display(player);
 
             } else {
                 player.resource_state = new int[6];
                 showResource(player);
                 player.setTurn(player.getTurn() + 1);
-                turn.setText("Turn " + player.getTurn());
                 roll1.setDisable(false);
                 roll2.setDisable(true);
                 roll3.setDisable(true);
                 r.setDisable(false);
                 ready.setDisable(false);
+                for(int i =0;i<=5;i++){
+                    t[i].setText("");
+                }
+                ready.setDisable(true);
             }
             System.out.println(player.getBoard_state());
             showPoints(player);
+            displayTotalPoint(player);
 
         });
     }
 
     public int all_point = 0;
+    int punish = 0;
 
     public void getPoint(Player player) {
         int point = 0;
@@ -688,12 +690,17 @@ public class Game extends Application {
                 }
             }
         }
-        System.out.println(point-all_point);
         for(int i =0;i<=player.getTurn()-1;i++){
             all_point +=player.getPoint()[i];
         }
-        player.setPoint(player.getTurn()-1,point-all_point);
-        all_point=0;
+        if(point==all_point){
+            player.setPoint(player.getTurn()-1,-2);
+            punish++;
+        }
+        else {
+            player.setPoint(player.getTurn()-1,point-all_point);
+        }
+        all_point=0+punish*2;
 
     }
     Group points = new Group();
@@ -730,27 +737,43 @@ public class Game extends Application {
             p[i].setLayoutX(970+47*(i-12));
             p[i].setLayoutY(45+58*4);
         }
-        Text allPoint = new Text();
-        point.add(allPoint);
-        allPoint.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
-        allPoint.setLayoutX(970+47*2+82);
-        allPoint.setLayoutY(45+58*4);
 
         for(int i = 0;i<=14;i++){
-            point.get(i).setText("");
             point.get(i).setText(String.valueOf(player.getPoint()[i]));
             p[i].setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
         }
 
 
-        if(a==1)
-        {
+        if(a==1) {
             points.getChildren().addAll(point);
             a++;
         }
         if (!(root.getChildren().contains(points)))
             root.getChildren().add(points);
 
+    }
+
+    public Group allp = new Group();
+    public Text allPoint = new Text();
+    int b = 0;
+
+
+    public int displayTotalPoint(Player player){
+        if(b==0){
+            allp.getChildren().add(allPoint);
+            b++;
+        }
+        allPoint.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+        allPoint.setLayoutX(970+47*2+82);
+        allPoint.setLayoutY(45+58*4);
+        if (!(root.getChildren().contains(allp)))
+            root.getChildren().add(allp);
+        int total = 0;
+        for(int point:player.getPoint()){
+            total+=point;
+        }
+        allPoint.setText(String.valueOf(total));
+        return total;
     }
 
 
