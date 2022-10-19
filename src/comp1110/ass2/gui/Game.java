@@ -255,7 +255,8 @@ public class Game extends Application {
                 if (!(CatanDice.checkResources("S", resourceState))) {
                     AlertWindow.display("Resource Constrain", "Not enough resources to build a settlement!");
                 } else if (!(CatanDice.checkBuildConstraints(finalSettlement, boardState))) {
-//                    System.out.print("\nsettlement Build Constrain: "+boardState+"\n");
+                    System.out.print("\nsettlement Build Constrain: "+boardState+"\n");
+                    System.out.println(finalSettlement);
                     AlertWindow.display("Build Constrain", "Cannot build this settlement!");
                 } else {
                     bSettle.setStyle("-fx-background-color:#FFCC00;" +   //设置背景颜色
@@ -671,68 +672,63 @@ public class Game extends Application {
         });
     }
 
+    public int all_point = 0;
+
     public void getPoint(Player player) {
-        int all_point = 0;
-        int turn = player.getTurn();
+        int point = 0;
         String[] state =player.getBoard_state().split(",");
         if(state[0]!=""){
             for(String str : state){
                 switch (str.charAt(0)){
-                    case 'R' -> all_point++;//道路得分
+                    case 'R' -> point++;//道路得分
                     default -> {
                         int p = Integer.parseInt(str.substring(1));//房子 城市 骑士的得分
-                        all_point+=p;
+                        point+=p;
                     }
                 }
             }
-            if(turn == 0){
-                player.setPoint(turn,all_point);
-            }
-            else
-                player.setPoint(turn,all_point-player.getPoint()[turn-1]);
-
-            if(player.getPoint()[turn]==0){
-                player.setPoint(turn,-2);
-            }
         }
+        System.out.println(point-all_point);
+        for(int i =0;i<=player.getTurn()-1;i++){
+            all_point +=player.getPoint()[i];
+        }
+        player.setPoint(player.getTurn()-1,point-all_point);
+        all_point=0;
 
     }
+    Group points = new Group();
+    List<Text> point = new ArrayList<>();
+    Text[] p = new Text[15];
+    int a=1;
+
 
 
     public void showPoints(Player player){
         getPoint(player);
-        Group points = new Group();
-        List<Text> point = new ArrayList<>();
-        for(int i = 0;i<=4;i++){
-            Text point0 = new Text();
-            point.add(point0);
-            point0.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
-            point0.setLayoutX(970+47*i);
-            point0.setLayoutY(45);
+        for(int i =0;i<=14;i++){
+            p[i] = new Text();
         }
-        Text point1 = new Text();
-        point.add(point1);
-        point1.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
-        point1.setLayoutX(970+47*4);
-        point1.setLayoutY(45+58);
         for(int i = 0;i<=4;i++){
-            Text point0 = new Text();
-            point.add(point0);
-            point0.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
-            point0.setLayoutX(970+47*(4-i));
-            point0.setLayoutY(45+58*2);
+            point.add(p[i]);
+            p[i].setLayoutX(970+47*i);
+            p[i].setLayoutY(45);
         }
-        Text point2 = new Text();
-        point.add(point2);
-        point2.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
-        point2.setLayoutX(970);
-        point2.setLayoutY(45+58*3);
-        for(int i = 0;i<=2;i++){
-            Text point0 = new Text();
-            point.add(point0);
-            point0.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
-            point0.setLayoutX(970+47*i);
-            point0.setLayoutY(45+58*4);
+        point.add(p[5]);
+
+        p[5].setLayoutX(970+47*4);
+        p[5].setLayoutY(45+58);
+        for(int i = 6;i<=10;i++){
+            point.add(p[i]);
+            p[i].setLayoutX(970+47*(4-i+6));
+            p[i].setLayoutY(45+58*2);
+        }
+        point.add(p[11]);
+        p[11].setLayoutX(970);
+        p[11].setLayoutY(45+58*3);
+        for(int i = 12;i<=14;i++){
+            point.add(p[i]);
+            p[i].setLayoutX(970+47*(i-12));
+            p[i].setLayoutY(45+58*4);
         }
         Text allPoint = new Text();
         point.add(allPoint);
@@ -740,10 +736,18 @@ public class Game extends Application {
         allPoint.setLayoutX(970+47*2+82);
         allPoint.setLayoutY(45+58*4);
 
+        for(int i = 0;i<=14;i++){
+            point.get(i).setText("");
+            point.get(i).setText(String.valueOf(player.getPoint()[i]));
+            p[i].setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+        }
 
 
-
-        points.getChildren().addAll(point);
+        if(a==1)
+        {
+            points.getChildren().addAll(point);
+            a++;
+        }
         if (!(root.getChildren().contains(points)))
             root.getChildren().add(points);
 
@@ -757,7 +761,7 @@ public class Game extends Application {
         Player player = new Player();
         player.resource_state = new int[]{0, 0, 0, 0, 0, 0};
         player.board_state = "";
-        player.turn = 1;
+        player.turn = 0;
         displayBoard(player);
         displayScore();
         displayDices(player);

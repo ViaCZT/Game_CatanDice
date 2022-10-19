@@ -144,8 +144,8 @@ public class CatanDice {
             if (!structure.equals("S3")) {
                 return myBoardState.contains(sList.get(sList.indexOf(structure) - 1)) && myBoardState.contains(getRoad(structure));
             } else {
-//                return myBoardState.contains(getRoad(structure));
-                return true;
+                return myBoardState.contains(getRoad(structure));
+//                return true;
             }
         } else if (cList.contains(structure)) {
             if (!structure.equals("C7")) {
