@@ -404,9 +404,7 @@ public class Game extends Application {
 
     public void displayResource(Player player) {
         Group resourceGroup = new Group();
-        bSwapTrade.setOnMouseClicked(event -> {
-            ChangeResources.display("Please change your resources", "Please choose your operation", player);
-        });
+        bSwapTrade.setOnMouseClicked(event -> ChangeResources.display("Please change your resources", "Please choose your operation", player));
         resourceGroup.getChildren().add(bSwapTrade);
         resourceGroup.setLayoutX(WINDOW_WIDTH / 2.0 + 10);
         resourceGroup.setLayoutY(WINDOW_HEIGHT / 2.0 + 200);
@@ -421,9 +419,7 @@ public class Game extends Application {
         dice.getChildren().add(d);
         dice.setLayoutX(X);
         dice.setLayoutY(Y);
-        d.setOnAction(event -> {
-            d.setDisable(true);
-        });
+        d.setOnAction(event -> d.setDisable(true));
         if (!(root.getChildren().contains(dice)))
             root.getChildren().add(dice);
         return d;
@@ -618,9 +614,7 @@ public class Game extends Application {
         showResources.setLayoutY(WINDOW_HEIGHT / 2.0 + 50);
         if (!(root.getChildren().contains(showResources)))
             root.getChildren().add(showResources);
-        sb.setOnAction(event -> {
-            showResource(player);
-        });
+        sb.setOnAction(event -> showResource(player));
     }
 
     public void changeKnightButton(String knight, Group node) {
@@ -696,9 +690,51 @@ public class Game extends Application {
         if (!(root.getChildren().contains(endturn)))
             root.getChildren().add(endturn);
 
-
         end.setOnAction(event -> {
             makeKnight(player, boardGroup); // change Joker to Knight if there is
+//            if (player.turn == 15) {
+//                roll1.setDisable(true);
+//                roll2.setDisable(true);
+//                roll3.setDisable(true);
+//                r.setDisable(true);
+//                ready.setDisable(true);
+//                sb.setDisable(true);
+//                bSwapTrade.setDisable(true);
+//                EndWindow.display(player);
+//            } else {
+//                player.resource_state = new int[6];
+//                showResource(player);
+//                player.setTurn(player.getTurn() + 1);
+//                roll1.setDisable(false);
+//                roll2.setDisable(true);
+//                roll3.setDisable(true);
+//                r.setDisable(false);
+//                ready.setDisable(false);
+//                for (int i = 0; i <= 5; i++) {
+//                    t[i].setText("");
+//                }
+//                ready.setDisable(true);
+//            }
+//            System.out.println(player.getBoard_state());
+//            showPoints(player);
+//            displayTotalPoint(player);
+
+            //new
+            player.resource_state = new int[6];
+            showResource(player);
+            player.setTurn(player.getTurn() + 1);
+            roll1.setDisable(false);
+            roll2.setDisable(true);
+            roll3.setDisable(true);
+            r.setDisable(false);
+            ready.setDisable(false);
+            for (int i = 0; i <= 5; i++) {
+                t[i].setText("");
+            }
+            ready.setDisable(true);
+            System.out.println(player.getBoard_state());
+            showPoints(player);
+            displayTotalPoint(player);
             if (player.turn == 15) {
                 roll1.setDisable(true);
                 roll2.setDisable(true);
@@ -708,24 +744,7 @@ public class Game extends Application {
                 sb.setDisable(true);
                 bSwapTrade.setDisable(true);
                 EndWindow.display(player);
-
-            } else {
-                player.resource_state = new int[6];
-                showResource(player);
-                player.setTurn(player.getTurn() + 1);
-                roll1.setDisable(false);
-                roll2.setDisable(true);
-                roll3.setDisable(true);
-                r.setDisable(false);
-                ready.setDisable(false);
-                for (int i = 0; i <= 5; i++) {
-                    t[i].setText("");
-                }
-                ready.setDisable(true);
             }
-            System.out.println(player.getBoard_state());
-            showPoints(player);
-            displayTotalPoint(player);
 
         });
     }
@@ -736,14 +755,13 @@ public class Game extends Application {
     public void getPoint(Player player) {
         int point = 0;
         String[] state = player.getBoard_state().split(",");
-        if (state[0] != "") {
+        if (!state[0].equals("")) {
             for (String str : state) {
-                switch (str.charAt(0)) {
-                    case 'R' -> point++;//道路得分
-                    default -> {
-                        int p = Integer.parseInt(str.substring(1));//房子 城市 骑士的得分
-                        point += p;
-                    }
+                if (str.charAt(0) == 'R') {
+                    point++;//道路得分
+                } else {
+                    int p = Integer.parseInt(str.substring(1));//房子 城市 骑士的得分
+                    point += p;
                 }
             }
         }
