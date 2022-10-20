@@ -621,48 +621,48 @@ public class Game extends Application {
         switch (knight) {
             case "K1" -> {
                 Button k = new Button("Knight");
-                k.setStyle("-fx-background-color:#0000CD;" +   //设置背景颜色
-                        "-fx-text-fill:#FFF;");                 //设置字体颜色
+                k.setStyle("-fx-background-color:#FFF;" +   //设置背景颜色
+                        "-fx-text-fill:#0000CD;");                 //设置字体颜色
                 k.setLayoutX(360);
                 k.setLayoutY(165);
                 node.getChildren().add(k);
             }
             case "K2" -> {
                 Button k = new Button("Knight");
-                k.setStyle("-fx-background-color:#0000CD;" +   //设置背景颜色
-                        "-fx-text-fill:#FFF;");                 //设置字体颜色
+                k.setStyle("-fx-background-color:#FFF;" +   //设置背景颜色
+                        "-fx-text-fill:#0000CD;");                 //设置字体颜色
                 k.setLayoutX(360);
                 k.setLayoutY(363);
                 node.getChildren().add(k);
             }
             case "K3" -> {
                 Button k = new Button("Knight");
-                k.setStyle("-fx-background-color:#0000CD;" +   //设置背景颜色
-                        "-fx-text-fill:#FFF;");                 //设置字体颜色
+                k.setStyle("-fx-background-color:#FFF;" +   //设置背景颜色
+                        "-fx-text-fill:#0000CD;");                 //设置字体颜色
                 k.setLayoutX(574);
                 k.setLayoutY(450);
                 node.getChildren().add(k);
             }
             case "K4" -> {
                 Button k = new Button("Knight");
-                k.setStyle("-fx-background-color:#0000CD;" +   //设置背景颜色
-                        "-fx-text-fill:#FFF;");                 //设置字体颜色
+                k.setStyle("-fx-background-color:#FFF;" +   //设置背景颜色
+                        "-fx-text-fill:#0000CD;");                 //设置字体颜色
                 k.setLayoutX(747);
                 k.setLayoutY(354);
                 node.getChildren().add(k);
             }
             case "K5" -> {
                 Button k = new Button("Knight");
-                k.setStyle("-fx-background-color:#0000CD;" +   //设置背景颜色
-                        "-fx-text-fill:#FFF;");                 //设置字体颜色
+                k.setStyle("-fx-background-color:#FFF;" +   //设置背景颜色
+                        "-fx-text-fill:#0000CD;");                 //设置字体颜色
                 k.setLayoutX(786);
                 k.setLayoutY(171);
                 node.getChildren().add(k);
             }
             case "K6" -> {
                 Button k = new Button("Knight");
-                k.setStyle("-fx-background-color:#0000CD;" +   //设置背景颜色
-                        "-fx-text-fill:#FFF;");                 //设置字体颜色
+                k.setStyle("-fx-background-color:#FFF;" +   //设置背景颜色
+                        "-fx-text-fill:#0000CD;");                 //设置字体颜色
                 k.setLayoutX(614);
                 k.setLayoutY(62);
                 node.getChildren().add(k);
@@ -692,9 +692,7 @@ public class Game extends Application {
 
         end.setOnAction(event -> {
             makeKnight(player, boardGroup); // change Joker to Knight if there is
-
-
-            //new
+            //reset all buttons, properties of player
             player.resource_state = new int[6];
             showResource(player);
             player.setTurn(player.getTurn() + 1);
@@ -720,8 +718,6 @@ public class Game extends Application {
                 bSwapTrade.setDisable(true);
                 end.setDisable(true);
                 EndWindow.display(player);
-
-
             }
 
         });
@@ -834,8 +830,8 @@ public class Game extends Application {
         stage.setTitle("Catan Dice");
         Scene scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
         Player player = new Player();
-        player.resource_state = new int[]{0, 0, 0, 0, 0, 0};
-//        player.resource_state = new int[]{99, 99, 99, 99, 99, 99};
+//        player.resource_state = new int[]{0, 0, 0, 0, 0, 0};
+        player.resource_state = new int[]{99, 99, 99, 99, 99, 99};
         player.board_state = "";
         player.turn = 0;
         displayBoard(player);
