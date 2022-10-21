@@ -2,7 +2,6 @@ package comp1110.ass2;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  * player can do actions:
@@ -17,11 +16,17 @@ public class Player {
     public int[] resource_state;
 
     public int turn;
-    public int point[] = {0 ,0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    public int[] point = {0 ,0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     public Player() {
 
     }
+
+    /**
+     * Some function to get and set the player's information
+     *
+     * @auther Zihan Ai (uid: u7528678)
+     */
 
     public void setBoard_state(String bs){
         this.board_state=bs;
@@ -70,22 +75,6 @@ public class Player {
     public List<String> getSwapResource() {
         String[] swap = {"1", "2", "3", "4", "5", "0"};
         return Arrays.asList(swap);
-    }
-
-    /**
-     * Roll the specified number of dice and add the result to the resource state.
-     * This method does not return any value. It should update the given resource_state.
-     *
-     * @param n_dice:            The number of dice to roll (>= 0).
-     * @param resource_state：The available resources that the dice roll will be added to.
-     */
-    public void rollDice(int n_dice, int[] resource_state) {
-        Random ran = new Random();
-//        ran.nextInt(5);
-        for (int i = 1; i <= n_dice; i++) {
-            int resource_index = ran.nextInt(5);
-            resource_state[resource_index]++;
-        }
     }
 
 }

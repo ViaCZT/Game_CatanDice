@@ -28,7 +28,15 @@ public class Game extends Application {
     private static final int WINDOW_WIDTH = 1200;
     private static final int WINDOW_HEIGHT = 700;
 
-
+    /**
+     * import the image to the window.
+     *
+     * @param node: The group contains the image.
+     * @param image : The image needed to import.
+     * @param height :Image height.
+     * @param width :Image width.
+     * @auther Zetian Chen (uid: u7564812)
+     */
     public void importImage(Group node, Image image, double height, double width) {
         //导入图片并使其居中 import and center the image.
         ImageView Img = new ImageView(image);
@@ -41,6 +49,12 @@ public class Game extends Application {
         node.getChildren().add(Img);
     }
 
+    /**
+     * make the resource labels on the window.
+     *
+     * @param node: The group contains the image.
+     * @auther Zetian Chen (uid: u7564812)
+     */
     public void makeResourceLabel(Group node) {
         Label label1 = new Label("Ore");
         label1.setLayoutX(411);
@@ -65,7 +79,13 @@ public class Game extends Application {
     }
 
     Group boardGroup = new Group();
-
+    /**
+     * display the board of the game.
+     * also display the buttons on it.
+     *
+     * @param player: The game player
+     * @auther Zetian Chen (uid: u7564812)
+     */
     void displayBoard(Player player) {
         Image boardImage = new Image(Objects.requireNonNull(Viewer.class.getResource("island-one-with-numbering.png")).toString());
         importImage(boardGroup, boardImage, 600.0, 600.0);
@@ -83,6 +103,13 @@ public class Game extends Application {
 
     }
 
+    /**
+     * make jokers' buttons
+     *
+     * @param node :The group contains the buttons.
+     * @param player: The game player
+     * @auther Zetian Chen (uid: u7564812)
+     */
     public void makeJokerButton(Group node, Player player) {
         List<Button> jokerButton = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
@@ -137,6 +164,13 @@ public class Game extends Application {
         node.getChildren().addAll(jokerButton);
     }
 
+    /**
+     * make cities' buttons
+     *
+     * @param node :The group contains the buttons.
+     * @param player: The game player
+     * @auther Zetian Chen (uid: u7564812)
+     */
     public void makeCityButton(Group node, Player player) {
         List<Button> cityButton = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -204,13 +238,18 @@ public class Game extends Application {
         node.getChildren().addAll(cityButton);
     }
 
+    /**
+     * make settlements' buttons
+     *
+     * @param node :The group contains the buttons.
+     * @param player: The game player
+     * @auther Zetian Chen (uid: u7564812)
+     */
     public void makeSettleButton(Group node, Player player) {
         List<Button> settleButton = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             settleButton.add(new Button());
             Button bSettle = settleButton.get(i);
-//            bSettle.setPrefHeight(30);
-//            bSettle.setPrefWidth(30);
 
             String settlement = "S";
             switch (i) {
@@ -290,6 +329,13 @@ public class Game extends Application {
         node.getChildren().addAll(settleButton);
     }
 
+    /**
+     * make roads' buttons
+     *
+     * @param node :The group contains the buttons.
+     * @param player: The game player
+     * @auther Zetian Chen (uid: u7564812)
+     */
     public void makeRoadButton(Group node, Player player) {
         List<Button> roadButton = new ArrayList<>();
         for (int i = 0; i <= 15; i++) {
@@ -389,6 +435,11 @@ public class Game extends Application {
         node.getChildren().addAll(roadButton);
     }
 
+    /**
+     * The point display board.
+     *
+     * @auther Zetian Chen (uid: u7564812)
+     */
     void displayScore() {
         Group scoreGroup = new Group();
         Image scoreImage = new Image(Objects.requireNonNull(Viewer.class.getResource("island-one-score.png")).toString());
@@ -402,6 +453,12 @@ public class Game extends Application {
 
     Button bSwapTrade = new Button("Would like Swap or Trade?");
 
+    /**
+     * display the button of changing resource
+     *
+     * @param player: The game player
+     * @auther Zetian Chen (uid: u7564812)
+     */
     public void displayResource(Player player) {
         Group resourceGroup = new Group();
         bSwapTrade.setOnMouseClicked(event -> ChangeResources.display("Please change your resources", "Please choose your operation", player));
@@ -412,6 +469,14 @@ public class Game extends Application {
             root.getChildren().add(resourceGroup);
 
     }
+
+    /**
+     * make dices' buttons
+     *
+     * @param X the layout position x direction.
+     * @param Y the layout position y direction.
+     * @auther Zihan Ai(uid: u7528678), Zetian Chen (uid: u7564812)
+     */
 
     public Button makeDicesButton(Double X, Double Y) {
         Group dice = new Group();
@@ -424,6 +489,14 @@ public class Game extends Application {
             root.getChildren().add(dice);
         return d;
     }
+
+    /**
+     * covert the index of resource to name.
+     *
+     * @param resourceID :The index of resource.
+     * @auther Zihan Ai(uid: u7528678), Zetian Chen (uid: u7564812)
+     */
+
 
     public String makeDiceResource(int resourceID) {
         String s = null;
@@ -445,6 +518,13 @@ public class Game extends Application {
     Button r = new Button("Reset");
     Text[] t = new Text[6];
 
+    /**
+     * roll dices and display the result.
+     * After rolling dices, update the resource state.
+     *
+     * @param player: The game player.
+     * @auther Zihan Ai(uid: u7528678)
+     */
 
     public void displayDices(Player player) {
         Group DiceGroup = new Group();
@@ -584,6 +664,13 @@ public class Game extends Application {
 
     Group showResources = new Group();
 
+    /**
+     * If the resource state doesn't update on time, this button will display the latest state.
+     *
+     * @param player: The game player
+     * @auther Zihan Ai(uid: u7528678)
+     */
+
     public void showResource(Player player) {
         Text show = new Text();
         showResources.getChildren().clear();
@@ -597,6 +684,14 @@ public class Game extends Application {
     }
 
     Button sb = new Button("Show resource");
+
+    /**
+     * show the resource state of player.
+     *
+     * @param player: the game player.
+     * @auther Zihan Ai(uid: u7528678), Zetian Chen (uid: u7564812)
+     */
+
 
     public void show(Player player) {
         Group showButton = new Group();
@@ -616,6 +711,15 @@ public class Game extends Application {
             root.getChildren().add(showResources);
         sb.setOnAction(event -> showResource(player));
     }
+
+
+    /**
+     * After using the joker, change the appearance of them.
+     *
+     * @param knight: the index of knight.
+     * @param node :the group contain the kinghts.
+     * @auther Zetian Chen (uid: u7564812)
+     */
 
     public void changeKnightButton(String knight, Group node) {
         switch (knight) {
@@ -670,6 +774,14 @@ public class Game extends Application {
         }
     }
 
+    /**
+     * make knights' buttons
+     *
+     * @param player: The game player.
+     * @param node : the group contain the knights.
+     * @auther Zetian Chen (uid: u7564812)
+     */
+
     public void makeKnight(Player player, Group node) {
         String board_state = player.getBoard_state();
         List<String> myBoardState = Arrays.asList(new Board(board_state).getStructure());
@@ -681,6 +793,13 @@ public class Game extends Application {
         }
     }
 
+
+    /**
+     * The operation of end a turn and begin next turn.
+     *
+     * @param player: The game player.
+     * @auther Zihan Ai (uid:u7528678)
+     */
     public void endTurn(Player player) {
         Group endturn = new Group();
         Button end = new Button("End this turn and calculate score");
@@ -726,6 +845,12 @@ public class Game extends Application {
     public int all_point = 0;
     int punish = 0;
 
+    /**
+     * calculate the point of each turn.
+     *
+     * @param player: The game player.
+     * @auther Zihan Ai (uid: u7528678)
+     */
     public void getPoint(Player player) {
         int point = 0;
         String[] state = player.getBoard_state().split(",");
@@ -748,7 +873,7 @@ public class Game extends Application {
         } else {
             player.setPoint(player.getTurn() - 1, point - all_point);
         }
-        all_point = 0 + punish * 2;
+        all_point = punish * 2;
 
     }
 
@@ -757,7 +882,12 @@ public class Game extends Application {
     Text[] p = new Text[15];
     int a = 1;
 
-
+    /**
+     * display the point on the point board.
+     *
+     * @param player: The game player.
+     * @auther Zihan Ai (uid: u7528678)
+     */
     public void showPoints(Player player) {
         getPoint(player);
         for (int i = 0; i <= 14; i++) {
@@ -805,8 +935,13 @@ public class Game extends Application {
     public Text allPoint = new Text();
     int b = 0;
 
-
-    public int displayTotalPoint(Player player) {
+    /**
+     * display the total point on the point board.
+     *
+     * @param player: The game player.
+     * @auther Zihan Ai (uid: u7528678)
+     */
+    public void displayTotalPoint(Player player) {
         if (b == 0) {
             allp.getChildren().add(allPoint);
             b++;
@@ -821,17 +956,21 @@ public class Game extends Application {
             total += point;
         }
         allPoint.setText(String.valueOf(total));
-        return total;
     }
 
-
+    /**
+     * The main part of the game.
+     * start the game
+     *
+     * @param stage : the stage to display the game.
+     * @auther Zihan Ai (uid: u7528678), Zetian Chen(uid: u7654812)
+     */
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Catan Dice");
         Scene scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
         Player player = new Player();
-//        player.resource_state = new int[]{0, 0, 0, 0, 0, 0};
-        player.resource_state = new int[]{99, 99, 99, 99, 99, 99};
+        player.resource_state = new int[]{0, 0, 0, 0, 0, 0};
         player.board_state = "";
         player.turn = 0;
         displayBoard(player);

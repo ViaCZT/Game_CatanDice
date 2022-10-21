@@ -2,11 +2,16 @@ package comp1110.ass2.gui;
 
 import comp1110.ass2.CatanDice;
 import comp1110.ass2.Player;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -14,6 +19,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 
 public class ChangeResources {
@@ -33,14 +39,14 @@ public class ChangeResources {
     static Button trade = new Button("trade");
     static Button cancel = new Button("Cancel");
     static Button ok = new Button("OK");
+
     /**
-     * display the window which used to changing resources
-     * after the action, update the player's resource state
+     * Show the state of a (single player's) board in the window.
      *
-     * @param title: The string representation the window's title.
-     * @param msg: The massage to display on this window。
+     * @param title: The string representation the title of the window.
+     * @param msg: The string displayed on the window.
      * @param player: The game player.
-     * @author Zihan Ai (uid: u7528678)
+     * @auther Zihan Ai (uid: u7528678)
      */
 
     public static void display(String title, String msg, Player player) {
@@ -61,6 +67,8 @@ public class ChangeResources {
         stage.initModality(Modality.APPLICATION_MODAL);
         Label label = new Label();
         label.setText(msg);
+        label.setTextFill(Color.web("#0076a3"));
+        label.setFont(Font.font("Arial", 18));
 
 
         for (Button button : resources) {
@@ -138,7 +146,7 @@ public class ChangeResources {
 
         ok.setOnMouseClicked(event -> {
             String s = "";
-            if (t4.getText().equals("") && t2.getText().equals("trade")) {
+            if (Objects.equals(t4.getText(), "") && t2.getText().equals("trade")) {
                 s += "trade ";
                 s += resourceToNum(t3.getText());
             } else if (t2.getText().equals("swap") && !t4.getText().equals("")) {
@@ -163,16 +171,39 @@ public class ChangeResources {
         Button close = new Button("Close");
         close.setOnAction(event -> stage.close());
 
-        VBox vBox = new VBox();
-        vBox.getChildren().addAll(label, swap, trade, ore, grain, wool, timber, brick, gold, cancel, re, bo, ok, t2, t3, t4, close);
+        HBox hBoxTitle = new HBox();
+        hBoxTitle.getChildren().addAll(label);
+        hBoxTitle.setLayoutX(125);
+        hBoxTitle.setLayoutY(50);
 
+        HBox hBoxSwapTradeButton = new HBox();
+        hBoxSwapTradeButton.getChildren().addAll(swap, trade);
+        hBoxSwapTradeButton.setPadding(new Insets(0, 50, 0, 50));
+        hBoxSwapTradeButton.setSpacing(50);  //设置节点间的距离
+        hBoxSwapTradeButton.setLayoutX(125);
+        hBoxSwapTradeButton.setLayoutY(100);
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(ore, grain, wool, timber, brick, gold, cancel, re, bo, ok, t2, t3, t4, close);
         vBox.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(vBox, 200, 500);
+        vBox.setLayoutX(200);
+        vBox.setLayoutY(150);
+
+        Group root = new Group();
+        root.getChildren().addAll(hBoxSwapTradeButton, hBoxTitle, vBox);
+        Scene scene = new Scene(root, 500, 500);
         stage.setScene(scene);
         stage.setTitle(title);
         stage.showAndWait();
 
     }
+
+    /**
+     * light the button if satisfied the condition of swap.
+     *
+     * @param board_state: The string representation the board state of the player.
+     * @auther Zihan Ai (uid: u7528678)
+     */
 
     public static void lightOnButtonsSwap(String board_state) {
         String[] bs = board_state.split(",");
@@ -185,12 +216,24 @@ public class ChangeResources {
 
     }
 
+    /**
+     * light the button if satisfied the condition of trade.
+     *
+     * @auther Zihan Ai (uid: u7528678)
+     */
+
     public static void lightOnButtonsTrade() {
         for (int i = 0; i <= 4; i++) {
             resources[i].setDisable(false);
         }
     }
 
+    /**
+     * display the resource state from resource index.
+     *
+     * @param resource_state: The string representation the resource state of the player.
+     * @auther Zihan Ai (uid: u7528678)
+     */
     public static String resourceStateToString(int[] resource_state) {
         String s = "";
         s += "Ore : " + resource_state[0] + "\n";
@@ -202,6 +245,12 @@ public class ChangeResources {
         return s;
     }
 
+    /**
+     * convert the resource name to index.
+     *
+     * @param s: The string representation the resource namer.
+     * @auther Zihan Ai (uid: u7528678)
+     */
     public static String resourceToNum(String s) {
         String i = null;
         switch (s) {

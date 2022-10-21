@@ -285,6 +285,13 @@ public class CatanDice {
         return actions;
     }
 
+
+    /**
+     * avoid redundant.
+     * automatic swap the resource which is needed.
+     *
+     * @auther Zihan Ai (uid: u7528678)
+     */
     public static String useSwap(String board_state, List<String> act, int[] new_resource_state, int i) {
         for (int j = 0; j <= 5; j++) {
             if (checkCanSwap(board_state, new_resource_state, j, i)) { //Check if swap can replenish the resource

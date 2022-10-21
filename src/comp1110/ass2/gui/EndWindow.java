@@ -3,8 +3,6 @@ package comp1110.ass2.gui;
 import comp1110.ass2.Player;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -12,7 +10,15 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+
+
 public class EndWindow {
+
+    /**
+     * The game over window.
+     * @param player: The game player.
+     * @auther Zihan Ai (uid: u7528678)
+     */
     public static void display(Player player){
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
