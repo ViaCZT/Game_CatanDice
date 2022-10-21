@@ -1,4 +1,3 @@
-
 # Features
 
 In addition to the features that are auto-tested, the graphical user interface
@@ -6,9 +5,8 @@ of our project implements the following features:
 
 *(Remove those that are unimplemented)*
 
- - A simple placement viewer (Task 5)
- - A basic playable game (Task 10)
- - Playable against a computer opponent (Task 15)
+- A simple placement viewer (Task 5)
+- A basic playable game (Task 10)
 
 List additional noteworthy features beyond those in the assignment
 specification that you have added, if any.
@@ -22,3 +20,5 @@ to use any parts of your game GUI that are not intuitively obvious
 (and not documented in the GUI itself).
 
 This section is optional.
+
+
