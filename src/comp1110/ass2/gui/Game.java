@@ -732,9 +732,9 @@ public class Game extends Application {
         if (!state[0].equals("")) {
             for (String str : state) {
                 if (str.charAt(0) == 'R') {
-                    point++;//道路得分
+                    point++;//roads point
                 } else {
-                    int p = Integer.parseInt(str.substring(1));//房子 城市 骑士的得分
+                    int p = Integer.parseInt(str.substring(1));//settlement,city,joker points
                     point += p;
                 }
             }
