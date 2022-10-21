@@ -13,39 +13,28 @@ declaration: >-
   I submit the work below for assessment as my best work. I declare that this
   is entirely my own work, with the following documented exceptions:
 
-# Use this to list names of people who you collaborated with, and a
-# comment about what you collaborated on.
-#
-# Add as many "name+comment" entries as necessary
-# (or remove it altogether if you haven't collaborated with anyone)
-collaboration:
-  - name:
-    comment: >-
-
-# Use this to list any code that you used that you did not write,
-# aside from code provided by the lecturer.  Provide a comment
-# explaining your use and the URL to that code and the licence for
-# that code
-#
-# Add as many "url+licence+comment" entries as necessary
-# (or remove it altogether if you haven't used any external code)
-code:
-  - comment:
-    url:
-    licence:
 
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 class:
-   - 
-   - 
+   - ChangeResources (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/ChangeResources.java)
+   - EndWindow (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/EndWindow.java)
 
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
 method:
-   - 
-   - 
+   - CatanDice.autoChangeResource (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/CatanDice.java#L239-286)
+   - CatanDice.useSwap (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/CatanDice.java#L295-304)
+   - CatanDice.updateBoardState (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/CatanDice.java#L411-443)
+   - CatanDice.updateResourceState (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/CatanDice.java#L453-493)
+   - CatanDice.buildPlan (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/CatanDice.java#651-713)
+   - Game.displayDices (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#529-663)
+   - Game.showResource (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#674-684)
+   - Game.endTurn (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#803-843)
+   - Game.getPoint (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#854-878)
+   - Game.showPoints (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#891-932)
+   - Game.showTotalPoint (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#944-959)
 
 # sign *your* name and uid here
-name:
-uid:
+name: Zihan Ai
+uid: u7528678

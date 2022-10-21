@@ -13,38 +13,28 @@ declaration: >-
   I submit the work below for assessment as my best work. I declare that this
   is entirely my own work, with the following documented exceptions:
 
-# Use this to list names of people who you collaborated with, and a
-# comment about what you collaborated on.
-#
-# Add as many "name+comment" entries as necessary
-# (or remove it altogether if you haven't collaborated with anyone)
-collaboration:
-  - name:
-    comment: >-
-
-# Use this to list any code that you used that you did not write,
-# aside from code provided by the lecturer.  Provide a comment
-# explaining your use and the URL to that code and the licence for
-# that code
-#
-# Add as many "url+licence+comment" entries as necessary
-# (or remove it altogether if you haven't used any external code)
-code:
-  - comment:
-    url:
-    licence:
 
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 class:
-   - 
-   - 
+   - AlertWindow (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/AlertWindow.java)
+   - Resource (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/Resource.java)
+   - Structure (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/Structure.java)
 
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
 method:
-   - 
-   - 
+   - Game.importImage (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L40-50)
+   - Game.makeResourceLabel (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L58-79)
+   - Game.displayBoard (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L89-104)
+   - Game.makeJokerButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L113-165)
+   - Game.makeCityButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L174-239)
+   - Game.makeSettleButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L248-330)
+   - Game.makeRoadButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L339-436)
+   - Game.displayScore (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L443-452)
+   - Game.displayResource (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L432-471)
+   - Game.changeKnightButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L724-775)
+   - Game.makeKnight (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L785-794)
 
 # sign *your* name and uid here
 name:
