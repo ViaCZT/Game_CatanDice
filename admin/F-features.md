@@ -21,4 +21,10 @@ to use any parts of your game GUI that are not intuitively obvious
 
 This section is optional.
 
+1. Roll Dices: A button represents a dice, press the one you would like to reroll for the next rolling. If you press
+   wrong dices by accident, you can press the "Reset" button to rechoose them. Press the "Ready" button to end the
+   rolling process.
+2. Swap and Trade Resources: For swap, first choose the resource used to exchange (only the resource you already have
+   can be chosen), then choose the resource you would like to swap for (according to which Joker you have).
+3. Build Structures: just press the corresponding button on the board.
 
