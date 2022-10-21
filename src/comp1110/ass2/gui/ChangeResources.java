@@ -2,17 +2,10 @@ package comp1110.ass2.gui;
 
 import comp1110.ass2.CatanDice;
 import comp1110.ass2.Player;
-import gittest.A;
-import gittest.B;
-import javafx.animation.PauseTransition;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -24,10 +17,6 @@ import java.util.List;
 
 
 public class ChangeResources {
-
-
-    private static boolean res;
-    private static boolean b1 = false;
 
 
     public static Player player = new Player();
@@ -44,8 +33,17 @@ public class ChangeResources {
     static Button trade = new Button("trade");
     static Button cancel = new Button("Cancel");
     static Button ok = new Button("OK");
+    /**
+     * display the window which used to changing resources
+     * after the action, update the player's resource state
+     *
+     * @param title: The string representation the window's title.
+     * @param msg: The massage to display on this window。
+     * @param player: The game player.
+     * @author Zihan Ai (uid: u7528678)
+     */
 
-    public static boolean display(String title, String msg, Player player) {
+    public static void display(String title, String msg, Player player) {
         int[] r = player.getResource_state();
         String b = player.getBoard_state();
         player.setResource_state(r);
@@ -81,7 +79,6 @@ public class ChangeResources {
         Text t3 = new Text();
         Text t4 = new Text();
         swap.setOnAction(event -> {
-            res = true;
             for (int i = 0; i <= 5; i++) {
                 if (player.getResource_state()[i] > 0)
                     resources[i].setDisable(false);
@@ -96,7 +93,7 @@ public class ChangeResources {
                     for (Button bb : resources) {
                         bb.setDisable(true);
                     }
-                    lightOnButtonsSwap(player.getResource_state(), player.getBoard_state());
+                    lightOnButtonsSwap(player.getBoard_state());
                     for (Button bb0 : resources) {
                         bb0.setOnMouseClicked(event0 -> {
                             t4.setText(bb0.getText());
@@ -108,8 +105,7 @@ public class ChangeResources {
         });
 
         trade.setOnAction(event -> {
-            res = false;
-            lightOnButtonsTrade(resource_state);
+            lightOnButtonsTrade();
             cancel.setDisable(false);
             swap.setDisable(true);
             trade.setDisable(true);
@@ -142,10 +138,10 @@ public class ChangeResources {
 
         ok.setOnMouseClicked(event -> {
             String s = "";
-            if (t4.getText() == "" && t2.getText() == "trade") {
+            if (t4.getText().equals("") && t2.getText().equals("trade")) {
                 s += "trade ";
                 s += resourceToNum(t3.getText());
-            } else if (t2.getText() == "swap" && t4.getText() != "") {
+            } else if (t2.getText().equals("swap") && !t4.getText().equals("")) {
                 s = "swap " + resourceToNum(t3.getText()) + " " + resourceToNum(t4.getText());
             }
             System.out.println(s);
@@ -165,10 +161,7 @@ public class ChangeResources {
         });
 
         Button close = new Button("Close");
-        close.setOnAction(event -> {
-            stage.close();
-
-        });
+        close.setOnAction(event -> stage.close());
 
         VBox vBox = new VBox();
         vBox.getChildren().addAll(label, swap, trade, ore, grain, wool, timber, brick, gold, cancel, re, bo, ok, t2, t3, t4, close);
@@ -179,13 +172,11 @@ public class ChangeResources {
         stage.setTitle(title);
         stage.showAndWait();
 
-        return res;
     }
 
-    public static void lightOnButtonsSwap(int[] rs, String board_state) {
+    public static void lightOnButtonsSwap(String board_state) {
         String[] bs = board_state.split(",");
-        List<String> b = new ArrayList<>();
-        b.addAll(Arrays.asList(bs));
+        List<String> b = new ArrayList<>(Arrays.asList(bs));
         for (int i = 0; i <= 5; i++) {
             if (b.contains("J" + (i + 1)) || b.contains("J6")) {
                 resources[i].setDisable(false);
@@ -194,13 +185,13 @@ public class ChangeResources {
 
     }
 
-    public static void lightOnButtonsTrade(int[] rs) {
+    public static void lightOnButtonsTrade() {
         for (int i = 0; i <= 4; i++) {
             resources[i].setDisable(false);
         }
     }
 
-    public static String resourceStateToString(int resource_state[]) {
+    public static String resourceStateToString(int[] resource_state) {
         String s = "";
         s += "Ore : " + resource_state[0] + "\n";
         s += "Grain : " + resource_state[1] + "\n";
