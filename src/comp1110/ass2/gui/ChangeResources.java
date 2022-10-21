@@ -2,18 +2,16 @@ package comp1110.ass2.gui;
 
 import comp1110.ass2.CatanDice;
 import comp1110.ass2.Player;
-import gittest.A;
-import gittest.B;
-import javafx.animation.PauseTransition;
-import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -63,6 +61,8 @@ public class ChangeResources {
         stage.initModality(Modality.APPLICATION_MODAL);
         Label label = new Label();
         label.setText(msg);
+        label.setTextFill(Color.web("#0076a3"));
+        label.setFont(Font.font("Arial", 18));
 
 
         for (Button button : resources) {
@@ -170,11 +170,27 @@ public class ChangeResources {
 
         });
 
-        VBox vBox = new VBox();
-        vBox.getChildren().addAll(label, swap, trade, ore, grain, wool, timber, brick, gold, cancel, re, bo, ok, t2, t3, t4, close);
+        HBox hBoxTitle = new HBox();
+        hBoxTitle.getChildren().addAll(label);
+        hBoxTitle.setLayoutX(125);
+        hBoxTitle.setLayoutY(50);
 
+        HBox hBoxSwapTradeButton = new HBox();
+        hBoxSwapTradeButton.getChildren().addAll(swap, trade);
+        hBoxSwapTradeButton.setPadding(new Insets(0, 50, 0, 50));
+        hBoxSwapTradeButton.setSpacing(50);  //设置节点间的距离
+        hBoxSwapTradeButton.setLayoutX(125);
+        hBoxSwapTradeButton.setLayoutY(100);
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(ore, grain, wool, timber, brick, gold, cancel, re, bo, ok, t2, t3, t4, close);
         vBox.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(vBox, 200, 500);
+        vBox.setLayoutX(200);
+        vBox.setLayoutY(150);
+
+        Group root = new Group();
+        root.getChildren().addAll(hBoxSwapTradeButton, hBoxTitle, vBox);
+        Scene scene = new Scene(root, 500, 500);
         stage.setScene(scene);
         stage.setTitle(title);
         stage.showAndWait();
