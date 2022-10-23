@@ -24,17 +24,17 @@ import static comp1110.ass2.CatanDice.diceState;
 
 public class Game extends Application {
 
-    private final Group root = new Group();
+    private static final Group root = new Group();
     private static final int WINDOW_WIDTH = 1200;
     private static final int WINDOW_HEIGHT = 700;
 
     /**
      * import the image to the window.
      *
-     * @param node: The group contains the image.
-     * @param image : The image needed to import.
+     * @param node:  The group contains the image.
+     * @param image  : The image needed to import.
      * @param height :Image height.
-     * @param width :Image width.
+     * @param width  :Image width.
      * @auther Zetian Chen (uid: u7564812)
      */
     public void importImage(Group node, Image image, double height, double width) {
@@ -79,6 +79,7 @@ public class Game extends Application {
     }
 
     Group boardGroup = new Group();
+
     /**
      * display the board of the game.
      * also display the buttons on it.
@@ -106,7 +107,7 @@ public class Game extends Application {
     /**
      * make jokers' buttons
      *
-     * @param node :The group contains the buttons.
+     * @param node    :The group contains the buttons.
      * @param player: The game player
      * @auther Zetian Chen (uid: u7564812)
      */
@@ -167,7 +168,7 @@ public class Game extends Application {
     /**
      * make cities' buttons
      *
-     * @param node :The group contains the buttons.
+     * @param node    :The group contains the buttons.
      * @param player: The game player
      * @auther Zetian Chen (uid: u7564812)
      */
@@ -241,7 +242,7 @@ public class Game extends Application {
     /**
      * make settlements' buttons
      *
-     * @param node :The group contains the buttons.
+     * @param node    :The group contains the buttons.
      * @param player: The game player
      * @auther Zetian Chen (uid: u7564812)
      */
@@ -332,7 +333,7 @@ public class Game extends Application {
     /**
      * make roads' buttons
      *
-     * @param node :The group contains the buttons.
+     * @param node    :The group contains the buttons.
      * @param player: The game player
      * @auther Zetian Chen (uid: u7564812)
      */
@@ -662,7 +663,7 @@ public class Game extends Application {
         });
     }
 
-    Group showResources = new Group();
+    static Group showResources = new Group();
 
     /**
      * If the resource state doesn't update on time, this button will display the latest state.
@@ -671,7 +672,7 @@ public class Game extends Application {
      * @auther Zihan Ai(uid: u7528678)
      */
 
-    public void showResource(Player player) {
+    public static void showResource(Player player) {
         Text show = new Text();
         showResources.getChildren().clear();
         showResources.getChildren().add(show);
@@ -717,7 +718,7 @@ public class Game extends Application {
      * After using the joker, change the appearance of them.
      *
      * @param knight: the index of knight.
-     * @param node :the group contain the kinghts.
+     * @param node    :the group contain the kinghts.
      * @auther Zetian Chen (uid: u7564812)
      */
 
@@ -778,7 +779,7 @@ public class Game extends Application {
      * make knights' buttons
      *
      * @param player: The game player.
-     * @param node : the group contain the knights.
+     * @param node    : the group contain the knights.
      * @auther Zetian Chen (uid: u7564812)
      */
 
@@ -968,9 +969,10 @@ public class Game extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Catan Dice");
-        Scene scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         Player player = new Player();
         player.resource_state = new int[]{0, 0, 0, 0, 0, 0};
+//        player.resource_state = new int[]{99, 99, 99, 99, 99, 99};
         player.board_state = "";
         player.turn = 0;
         displayBoard(player);

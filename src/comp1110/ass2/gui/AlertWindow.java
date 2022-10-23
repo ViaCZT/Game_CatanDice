@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -21,6 +22,7 @@ public class AlertWindow {
     public static void display(String title, String msg) {
         Stage stage = new Stage();
         stage.setTitle(title);
+        stage.initModality(Modality.APPLICATION_MODAL);  //阻止此JavaFX应用程序打开的所有其他窗口（Stage）
 
         Image alertImg = new Image(Objects.requireNonNull(AlertWindow.class.getResourceAsStream("alert.png")));
         Label msgLabel = new Label(msg, new ImageView(alertImg));

@@ -17,25 +17,25 @@ declaration: >-
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 class:
-   - AlertWindow (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/AlertWindow.java)
-   - Resource (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/Resource.java)
-   - Structure (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/Structure.java)
+  - AlertWindow (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/AlertWindow.java)
+  - Resource (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/Resource.java)
+  - Structure (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/Structure.java)
 
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
 method:
-   - Game.importImage (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L40-50)
-   - Game.makeResourceLabel (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L58-79)
-   - Game.displayBoard (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L89-104)
-   - Game.makeJokerButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L113-165)
-   - Game.makeCityButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L174-239)
-   - Game.makeSettleButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L248-330)
-   - Game.makeRoadButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L339-436)
-   - Game.displayScore (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L443-452)
-   - Game.displayResource (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L432-471)
-   - Game.changeKnightButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L724-775)
-   - Game.makeKnight (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L785-794)
+  - Game.importImage (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L40-50)
+  - Game.makeResourceLabel (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L58-79)
+  - Game.displayBoard (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L89-104)
+  - Game.makeJokerButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L113-165)
+  - Game.makeCityButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L174-239)
+  - Game.makeSettleButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L248-330)
+  - Game.makeRoadButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L339-436)
+  - Game.displayScore (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L443-452)
+  - Game.displayResource (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L432-471)
+  - Game.changeKnightButton (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L724-775)
+  - Game.makeKnight (https://gitlab.cecs.anu.edu.au/u7528678/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Game.java#L785-794)
 
 # sign *your* name and uid here
-name:
-uid:
+name: Zetian Chen
+uid: u7564812
